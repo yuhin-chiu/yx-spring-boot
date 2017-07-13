@@ -5,4 +5,4 @@
  * @author yuxuanjiao
  *
  */
-package com.yx.config;
+package cn.yx.config;

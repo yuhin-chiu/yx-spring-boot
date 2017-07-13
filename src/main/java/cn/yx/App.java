@@ -1,4 +1,4 @@
-package com.yx;
+package cn.yx;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
