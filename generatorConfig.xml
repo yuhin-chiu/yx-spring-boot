@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+<classPathEntry  
+        location="D:\Dev\repo\mysql\mysql-connector-java\5.1.42\mysql-connector-java-5.1.42.jar" />
+  <context id="context1">
+    <jdbcConnection connectionURL="jdbc:mysql://127.0.0.1:3306/test"
+    	 driverClass="com.mysql.jdbc.Driver" password="tiger" userId="root"/>
+    <javaModelGenerator targetPackage="cn.yx.entity" targetProject="YxSpringBoot/src/main/java" />
+    <sqlMapGenerator targetPackage="cn.yx.mapper" targetProject="YxSpringBoot/src/main/java" />
+    <javaClientGenerator targetPackage="cn.yx.mapper" targetProject="YxSpringBoot/src/main/java" type="ANNOTATEDMAPPER" />
+    
+    <table schema="homepage" tableName="whs_homepage" enableCountByExample="false" enableUpdateByExample="false"  
+            enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+    <table schema="news" tableName="whs_news" enableCountByExample="false" enableUpdateByExample="false"  
+            enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+    <table schema="activities" tableName="whs_activities" enableCountByExample="false" enableUpdateByExample="false"  
+            enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+    <table schema="sliders" tableName="whs_sliders" enableCountByExample="false" enableUpdateByExample="false"  
+            enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+  </context>
+</generatorConfiguration>
