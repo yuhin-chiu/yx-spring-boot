@@ -12,21 +12,21 @@ import cn.yx.model.ApiResponse;
 
 /**
  * @author yuxuanjiao
- * @date 2017年7月13日 下午3:19:59
+ * @date 2017年7月23日 下午6:05:09 
  * @version 1.0
  */
 
 @RestController
-@RequestMapping("/news")
-public class NewsController extends AbstractController {
+@RequestMapping("/history")
+public class HistoryController extends AbstractController {
 
     @RequestMapping("/list")
-    public ApiResponse list(Integer status, Integer parent, Integer pageSize, Integer currentPage) {
+    public ApiResponse list(Integer pageSize, Integer currentPage) {
         ApiResponse resp = new ApiResponse();
         pageSize = (pageSize == null) ? 20 : pageSize;
         currentPage = (currentPage == null) ? 1 : currentPage;
-        List list = newsService.list(status, parent, pageSize, currentPage);
-        int count = newsService.count(status, parent);
+        List list = historyService.list(pageSize, currentPage);
+        int count = historyService.count();
         
         resp.setData(list);
         resp.setTotal(count);
@@ -34,18 +34,16 @@ public class NewsController extends AbstractController {
     }
 
     @RequestMapping("/detail/{id}")
-    public ApiResponse detail(@PathVariable(required = true) int id) {
+    public ApiResponse detail(@PathVariable int id) {
         ApiResponse resp = new ApiResponse();
-        resp.setData(newsService.getDetail(id));
+        resp.setData(historyService.getDetail(id));
         return resp;
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ApiResponse uploadNews(@RequestParam String title, @RequestParam Byte parent, @RequestParam String content,
-            String author, String createTime, Long browses, String url, Integer status) {
+    public ApiResponse uploadHistory(@RequestParam String name, @RequestParam String content) {
         ApiResponse resp = new ApiResponse();
-        resp.setData(newsService.uploadNews(title, parent, content, author, createTime, browses, url, status));
+        resp.setData(historyService.uploadHistory(name, content));
         return resp;
     }
-
 }

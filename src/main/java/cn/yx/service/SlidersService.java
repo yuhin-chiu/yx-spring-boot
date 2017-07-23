@@ -24,4 +24,7 @@ public class SlidersService {
 		return whsSlidersMapper.selectAll();
 	}
 	
+    public List<WhsSliders> getNew() {
+        return whsSlidersMapper.selectNew();
+    }
 }

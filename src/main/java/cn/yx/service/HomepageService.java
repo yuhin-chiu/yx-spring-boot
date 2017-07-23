@@ -11,19 +11,20 @@ import cn.yx.mapper.WhsHomepageMapper;
 
 /**
  * @author yuxuanjiao
- * @date 2017年7月13日 下午3:39:58 
+ * @date 2017年7月13日 下午3:39:58
  * @version 1.0
  */
 
 @Service
 public class HomepageService {
 
-	@Autowired
-	private WhsHomepageMapper whsHomepageMapper;
-	
-	public JSONObject getBaseInfo() {
-		WhsHomepage whshomepage =  whsHomepageMapper.selectByPrimaryKey(0);
-		JSONObject resp = (JSONObject) JSON.toJSON(whshomepage);
-		return resp;
-	}
+    @Autowired
+    private WhsHomepageMapper whsHomepageMapper;
+
+    public JSONObject getBaseInfo() {
+        // TODO
+        WhsHomepage whshomepage = whsHomepageMapper.selectByPrimaryKey(1);
+        JSONObject resp = (JSONObject) JSON.toJSON(whshomepage);
+        return resp;
+    }
 }
