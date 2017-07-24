@@ -97,9 +97,9 @@ public class WhsCompanySqlProvider {
         sql.ORDER_BY("applyTime desc");
         
         if(status != null) {
-            sql.WHERE("status = #{status,jdbcType=TINYINT}");
+            sql.WHERE("status = #{arg0,jdbcType=TINYINT}");
         }
-        if (limit != -1) {
+        if (limit != null && limit != -1) {
             return sql + " limit " + limit + " OFFSET " + offset;
         } else {
             return sql.toString();

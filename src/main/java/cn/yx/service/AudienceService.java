@@ -27,4 +27,8 @@ public class AudienceService {
     public List<WhsAudience> listApply(Integer pageSize, Integer currentPage) {
         return auMapper.list(pageSize, pageSize * (currentPage - 1));
     }
+    
+    public int countApply() {
+        return auMapper.count();
+    }
 }

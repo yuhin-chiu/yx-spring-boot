@@ -36,7 +36,11 @@ public class NewsService {
     }
 
     public List<WhsNews> getNew() {
-        return whsNewsMapper.list(null, null, 10, 1);
+        return whsNewsMapper.list(null, null, 20, 1);
+    }
+    
+    public int update(WhsNews com) {
+        return whsNewsMapper.updateByPrimaryKeySelective(com);
     }
 
     public WhsNews uploadNews(String title, Byte parent, String content,

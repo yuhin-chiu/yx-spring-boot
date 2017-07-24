@@ -81,5 +81,5 @@ public interface WhsCompanyApplyMapper {
     List<WhsCompanyApply> list(Integer limit, Integer offset);
     
     @SelectProvider(type = WhsCompanyApplySqlProvider.class, method = "countApplySelective")
-    List<WhsCompanyApply> count();
+    int count();
 }

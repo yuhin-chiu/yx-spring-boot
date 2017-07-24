@@ -102,9 +102,11 @@ public class ApplyController extends AbstractController {
         currentPage = (currentPage ==null)? 1 : currentPage;
         
         List<WhsMediaApply> list = mediaService.listApply(pageSize, currentPage);
+        int count = mediaService.countApply();
         
         res.setData(list);
         res.setDescription("默认返回第一页，每页20行");
+        res.setTotal(count);
         return res; 
     }
     
@@ -115,11 +117,11 @@ public class ApplyController extends AbstractController {
         currentPage = (currentPage ==null)? 1 : currentPage;
         
         List<WhsAudience> list = audienceService.listApply(pageSize, currentPage);
-        //total
-        
+        int count = audienceService.countApply();
         
         res.setData(list);
         res.setDescription("默认返回第一页，每页20行");
+        res.setTotal(count);
         return res; 
     }
     
@@ -130,9 +132,11 @@ public class ApplyController extends AbstractController {
         currentPage = (currentPage ==null)? 1 : currentPage;
         
         List<WhsCompanyApply> list = companyService.listApply(pageSize, currentPage);
+        int count = companyService.countApply();
         
         res.setData(list);
         res.setDescription("默认返回第一页，每页20行");
+        res.setTotal(count);
         return res; 
     }
 }

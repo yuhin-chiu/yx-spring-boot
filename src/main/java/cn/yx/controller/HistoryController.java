@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.yx.entity.WhsHistory;
 import cn.yx.model.ApiResponse;
 
 /**
@@ -37,6 +38,15 @@ public class HistoryController extends AbstractController {
     public ApiResponse detail(@PathVariable int id) {
         ApiResponse resp = new ApiResponse();
         resp.setData(historyService.getDetail(id));
+        return resp;
+    }
+    
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public ApiResponse edit(@PathVariable Integer id, WhsHistory history) {
+        ApiResponse resp = new ApiResponse();
+        
+        resp.setData(historyService.update(history));
+        
         return resp;
     }
 

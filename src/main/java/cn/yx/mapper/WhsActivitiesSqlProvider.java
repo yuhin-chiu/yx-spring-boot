@@ -82,7 +82,7 @@ public class WhsActivitiesSqlProvider {
         sql.FROM("whs_activities");
 
         if (status != null && status >= 0) {
-            sql.WHERE("status = #{status,jdbcType=TINYINT}");
+            sql.WHERE("status = #{arg0,jdbcType=TINYINT}");
         }
         sql.ORDER_BY("createTime desc");
 

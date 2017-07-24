@@ -69,6 +69,7 @@ public interface WhsCompanyMapper {
      * @mbg.generated  Sun Jul 23 15:42:13 CST 2017
      */
     @UpdateProvider(type = WhsCompanySqlProvider.class, method = "updateByPrimaryKeySelective")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     int updateByPrimaryKeySelective(WhsCompany record);
 
     /**
@@ -81,6 +82,7 @@ public interface WhsCompanyMapper {
             "mail = #{mail,jdbcType=VARCHAR},", "status = #{status,jdbcType=TINYINT},",
             "address = #{address,jdbcType=VARCHAR},", "url = #{url,jdbcType=LONGVARCHAR}",
             "where id = #{id,jdbcType=INTEGER}" })
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     int updateByPrimaryKeyWithBLOBs(WhsCompany record);
 
     /**

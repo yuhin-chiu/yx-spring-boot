@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.yx.entity.WhsNews;
 import cn.yx.model.ApiResponse;
 
 /**
@@ -37,6 +38,15 @@ public class NewsController extends AbstractController {
     public ApiResponse detail(@PathVariable(required = true) int id) {
         ApiResponse resp = new ApiResponse();
         resp.setData(newsService.getDetail(id));
+        return resp;
+    }
+    
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public ApiResponse edit(@PathVariable Integer id, WhsNews news) {
+        ApiResponse resp = new ApiResponse();
+        
+        resp.setData(newsService.update(news));
+        
         return resp;
     }
 

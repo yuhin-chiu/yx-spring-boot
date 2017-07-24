@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.yx.entity.WhsHistory;
+import cn.yx.entity.WhsNews;
 import cn.yx.mapper.WhsHistoryMapper;
 
 /**
@@ -32,6 +33,10 @@ public class HistoryService {
 
     public WhsHistory getDetail(int id) {
         return hisMapper.selectByPrimaryKey(id);
+    }
+    
+    public int update(WhsHistory his) {
+        return hisMapper.updateByPrimaryKeySelective(his);
     }
 
     public WhsHistory uploadHistory(String name, String content) {

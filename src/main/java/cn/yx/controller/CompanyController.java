@@ -1,5 +1,8 @@
 package cn.yx.controller;
 
+import javax.websocket.server.PathParam;
+
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,12 +26,12 @@ public class CompanyController extends AbstractController {
         ApiResponse resp = new ApiResponse();
         
         resp.setData(companyService.list(status, limit, offset));
-        
+        resp.setTotal(companyService.count(status));
         return resp;
     }
     
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ApiResponse edit(WhsCompany company) {
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public ApiResponse edit(@PathVariable Integer id, WhsCompany company) {
         ApiResponse resp = new ApiResponse();
         
         resp.setData(companyService.update(company));

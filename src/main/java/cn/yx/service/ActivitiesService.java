@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.yx.entity.WhsActivities;
+import cn.yx.entity.WhsCompany;
 import cn.yx.mapper.WhsActivitiesMapper;
 import cn.yx.util.TimeUtil;
 
@@ -25,7 +26,7 @@ public class ActivitiesService {
     public List<WhsActivities> list(Integer status, Integer pageSize, Integer currentPage) {
         return whsActivitiesMapper.list(status, pageSize, pageSize * (currentPage - 1));
     }
-    
+
     public int count(Integer status) {
         return whsActivitiesMapper.count(status);
     }
@@ -35,7 +36,11 @@ public class ActivitiesService {
     }
 
     public List<WhsActivities> getNew() {
-        return whsActivitiesMapper.list(null, 10, 1);
+        return whsActivitiesMapper.list(null, 20, 1);
+    }
+    
+    public int update(WhsActivities com) {
+        return whsActivitiesMapper.updateByPrimaryKeySelective(com);
     }
 
     public WhsActivities uploadActivities(String title, String content, String author, String createTime, Long browses,

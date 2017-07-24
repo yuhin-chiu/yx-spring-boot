@@ -85,5 +85,5 @@ public interface WhsAudienceMapper {
     List<WhsAudience> list(Integer limit, Integer offset);
     
     @SelectProvider(type = WhsAudienceSqlProvider.class, method = "countApplySelective")
-    List<WhsAudience> count();
+    int count();
 }

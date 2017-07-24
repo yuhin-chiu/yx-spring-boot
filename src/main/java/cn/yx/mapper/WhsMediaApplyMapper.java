@@ -79,5 +79,5 @@ public interface WhsMediaApplyMapper {
     List<WhsMediaApply> list(Integer limit, Integer offset);
     
     @SelectProvider(type = WhsMediaApplySqlProvider.class, method = "countApplySelective")
-    List<WhsMediaApply> count();
+    int count();
 }
