@@ -10,20 +10,20 @@ import cn.yx.mapper.WhsSlidersMapper;
 
 /**
  * @author yuxuanjiao
- * @date 2017年7月13日 下午4:58:14 
+ * @date 2017年7月13日 下午4:58:14
  * @version 1.0
  */
 
 @Service
 public class SlidersService {
 
-	@Autowired
-	private WhsSlidersMapper whsSlidersMapper;
-	
-	public List<WhsSliders> getAll() {
-		return whsSlidersMapper.selectAll();
-	}
-	
+    @Autowired
+    private WhsSlidersMapper whsSlidersMapper;
+
+    public List<WhsSliders> getAll() {
+        return whsSlidersMapper.selectAll();
+    }
+
     public List<WhsSliders> getNew() {
         return whsSlidersMapper.selectNew();
     }

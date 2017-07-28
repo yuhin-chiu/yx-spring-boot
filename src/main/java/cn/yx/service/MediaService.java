@@ -13,7 +13,7 @@ import cn.yx.mapper.WhsMediaMapper;
 
 /**
  * @author yuxuanjiao
- * @date 2017年7月23日 下午12:33:17 
+ * @date 2017年7月23日 下午12:33:17
  * @version 1.0
  */
 
@@ -24,28 +24,28 @@ public class MediaService {
     private WhsMediaMapper mediaMapper;
     @Autowired
     private WhsMediaApplyMapper mediaApplyMapper;
-    
+
     public List<WhsMedia> getRecomm() {
         return list(1, 20, 0);
     }
-    
+
     public List<WhsMedia> list(Integer status, Integer limit, Integer offset) {
         return mediaMapper.list(status, limit, offset);
     }
-    
+
     public int count(Integer status) {
         return mediaMapper.count(status);
     }
-    
+
     public int apply(WhsMediaApply record) {
         return mediaApplyMapper.insertSelective(record);
     }
-    
+
     public List<WhsMediaApply> listApply(Integer pageSize, Integer currentPage) {
-        
+
         return mediaApplyMapper.list(pageSize, pageSize * (currentPage - 1));
     }
-    
+
     public int countApply() {
         return mediaApplyMapper.count();
     }

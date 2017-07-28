@@ -15,21 +15,22 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 /**
  * @author yuxuanjiao
- * @date 2017年7月11日 下午5:16:28 
+ * @date 2017年7月11日 下午5:16:28
  * @version 1.0
  */
 @Configuration
 @MapperScan(basePackages = "cn.yx.mapper", sqlSessionTemplateRef = "baseSqlSessionTemplate")
 public class DatasourceConfig {
-	
-	@Bean(name = "baseDataSource")
-	@ConfigurationProperties(prefix = "datasource")
+
+    @Bean(name = "baseDataSource")
+    @ConfigurationProperties(prefix = "datasource")
     public DataSource createDataSource() {
         return DataSourceBuilder.create().build();
     }
-	
+
     @Bean(name = "baseSqlSessionFactory")
-    public SqlSessionFactory createSqlSessionFactory(@Qualifier("baseDataSource") DataSource dataSource) throws Exception {
+    public SqlSessionFactory createSqlSessionFactory(@Qualifier("baseDataSource") DataSource dataSource)
+            throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         return bean.getObject();
@@ -41,7 +42,8 @@ public class DatasourceConfig {
     }
 
     @Bean(name = "baseSqlSessionTemplate")
-    public SqlSessionTemplate createSqlSessionTemplate(@Qualifier("baseSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
-		return new SqlSessionTemplate(sqlSessionFactory);
-	}
+    public SqlSessionTemplate createSqlSessionTemplate(
+            @Qualifier("baseSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+        return new SqlSessionTemplate(sqlSessionFactory);
+    }
 }

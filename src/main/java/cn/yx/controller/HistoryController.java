@@ -13,7 +13,7 @@ import cn.yx.model.ApiResponse;
 
 /**
  * @author yuxuanjiao
- * @date 2017年7月23日 下午6:05:09 
+ * @date 2017年7月23日 下午6:05:09
  * @version 1.0
  */
 
@@ -28,7 +28,7 @@ public class HistoryController extends AbstractController {
         currentPage = (currentPage == null) ? 1 : currentPage;
         List list = historyService.list(pageSize, currentPage);
         int count = historyService.count();
-        
+
         resp.setData(list);
         resp.setTotal(count);
         return resp;
@@ -40,13 +40,13 @@ public class HistoryController extends AbstractController {
         resp.setData(historyService.getDetail(id));
         return resp;
     }
-    
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public ApiResponse edit(@PathVariable Integer id, WhsHistory history) {
         ApiResponse resp = new ApiResponse();
-        
+
         resp.setData(historyService.update(history));
-        
+
         return resp;
     }
 

@@ -13,12 +13,12 @@ import cn.yx.service.SlidersService;
 
 /**
  * @author yuxuanjiao
- * @date 2017年7月23日 下午12:19:12 
+ * @date 2017年7月23日 下午12:19:12
  * @version 1.0
  */
 
 public abstract class AbstractController {
-    
+
     @Resource
     protected ActivitiesService activitiesService;
     @Resource
@@ -29,7 +29,7 @@ public abstract class AbstractController {
     protected NewsService newsService;
     @Resource
     protected CompanyService companyService;
-    @Resource 
+    @Resource
     protected MediaService mediaService;
     @Resource
     protected AudienceService audienceService;

@@ -28,7 +28,7 @@ public class NewsController extends AbstractController {
         currentPage = (currentPage == null) ? 1 : currentPage;
         List list = newsService.list(status, parent, pageSize, currentPage);
         int count = newsService.count(status, parent);
-        
+
         resp.setData(list);
         resp.setTotal(count);
         return resp;
@@ -40,13 +40,13 @@ public class NewsController extends AbstractController {
         resp.setData(newsService.getDetail(id));
         return resp;
     }
-    
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public ApiResponse edit(@PathVariable Integer id, WhsNews news) {
         ApiResponse resp = new ApiResponse();
-        
+
         resp.setData(newsService.update(news));
-        
+
         return resp;
     }
 

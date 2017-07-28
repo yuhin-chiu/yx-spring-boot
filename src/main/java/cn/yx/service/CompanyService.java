@@ -45,7 +45,7 @@ public class CompanyService {
     public List<WhsCompanyApply> listApply(Integer pageSize, Integer currentPage) {
         return comApplyMapper.list(pageSize, pageSize * (currentPage - 1));
     }
-    
+
     public int countApply() {
         return comApplyMapper.count();
     }

@@ -14,16 +14,16 @@ import cn.yx.entity.WhsCompany;
 import cn.yx.model.ApiResponse;
 import cn.yx.service.ActivitiesService;
 import cn.yx.controller.AbstractController;
+
 /**
  * @author yuxuanjiao
- * @date 2017年7月13日 下午3:19:59 
+ * @date 2017年7月13日 下午3:19:59
  * @version 1.0
  */
 @RestController
 @RequestMapping("/activities")
 public class ActivitiesController extends AbstractController {
-	
-	
+
     @RequestMapping("/list")
     public ApiResponse list(Integer status, Integer pageSize, Integer currentPage) {
         ApiResponse resp = new ApiResponse();
@@ -40,19 +40,19 @@ public class ActivitiesController extends AbstractController {
         resp.setData(activitiesService.getDetail(id));
         return resp;
     }
-    
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public ApiResponse edit(@PathVariable Integer id, WhsActivities acti) {
         ApiResponse resp = new ApiResponse();
-        
+
         resp.setData(activitiesService.update(acti));
-        
+
         return resp;
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ApiResponse uploadActivities(@RequestParam String title, @RequestParam String content,
-            String author, String createTime, Long browses, String url, Integer status) {
+    public ApiResponse uploadActivities(@RequestParam String title, @RequestParam String content, String author,
+            String createTime, Long browses, String url, Integer status) {
         ApiResponse resp = new ApiResponse();
         resp.setData(activitiesService.uploadActivities(title, content, author, createTime, browses, url, status));
         return resp;

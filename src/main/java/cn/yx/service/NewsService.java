@@ -38,13 +38,13 @@ public class NewsService {
     public List<WhsNews> getNew() {
         return whsNewsMapper.list(null, null, 20, 1);
     }
-    
+
     public int update(WhsNews com) {
         return whsNewsMapper.updateByPrimaryKeySelective(com);
     }
 
-    public WhsNews uploadNews(String title, Byte parent, String content,
-            String author, String createTime, Long browses, String url, Integer status) {
+    public WhsNews uploadNews(String title, Byte parent, String content, String author, String createTime, Long browses,
+            String url, Integer status) {
         WhsNews news = new WhsNews();
         news.setTitle(title);
         news.setParent(parent);

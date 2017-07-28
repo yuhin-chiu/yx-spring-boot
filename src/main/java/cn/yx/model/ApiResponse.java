@@ -13,7 +13,7 @@ public class ApiResponse {
         this.code = en.getCode();
         this.msg = en.getContent();
     }
-    
+
     public Integer getCode() {
         return code;
     }
@@ -53,5 +53,5 @@ public class ApiResponse {
     public void setTotal(Integer total) {
         this.total = total;
     }
-    
+
 }

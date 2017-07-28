@@ -46,9 +46,9 @@ public class HomepageController extends AbstractController {
         obj.put("activities", activities);
         obj.put("companys", companys);
         obj.put("medias", medias);
-        
+
         resp.setData(obj);
-        
+
         return resp;
     }
 

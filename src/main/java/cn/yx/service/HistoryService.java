@@ -34,7 +34,7 @@ public class HistoryService {
     public WhsHistory getDetail(int id) {
         return hisMapper.selectByPrimaryKey(id);
     }
-    
+
     public int update(WhsHistory his) {
         return hisMapper.updateByPrimaryKeySelective(his);
     }

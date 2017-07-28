@@ -12,7 +12,7 @@ import cn.yx.model.ApiResponse;
 
 /**
  * @author yuxuanjiao
- * @date 2017年7月23日 下午7:20:06 
+ * @date 2017年7月23日 下午7:20:06
  * @version 1.0
  */
 
@@ -20,31 +20,30 @@ import cn.yx.model.ApiResponse;
 @RequestMapping("/company")
 public class CompanyController extends AbstractController {
 
-    
     @RequestMapping("/list")
     public ApiResponse list(Integer status, Integer limit, Integer offset) {
         ApiResponse resp = new ApiResponse();
-        
+
         resp.setData(companyService.list(status, limit, offset));
         resp.setTotal(companyService.count(status));
         return resp;
     }
-    
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public ApiResponse edit(@PathVariable Integer id, WhsCompany company) {
         ApiResponse resp = new ApiResponse();
-        
+
         resp.setData(companyService.update(company));
-        
+
         return resp;
     }
-    
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ApiResponse add(WhsCompany company) {
         ApiResponse resp = new ApiResponse();
-        
+
         resp.setData(companyService.add(company));
-        
+
         return resp;
     }
 }

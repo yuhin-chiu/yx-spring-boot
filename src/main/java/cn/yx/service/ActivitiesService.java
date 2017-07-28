@@ -38,7 +38,7 @@ public class ActivitiesService {
     public List<WhsActivities> getNew() {
         return whsActivitiesMapper.list(null, 20, 1);
     }
-    
+
     public int update(WhsActivities com) {
         return whsActivitiesMapper.updateByPrimaryKeySelective(com);
     }
