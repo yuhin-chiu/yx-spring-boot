@@ -1,4 +1,4 @@
-package cn.yx.controller;
+package cn.yx.controller.api;
 
 import java.util.List;
 
@@ -96,10 +96,9 @@ public class ApplyController extends AbstractController {
     }
 
     @RequestMapping("/media/list")
-    public ApiResponse mediaList(Integer pageSize, Integer currentPage) {
+    public ApiResponse mediaList(@RequestParam(defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse res = new ApiResponse();
-        pageSize = (pageSize == null) ? 20 : pageSize;
-        currentPage = (currentPage == null) ? 1 : currentPage;
 
         List<WhsMediaApply> list = mediaService.listApply(pageSize, currentPage);
         int count = mediaService.countApply();
@@ -111,10 +110,9 @@ public class ApplyController extends AbstractController {
     }
 
     @RequestMapping("/audience/list")
-    public ApiResponse audienceList(Integer pageSize, Integer currentPage) {
+    public ApiResponse audienceList(@RequestParam(defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse res = new ApiResponse();
-        pageSize = (pageSize == null) ? 20 : pageSize;
-        currentPage = (currentPage == null) ? 1 : currentPage;
 
         List<WhsAudience> list = audienceService.listApply(pageSize, currentPage);
         int count = audienceService.countApply();
@@ -126,10 +124,9 @@ public class ApplyController extends AbstractController {
     }
 
     @RequestMapping("/company/list")
-    public ApiResponse companyList(Integer pageSize, Integer currentPage) {
+    public ApiResponse companyList(@RequestParam(defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse res = new ApiResponse();
-        pageSize = (pageSize == null) ? 20 : pageSize;
-        currentPage = (currentPage == null) ? 1 : currentPage;
 
         List<WhsCompanyApply> list = companyService.listApply(pageSize, currentPage);
         int count = companyService.countApply();

@@ -40,6 +40,8 @@
     <table schema="media_apply" tableName="whs_media_apply" enableCountByExample="false" enableUpdateByExample="false"  
             enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
     </table>
-    
+    <table schema="downloads" tableName="whs_downloads" enableCountByExample="false" enableUpdateByExample="false"  
+            enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
   </context>
 </generatorConfiguration>

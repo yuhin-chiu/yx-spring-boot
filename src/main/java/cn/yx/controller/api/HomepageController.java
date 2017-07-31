@@ -1,4 +1,4 @@
-package cn.yx.controller;
+package cn.yx.controller.api;
 
 import java.util.List;
 

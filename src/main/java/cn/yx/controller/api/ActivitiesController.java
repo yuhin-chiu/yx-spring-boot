@@ -1,4 +1,4 @@
-package cn.yx.controller;
+package cn.yx.controller.api;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.yx.controller.api.AbstractController;
 import cn.yx.entity.WhsActivities;
 import cn.yx.entity.WhsCompany;
 import cn.yx.model.ApiResponse;
 import cn.yx.service.ActivitiesService;
-import cn.yx.controller.AbstractController;
 
 /**
  * @author yuxuanjiao
@@ -25,10 +25,10 @@ import cn.yx.controller.AbstractController;
 public class ActivitiesController extends AbstractController {
 
     @RequestMapping("/list")
-    public ApiResponse list(Integer status, Integer pageSize, Integer currentPage) {
+    public ApiResponse list(@RequestParam(defaultValue = "0") Integer status,
+            @RequestParam(defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse resp = new ApiResponse();
-        pageSize = (pageSize == null) ? 20 : pageSize;
-        currentPage = (currentPage == null) ? 1 : currentPage;
         resp.setData(activitiesService.list(status, pageSize, currentPage));
         resp.setTotal(activitiesService.count(status));
         return resp;

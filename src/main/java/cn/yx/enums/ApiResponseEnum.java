@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum ApiResponseEnum {
     SUCCESS(200, "success"), BAD_REQUEST(400, "请求格式错误"), NON_LOGIN_IN(401, "用户未登录"), PAGE_NOT_FOUND(404,
-            "请求页面不存在"), INTERNAL_ERROR(500, "服务器内部错误"), COMMON_ERROR(1, "请求异常");
+            "请求页面不存在"), INTERNAL_ERROR(500, "服务器内部错误"), FILE_SAVE_FAILED(5001, "文件保存错误"), FILE_SAVE_EMPTY(5002, "上传文件为空"), COMMON_ERROR(1, "请求异常");
 
     private Integer code;
     private String content;

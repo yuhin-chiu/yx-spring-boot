@@ -30,8 +30,8 @@ public class CompanyService {
         return comMapper.list(1, 20, 0);
     }
 
-    public List<WhsCompany> list(Integer status, Integer limit, Integer offset) {
-        return comMapper.list(status, limit, offset);
+    public List<WhsCompany> list(Integer status, Integer pageSize, Integer currentPage) {
+        return comMapper.list(status, pageSize, pageSize * (currentPage - 1));
     }
 
     public int count(Integer status) {

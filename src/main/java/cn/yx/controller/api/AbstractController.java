@@ -1,10 +1,11 @@
-package cn.yx.controller;
+package cn.yx.controller.api;
 
 import javax.annotation.Resource;
 
 import cn.yx.service.ActivitiesService;
 import cn.yx.service.AudienceService;
 import cn.yx.service.CompanyService;
+import cn.yx.service.DownloadsService;
 import cn.yx.service.HistoryService;
 import cn.yx.service.HomepageService;
 import cn.yx.service.MediaService;
@@ -35,4 +36,6 @@ public abstract class AbstractController {
     protected AudienceService audienceService;
     @Resource
     protected HistoryService historyService;
+    @Resource
+    protected DownloadsService downloadsService;
 }

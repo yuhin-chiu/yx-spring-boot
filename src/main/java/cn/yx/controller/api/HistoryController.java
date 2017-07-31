@@ -1,4 +1,4 @@
-package cn.yx.controller;
+package cn.yx.controller.api;
 
 import java.util.List;
 
@@ -22,10 +22,9 @@ import cn.yx.model.ApiResponse;
 public class HistoryController extends AbstractController {
 
     @RequestMapping("/list")
-    public ApiResponse list(Integer pageSize, Integer currentPage) {
+    public ApiResponse list(@RequestParam(defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse resp = new ApiResponse();
-        pageSize = (pageSize == null) ? 20 : pageSize;
-        currentPage = (currentPage == null) ? 1 : currentPage;
         List list = historyService.list(pageSize, currentPage);
         int count = historyService.count();
 

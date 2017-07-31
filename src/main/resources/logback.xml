@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{68} %line - logId[[%X{client}][%X{request_id}]] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <File>${LOG_DIR}/sys.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>
+                <fileNamePattern>${LOG_DIR}/history/%d{yyyy-MM,aux}/sys.log_%d</fileNamePattern>
+            </fileNamePattern>
+            <maxHistory>90</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{68} %line - logId[[%X{client}][%X{request_id}]] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+
+        <File>${LOG_DIR}/sys.error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_DIR}/history/%d{yyyy-MM,aux}/%d.sys.error.log
+            </FileNamePattern>
+            <maxHistory>90</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d [%thread] %-5level %logger{68} %line - logId[[%X{client}][%X{request_id}]] - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="warnAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+
+        <File>${LOG_DIR}/sys.warn.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_DIR}/history/%d{yyyy-MM,aux}/%d.sys.warn.log
+            </FileNamePattern>
+            <maxHistory>90</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d [%thread] %-5level %logger{68} %line - logId[[%X{client}][%X{request_id}]] - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+     <root level="INFO">
+         <appender-ref ref="infoAppender" />
+         <appender-ref ref="errorAppender" />
+         <appender-ref ref="warnAppender" />
+         <appender-ref ref="STDOUT" />
+     </root>
+
+</configuration>
+

@@ -1,10 +1,9 @@
-package cn.yx.controller;
-
-import javax.websocket.server.PathParam;
+package cn.yx.controller.api;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.yx.entity.WhsCompany;
@@ -21,10 +20,12 @@ import cn.yx.model.ApiResponse;
 public class CompanyController extends AbstractController {
 
     @RequestMapping("/list")
-    public ApiResponse list(Integer status, Integer limit, Integer offset) {
+    public ApiResponse list(@RequestParam(defaultValue = "0") Integer status,
+            @RequestParam(defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse resp = new ApiResponse();
 
-        resp.setData(companyService.list(status, limit, offset));
+        resp.setData(companyService.list(status, pageSize, currentPage));
         resp.setTotal(companyService.count(status));
         return resp;
     }
