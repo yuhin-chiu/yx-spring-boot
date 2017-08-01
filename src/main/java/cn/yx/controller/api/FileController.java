@@ -38,7 +38,7 @@ public class FileController {
     // 文件下载相关代码
     @RequestMapping("/download")
     public void downloadFile(@RequestParam(defaultValue = "test.txt") String fileName, HttpServletResponse response)
-            throws IOException {""
+            throws IOException {
         if (fileName != null) {
             // 当前是从该工程目录的File文件夹中获取文件(该目录在常量中配置了)
             response.setContentType("application/force-download");// 设置强制下载不打开

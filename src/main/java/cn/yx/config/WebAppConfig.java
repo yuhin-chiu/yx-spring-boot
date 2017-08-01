@@ -1,10 +1,16 @@
 package cn.yx.config;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import cn.yx.interceptors.LoginInterceptor;
 
 /**
  * @author yuxuanjiao
@@ -16,10 +22,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
+    private List<String> excludePathes = Arrays.asList("/backend/login", "/backend/loginAction", "/backend/logout", "/backend/addUser");
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // TODO Auto-generated method stub
-        super.addInterceptors(registry);
+        InterceptorRegistration registration = registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**");
+        for (String path : excludePathes) {
+            registration.excludePathPatterns(path);
+        }
     }
 
     @Override

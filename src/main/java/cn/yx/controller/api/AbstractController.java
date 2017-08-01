@@ -3,6 +3,7 @@ package cn.yx.controller.api;
 import javax.annotation.Resource;
 
 import cn.yx.service.ActivitiesService;
+import cn.yx.service.AdminService;
 import cn.yx.service.AudienceService;
 import cn.yx.service.CompanyService;
 import cn.yx.service.DownloadsService;
@@ -38,4 +39,6 @@ public abstract class AbstractController {
     protected HistoryService historyService;
     @Resource
     protected DownloadsService downloadsService;
+    @Resource
+    protected AdminService adminService;
 }
