@@ -21,7 +21,7 @@ import cn.yx.util.TimeUtil;
  */
 
 @RestController
-@RequestMapping("/apply")
+@RequestMapping("/api/apply")
 public class ApplyController extends AbstractController {
 
     @RequestMapping(value = "/audience", method = RequestMethod.POST)

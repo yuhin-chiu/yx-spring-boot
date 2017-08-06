@@ -21,7 +21,7 @@ import cn.yx.model.ApiResponse;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/homepage")
+@RequestMapping("/api/homepage")
 public class HomepageController extends AbstractController {
 
     @RequestMapping("/all")

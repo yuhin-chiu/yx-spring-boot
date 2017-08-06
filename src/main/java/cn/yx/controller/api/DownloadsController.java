@@ -28,7 +28,7 @@ import cn.yx.util.TimeUtil;
  */
 
 @RestController
-@RequestMapping("/downloads")
+@RequestMapping("/api/downloads")
 public class DownloadsController extends AbstractController {
 
     @RequestMapping(value = "/list")

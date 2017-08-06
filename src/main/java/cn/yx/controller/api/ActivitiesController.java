@@ -21,7 +21,7 @@ import cn.yx.service.ActivitiesService;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/activities")
+@RequestMapping("/api/activities")
 public class ActivitiesController extends AbstractController {
 
     @RequestMapping("/list")

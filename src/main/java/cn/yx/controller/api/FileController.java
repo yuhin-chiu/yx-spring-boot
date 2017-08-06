@@ -33,6 +33,7 @@ import cn.yx.util.FileUtil;
  */
 
 @Controller
+@RequestMapping("/api")
 public class FileController {
 
     // 文件下载相关代码

@@ -22,7 +22,7 @@ import cn.yx.interceptors.LoginInterceptor;
 @Configuration
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
-    private List<String> excludePathes = Arrays.asList("/backend/login", "/backend/loginAction", "/backend/logout", "/backend/addUser");
+    private List<String> excludePathes = Arrays.asList("/api/**", "/backend/login", "/backend/loginAction", "/backend/logout", "/backend/addUser");
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration registration = registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**");

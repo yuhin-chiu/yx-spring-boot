@@ -16,7 +16,7 @@ import cn.yx.model.ApiResponse;
  */
 
 @RestController
-@RequestMapping("/company")
+@RequestMapping("/api/company")
 public class CompanyController extends AbstractController {
 
     @RequestMapping("/list")

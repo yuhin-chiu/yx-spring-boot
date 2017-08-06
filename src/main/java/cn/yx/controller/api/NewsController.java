@@ -18,7 +18,7 @@ import cn.yx.model.ApiResponse;
  */
 
 @RestController
-@RequestMapping("/news")
+@RequestMapping("/api/news")
 public class NewsController extends AbstractController {
 
     @RequestMapping("/list")

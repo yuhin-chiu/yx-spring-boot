@@ -18,7 +18,6 @@ import cn.yx.service.SlidersService;
  * @date 2017年7月23日 下午12:19:12
  * @version 1.0
  */
-
 public abstract class AbstractController {
 
     @Resource

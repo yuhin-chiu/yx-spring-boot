@@ -18,7 +18,7 @@ import cn.yx.model.ApiResponse;
  */
 
 @RestController
-@RequestMapping("/history")
+@RequestMapping("/api/history")
 public class HistoryController extends AbstractController {
 
     @RequestMapping("/list")
