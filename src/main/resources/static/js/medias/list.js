@@ -10,30 +10,40 @@ $(function() {
         field : "id",
         align : "center"
     }, {
-        title : "标题",
-        field : "title",
+        title : "媒体名",
+        field : "name",
         align : "center"
     }, {
-        title : "作者",
-        field : "author",
+        title : "负责人",
+        field : "principal",
         align : "center"
     }, {
-        title : "所属栏目",
-        field : "parent",
+        title : "图片",
+        field : "image",
         align : "center"
     }, {
-        title : "内容",
-        field : "content",
-        align : "center",
-        formatter : function(value) {
-            if(value.length <= 30) {
-                return value
-            }
-            return value.substring(0, 30);
-        }
+        title : "链接",
+        field : "url",
+        align : "center"
     }, {
-        title : "发布时间",
-        field : "createTime",
+        title : "手机",
+        field : "phone",
+        align : "center"
+    }, {
+        title : "办公电话",
+        field : "tele",
+        align : "center"
+    }, {
+        title : "邮箱",
+        field : "mail",
+        align : "center"
+    }, {
+        title : "地址",
+        field : "address",
+        align : "center"
+    }, {
+        title : "申请时间",
+        field : "applyTime",
         align : "center",
         formatter : function(value) {
             var date = new Date();
@@ -43,13 +53,19 @@ $(function() {
     }, {
         title : "操作",
         field : "status",
-        align : "center"
+        align : "center",
+        formatter : function(value) {
+            if(value == 1) {
+                return "推荐";
+            }
+            return "不推荐";
+        }
     } ];
 
     function callback(data) {
         $("#num").text(data.total);
     }
-    $("#autotable").baseTable("/api/news/list", columns, getOtherCondition, callback);
+    $("#autotable").baseTable("/api/medias/list", columns, getOtherCondition, callback);
 
     $("#timeRange").daterangepicker({}, function(start, end, label) {
         $("#autotable").baseTable.query();

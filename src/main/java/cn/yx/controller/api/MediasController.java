@@ -8,52 +8,46 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.yx.entity.WhsHistory;
+import cn.yx.entity.WhsMedia;
 import cn.yx.model.ApiResponse;
 
 /**
  * @author yuxuanjiao
- * @date 2017年7月23日 下午6:05:09
+ * @date 2017年7月13日 下午3:19:59
  * @version 1.0
  */
 
 @RestController
-@RequestMapping("/api/history")
-public class HistoryController extends AbstractController {
+@RequestMapping("/api/medias")
+public class MediasController extends AbstractController {
 
     @RequestMapping("/list")
     public ApiResponse list(@RequestParam(defaultValue = "-1") Integer status,
             @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse resp = new ApiResponse();
-        List list = historyService.list(status, pageSize, currentPage);
-        int count = historyService.count(status);
+        List<WhsMedia> list = mediaService.list(status, pageSize, currentPage);
+        int count = mediaService.count(status);
 
         resp.setData(list);
         resp.setTotal(count);
         return resp;
     }
 
-    @RequestMapping("/detail/{id}")
-    public ApiResponse detail(@PathVariable int id) {
-        ApiResponse resp = new ApiResponse();
-        resp.setData(historyService.getDetail(id));
-        return resp;
-    }
-
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-    public ApiResponse edit(@PathVariable Integer id, WhsHistory history) {
+    public ApiResponse edit(@PathVariable Integer id, WhsMedia media) {
         ApiResponse resp = new ApiResponse();
 
-        resp.setData(historyService.update(history));
+        resp.setData(mediaService.update(media));
 
         return resp;
     }
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ApiResponse uploadHistory(@RequestParam String name, @RequestParam String content) {
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ApiResponse uploadNews(WhsMedia media) {
         ApiResponse resp = new ApiResponse();
-        resp.setData(historyService.uploadHistory(name, content));
+        resp.setData(mediaService.add(media));
         return resp;
     }
+
 }

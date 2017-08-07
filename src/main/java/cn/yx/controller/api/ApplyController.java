@@ -96,12 +96,13 @@ public class ApplyController extends AbstractController {
     }
 
     @RequestMapping("/media/list")
-    public ApiResponse mediaList(@RequestParam(defaultValue = "20") Integer pageSize,
+    public ApiResponse mediaList(@RequestParam(defaultValue = "-1") Integer status,
+            @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse res = new ApiResponse();
 
-        List<WhsMediaApply> list = mediaService.listApply(pageSize, currentPage);
-        int count = mediaService.countApply();
+        List<WhsMediaApply> list = mediaService.listApply(status, pageSize, currentPage);
+        int count = mediaService.countApply(status);
 
         res.setData(list);
         res.setDescription("默认返回第一页，每页20行");
@@ -110,12 +111,13 @@ public class ApplyController extends AbstractController {
     }
 
     @RequestMapping("/audience/list")
-    public ApiResponse audienceList(@RequestParam(defaultValue = "20") Integer pageSize,
+    public ApiResponse audienceList(@RequestParam(defaultValue = "-1") Integer status,
+            @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse res = new ApiResponse();
 
-        List<WhsAudience> list = audienceService.listApply(pageSize, currentPage);
-        int count = audienceService.countApply();
+        List<WhsAudience> list = audienceService.listApply(status, pageSize, currentPage);
+        int count = audienceService.countApply(status);
 
         res.setData(list);
         res.setDescription("默认返回第一页，每页20行");
@@ -124,12 +126,13 @@ public class ApplyController extends AbstractController {
     }
 
     @RequestMapping("/company/list")
-    public ApiResponse companyList(@RequestParam(defaultValue = "20") Integer pageSize,
+    public ApiResponse companyList(@RequestParam(defaultValue = "-1") Integer status,
+            @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse res = new ApiResponse();
 
-        List<WhsCompanyApply> list = companyService.listApply(pageSize, currentPage);
-        int count = companyService.countApply();
+        List<WhsCompanyApply> list = companyService.listApply(status, pageSize, currentPage);
+        int count = companyService.countApply(status);
 
         res.setData(list);
         res.setDescription("默认返回第一页，每页20行");

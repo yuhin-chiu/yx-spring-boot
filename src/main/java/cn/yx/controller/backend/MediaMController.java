@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/backend/medias")
 public class MediaMController {
 
-//    @RequestMapping({"", "/", "/list"})
-//    public String list() {
-//        return "/media/list";
-//    }
+    @RequestMapping({"", "/", "/list"})
+    public String list() {
+        return "/media/list";
+    }
 }

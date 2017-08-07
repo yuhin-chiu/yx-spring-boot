@@ -2,11 +2,10 @@ package cn.yx.controller.api;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang.StringUtils;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +32,7 @@ public class DownloadsController extends AbstractController {
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public ApiResponse listDownloads(@RequestParam(defaultValue = "0") Integer status,
+    public ApiResponse listDownloads(@RequestParam(defaultValue = "-1") Integer status,
             @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse resp = new ApiResponse();

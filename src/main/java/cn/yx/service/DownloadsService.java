@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import cn.yx.entity.WhsCompany;
 import cn.yx.entity.WhsDownloads;
 import cn.yx.mapper.WhsDownloadsMapper;
 

@@ -24,11 +24,11 @@ public class AudienceService {
         return auMapper.insertSelective(record);
     }
 
-    public List<WhsAudience> listApply(Integer pageSize, Integer currentPage) {
-        return auMapper.list(pageSize, pageSize * (currentPage - 1));
+    public List<WhsAudience> listApply(Integer status, Integer pageSize, Integer currentPage) {
+        return auMapper.list(status, pageSize, pageSize * (currentPage - 1));
     }
 
-    public int countApply() {
-        return auMapper.count();
+    public int countApply(Integer status) {
+        return auMapper.count(status);
     }
 }

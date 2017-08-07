@@ -5,10 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.yx.entity.WhsHistory;
-import cn.yx.entity.WhsNews;
 import cn.yx.mapper.WhsHistoryMapper;
 
 /**
@@ -23,12 +21,12 @@ public class HistoryService {
     @Resource
     private WhsHistoryMapper hisMapper;
 
-    public List<WhsHistory> list(Integer pageSize, Integer currentPage) {
-        return hisMapper.list(pageSize, pageSize * (currentPage - 1));
+    public List<WhsHistory> list(Integer status, Integer pageSize, Integer currentPage) {
+        return hisMapper.list(status, pageSize, pageSize * (currentPage - 1));
     }
 
-    public int count() {
-        return hisMapper.count();
+    public int count(Integer status) {
+        return hisMapper.count(status);
     }
 
     public WhsHistory getDetail(int id) {

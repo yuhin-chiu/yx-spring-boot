@@ -22,9 +22,8 @@ import cn.yx.model.ApiResponse;
 public class NewsController extends AbstractController {
 
     @RequestMapping("/list")
-    public ApiResponse list(@RequestParam(defaultValue = "0") Integer status,
-            @RequestParam(defaultValue = "0") Integer parent,
-            @RequestParam(defaultValue = "20") Integer pageSize,
+    public ApiResponse list(@RequestParam(defaultValue = "-1") Integer status,
+            @RequestParam(defaultValue = "0") Integer parent, @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse resp = new ApiResponse();
         List<WhsNews> list = newsService.list(status, parent, pageSize, currentPage);

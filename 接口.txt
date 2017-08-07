@@ -248,7 +248,7 @@ METHOD：POST               //上传展商信息
 
 /activities/list
 METHOD：GET/POST              // 获取同期活动列表 时间倒序
-可选参数 status(0,-1)         // 0发布-1删除   
+可选参数 status(0, 1)         // 0不显示1显示   
 {
     "code": 200,
     "msg": "success",

@@ -1,19 +1,13 @@
 package cn.yx.controller.api;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.yx.controller.api.AbstractController;
 import cn.yx.entity.WhsActivities;
-import cn.yx.entity.WhsCompany;
 import cn.yx.model.ApiResponse;
-import cn.yx.service.ActivitiesService;
 
 /**
  * @author yuxuanjiao
@@ -25,7 +19,7 @@ import cn.yx.service.ActivitiesService;
 public class ActivitiesController extends AbstractController {
 
     @RequestMapping("/list")
-    public ApiResponse list(@RequestParam(defaultValue = "0") Integer status,
+    public ApiResponse list(@RequestParam(defaultValue = "-1") Integer status,
             @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse resp = new ApiResponse();

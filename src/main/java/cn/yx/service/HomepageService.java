@@ -22,9 +22,14 @@ public class HomepageService {
     private WhsHomepageMapper whsHomepageMapper;
 
     public JSONObject getBaseInfo() {
-        // TODO
-        WhsHomepage whshomepage = whsHomepageMapper.selectByPrimaryKey(1);
+        // TODO 这里应该查最新的
+        Integer index = getLastId();
+        WhsHomepage whshomepage = whsHomepageMapper.selectByPrimaryKey(index);
         JSONObject resp = (JSONObject) JSON.toJSON(whshomepage);
         return resp;
+    }
+    
+    public Integer getLastId() {
+        return whsHomepageMapper.getLastId();
     }
 }

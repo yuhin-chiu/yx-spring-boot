@@ -1,14 +1,8 @@
 package cn.yx.controller.api;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import cn.yx.constant.FileConstant;
 import cn.yx.enums.ApiResponseEnum;
 import cn.yx.model.ApiResponse;
 import cn.yx.util.FileUtil;
@@ -62,7 +55,7 @@ public class FileController {
             file = files.get(i);
             if (!file.isEmpty()) {
                 temp = FileUtil.uploadFile(file);
-                if(temp.getCode().compareTo(ApiResponseEnum.SUCCESS.getCode()) != 0) {
+                if (temp.getCode().compareTo(ApiResponseEnum.SUCCESS.getCode()) != 0) {
                     return temp;
                 }
                 fileNames[i] = (String) temp.getData();

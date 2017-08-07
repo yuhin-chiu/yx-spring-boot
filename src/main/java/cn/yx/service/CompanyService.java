@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.yx.entity.WhsAudience;
 import cn.yx.entity.WhsCompany;
 import cn.yx.entity.WhsCompanyApply;
 import cn.yx.mapper.WhsCompanyApplyMapper;
@@ -42,12 +41,12 @@ public class CompanyService {
         return comApplyMapper.insertSelective(record);
     }
 
-    public List<WhsCompanyApply> listApply(Integer pageSize, Integer currentPage) {
-        return comApplyMapper.list(pageSize, pageSize * (currentPage - 1));
+    public List<WhsCompanyApply> listApply(Integer status, Integer pageSize, Integer currentPage) {
+        return comApplyMapper.list(status, pageSize, pageSize * (currentPage - 1));
     }
 
-    public int countApply() {
-        return comApplyMapper.count();
+    public int countApply(Integer status) {
+        return comApplyMapper.count(status);
     }
 
     public int update(WhsCompany com) {

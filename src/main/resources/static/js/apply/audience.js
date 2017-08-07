@@ -40,6 +40,14 @@ $(function() {
             date.setTime(value * 1000);
             return date.format("yyyy-MM-dd");
         }
+    }, {
+        title : "操作",
+        field : "status",
+        width : "20",
+        align : "center",
+        formatter : function(value) {
+            return value;
+        }
     } ];
 
     function callback(data) {

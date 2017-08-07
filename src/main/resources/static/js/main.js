@@ -27,7 +27,8 @@ $(function () {
             } else if (type == "下载管理") {
                 location.href = "/backend/downloads";
             } else if(type == "其他"){
-            	location.href = "/backend/other";
+                return;
+                location.href = "/backend/other";
             }
             
         }

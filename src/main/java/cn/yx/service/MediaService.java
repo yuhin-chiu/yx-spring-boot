@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.yx.entity.WhsCompany;
 import cn.yx.entity.WhsMedia;
 import cn.yx.entity.WhsMediaApply;
 import cn.yx.mapper.WhsMediaApplyMapper;
@@ -26,11 +25,11 @@ public class MediaService {
     private WhsMediaApplyMapper mediaApplyMapper;
 
     public List<WhsMedia> getRecomm() {
-        return list(1, 20, 0);
+        return list(1, 20, 1);
     }
 
-    public List<WhsMedia> list(Integer status, Integer limit, Integer offset) {
-        return mediaMapper.list(status, limit, offset);
+    public List<WhsMedia> list(Integer status, Integer pageSize, Integer currentPage) {
+        return mediaMapper.list(status, pageSize, pageSize * (currentPage - 1));
     }
 
     public int count(Integer status) {
@@ -41,12 +40,20 @@ public class MediaService {
         return mediaApplyMapper.insertSelective(record);
     }
 
-    public List<WhsMediaApply> listApply(Integer pageSize, Integer currentPage) {
+    public List<WhsMediaApply> listApply(Integer status, Integer pageSize, Integer currentPage) {
 
-        return mediaApplyMapper.list(pageSize, pageSize * (currentPage - 1));
+        return mediaApplyMapper.list(status, pageSize, pageSize * (currentPage - 1));
     }
 
-    public int countApply() {
-        return mediaApplyMapper.count();
+    public int countApply(Integer status) {
+        return mediaApplyMapper.count(status);
+    }
+    
+    public int update(WhsMedia media) {
+        return mediaMapper.updateByPrimaryKeySelective(media);
+    }
+
+    public int add(WhsMedia media) {
+        return mediaMapper.insertSelective(media);
     }
 }
