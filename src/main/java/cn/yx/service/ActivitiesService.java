@@ -54,6 +54,7 @@ public class ActivitiesService {
         }
         activities.setBrowses(browses);
         activities.setUrl(url);
+        activities.setStatus(status);
         whsActivitiesMapper.insertSelective(activities);
         return activities;
     }

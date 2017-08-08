@@ -21,12 +21,14 @@ public class NewsService {
     @Autowired
     private WhsNewsMapper whsNewsMapper;
 
-    public List<WhsNews> list(Integer status, Integer parent, Integer pageSize, Integer currentPage) {
-        return whsNewsMapper.list(status, parent, pageSize, pageSize * (currentPage - 1));
+    public List<WhsNews> list(Integer status, Integer parent, String timeRange, String query, Integer pageSize, Integer currentPage) {
+        long[] time = TimeUtil.splitTimeRange(timeRange);
+        return whsNewsMapper.list(status, parent, time[0], time[1], query, pageSize, pageSize * (currentPage - 1));
     }
 
-    public int count(Integer status, Integer parent) {
-        return whsNewsMapper.count(status, parent);
+    public int count(Integer status, Integer parent, String timeRange, String query) {
+        long[] time = TimeUtil.splitTimeRange(timeRange);
+        return whsNewsMapper.count(status, parent, time[0], time[1], query);
     }
 
     public WhsNews getDetail(int id) {
@@ -34,7 +36,7 @@ public class NewsService {
     }
 
     public List<WhsNews> getNew() {
-        return whsNewsMapper.list(null, null, 20, 1);
+        return whsNewsMapper.list(null, null, -1, -1, null, 20, 1);
     }
 
     public int update(WhsNews com) {
@@ -55,6 +57,7 @@ public class NewsService {
         }
         news.setBrowses(browses);
         news.setUrl(url);
+        news.setStatus(status!=null?status.byteValue():0);
         whsNewsMapper.insertSelective(news);
         return news;
     }

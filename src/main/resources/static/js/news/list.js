@@ -2,7 +2,8 @@ $(function() {
 
     function getOtherCondition() { // 只要把需要提交的参数返回就行了
         return {
-            timeRange : $("#timeRange").val()
+            timeRange : $("#timeRange").val(),
+            query: $("#title").val()
         }
     }
     var columns = [ {
@@ -20,7 +21,15 @@ $(function() {
     }, {
         title : "所属栏目",
         field : "parent",
-        align : "center"
+        align : "center",
+        formatter : (value) => {
+            switch(value) {
+                case 0: return "展会资讯";
+                case 1: return "展商新闻";
+                case 2: return "行业资讯";
+                default : return "";
+            }
+        }
     }, {
         title : "内容",
         field : "content",
@@ -43,7 +52,18 @@ $(function() {
     }, {
         title : "操作",
         field : "status",
-        align : "center"
+        align : "center",
+        formatter : function(value,row,index) {
+            console.debug(row);
+            console.log(row + ":" + index);
+            var html = "<a class='remove' href='javascript:void(0)'>删除</a>&nbsp;";
+            if(value == 0) {
+                html += "<a class='no' href='javascript:void(0)'>关闭</a>"
+            } else {
+                html += "<a class='yes' href='javascript:void(0)'>开启</a>"
+            }
+            return html;
+        }
     } ];
 
     function callback(data) {

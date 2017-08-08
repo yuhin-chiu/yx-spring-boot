@@ -23,11 +23,11 @@ public class NewsController extends AbstractController {
 
     @RequestMapping("/list")
     public ApiResponse list(@RequestParam(defaultValue = "-1") Integer status,
-            @RequestParam(defaultValue = "0") Integer parent, @RequestParam(defaultValue = "20") Integer pageSize,
-            @RequestParam(defaultValue = "1") Integer currentPage) {
+            @RequestParam(defaultValue = "-1") Integer parent, @RequestParam(defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer currentPage, @RequestParam(defaultValue = "") String timeRange, String query) {
         ApiResponse resp = new ApiResponse();
-        List<WhsNews> list = newsService.list(status, parent, pageSize, currentPage);
-        int count = newsService.count(status, parent);
+        List<WhsNews> list = newsService.list(status, parent, timeRange, query, pageSize, currentPage);
+        int count = newsService.count(status, parent, timeRange, query);
 
         resp.setData(list);
         resp.setTotal(count);
@@ -51,10 +51,10 @@ public class NewsController extends AbstractController {
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ApiResponse uploadNews(@RequestParam String title, @RequestParam Byte parent, @RequestParam String content,
+    public ApiResponse uploadNews(@RequestParam String title, @RequestParam Byte target, @RequestParam String content,
             String author, String createTime, Long browses, String url, Integer status) {
         ApiResponse resp = new ApiResponse();
-        resp.setData(newsService.uploadNews(title, parent, content, author, createTime, browses, url, status));
+        resp.setData(newsService.uploadNews(title, target, content, author, createTime, browses, url, status));
         return resp;
     }
 

@@ -16,4 +16,9 @@ public class NewMcontroller {
     public String list() {
         return "/news/list";
     }
+    
+    @RequestMapping("/publish")
+    public String publish() {
+        return "/news/publish";
+    }
 }

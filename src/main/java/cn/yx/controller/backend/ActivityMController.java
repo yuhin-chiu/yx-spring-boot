@@ -17,4 +17,9 @@ public class ActivityMController {
     public String list() {
         return "/activity/list";
     }
+    
+    @RequestMapping("/publish")
+    public String publish() {
+        return "/activity/publish";
+    }
 }

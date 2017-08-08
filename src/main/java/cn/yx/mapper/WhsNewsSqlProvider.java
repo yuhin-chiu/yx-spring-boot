@@ -1,5 +1,6 @@
 package cn.yx.mapper;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.jdbc.SQL;
 
 import cn.yx.entity.WhsNews;
@@ -78,7 +79,7 @@ public class WhsNewsSqlProvider {
         return sql.toString();
     }
 
-    public String listSelective(Integer status, Integer parent, Integer limit, Integer offset) {
+    public String listSelective(Integer status, Integer parent, long beginTime, long endTime, String query, Integer limit, Integer offset) {
         SQL sql = new SQL();
         sql.SELECT("*");
         sql.SELECT("create_time as createTime");
@@ -92,6 +93,9 @@ public class WhsNewsSqlProvider {
         if(parent!= null && parent >= 0) {
             sql.WHERE("parent = #{arg1,jdbcType=TINYINT}");
         }
+        if(beginTime != -1) {
+            sql.WHERE("create_time >= #{arg2,jdbcType=BIGINT} AND #{arg3,jdbcType=BIGINT}");
+        }
         sql.ORDER_BY("createTime desc");
         
         if (limit != -1) {
@@ -101,7 +105,7 @@ public class WhsNewsSqlProvider {
         }
     }
     
-    public String countSelective(Integer status, Integer parent) {
+    public String countSelective(Integer status, Integer parent, long beginTime, long endTime, String query) {
         SQL sql = new SQL();
         sql.SELECT("count(*)");
         sql.FROM("whs_news");
@@ -111,10 +115,12 @@ public class WhsNewsSqlProvider {
         } else {
             sql.WHERE("status != -1 ");
         }
+        if(beginTime != -1) {
+            sql.WHERE("create_time between #{arg2,jdbcType=BIGINT} AND #{arg3,jdbcType=BIGINT}");
+        }
         if(parent!= null && parent >= 0) {
             sql.WHERE("parent = #{arg1,jdbcType=TINYINT}");
         }
-        
         return sql.toString();
     }
 }

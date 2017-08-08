@@ -90,8 +90,8 @@ public interface WhsNewsMapper {
     int updateByPrimaryKey(WhsNews record);
 
     @SelectProvider(type = WhsNewsSqlProvider.class, method = "listSelective")
-    List<WhsNews> list(Integer status, Integer parent, Integer limit, Integer offset);
+    List<WhsNews> list(Integer status, Integer parent, long beginTime, long endTime, String query, Integer limit, Integer offset);
     
     @SelectProvider(type = WhsNewsSqlProvider.class, method = "countSelective")
-    int count(Integer status, Integer parent);
+    int count(Integer status, Integer parent, long beginTime, long endTime, String query);
 }
