@@ -54,13 +54,11 @@ $(function() {
         field : "status",
         align : "center",
         formatter : function(value,row,index) {
-            console.debug(row);
-            console.log(row + ":" + index);
-            var html = "<a class='remove' href='javascript:void(0)'>删除</a>&nbsp;";
+            var html = "<a class='remove' href='javascript:void(0)' rowid=" + row.id + ">删除</a>&nbsp;";
             if(value == 0) {
-                html += "<a class='no' href='javascript:void(0)'>关闭</a>"
+                html += "<a class='no' href='javascript:void(0)' rowid=" + row.id + ">关闭</a>"
             } else {
-                html += "<a class='yes' href='javascript:void(0)'>开启</a>"
+                html += "<a class='yes' href='javascript:void(0)' rowid=" + row.id + ">开启</a>"
             }
             return html;
         }
@@ -68,6 +66,22 @@ $(function() {
 
     function callback(data) {
         $("#num").text(data.total);
+        $(".remove").each((i) => {
+            $($(".remove")[i]).click(() => {
+                var rowid = $($(".remove")[i]).attr("rowid");
+                $.post("/api/news/edit/"+rowid, {status: -1}, (data) => {
+                    if(data.code == 200) {
+                        window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success, {
+                            onOk: function(v) {
+                                window.location.href = "/backend/news/list";
+                            }
+                        });
+                    } else {
+                        console.log("error");
+                    }
+                });
+            });
+        });
     }
     $("#autotable").baseTable("/api/news/list", columns, getOtherCondition, callback);
 
