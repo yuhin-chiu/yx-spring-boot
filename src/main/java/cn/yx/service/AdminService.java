@@ -15,7 +15,7 @@ import cn.yx.util.MD5Util;
 public class AdminService {
 
     public Admin checkUser(Admin admin) {
-//        return fxbAdminMapper.checkUser(admin.getAccount());
+//        return adminMapper.checkUser(admin.getAccount());
         if("admin".equals(admin.getAccount())) {
             Admin ad = new Admin();
             ad.setAccount("admin");
@@ -28,7 +28,7 @@ public class AdminService {
     }
 
     public void addUser(String account, String password, String userName) {
-//        fxbAdminMapper.addUser(account, password, userName);
+//        adminMapper.addUser(account, password, userName);
         
     }
 }

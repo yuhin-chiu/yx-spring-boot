@@ -55,7 +55,7 @@ public class MD5Util {
     }
 
     public static String generateToken(Long brokerId, Long timestamp) {
-        return toMD5("fxb" + brokerId + timestamp);
+        return toMD5("xxx" + brokerId + timestamp);
     }
 
     public static String sohuMD5(String toHash) {

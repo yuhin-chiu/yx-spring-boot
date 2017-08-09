@@ -91,6 +91,6 @@ public interface WhsHomepageMapper {
     })
     List<WhsHomepage> selectAll();
     
-    @Select("SELECT max(id) + 1 FROM fxb_announcement")
+    @Select("SELECT max(id) + 1 FROM whs_homepage")
     Integer getLastId();
 }

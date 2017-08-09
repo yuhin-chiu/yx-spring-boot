@@ -97,6 +97,6 @@ public interface WhsNewsMapper {
     @SelectProvider(type = WhsNewsSqlProvider.class, method = "countSelective")
     int count(Integer status, Integer parent, long beginTime, long endTime, String query);
     
-    @Select("SELECT max(id) + 1 FROM whs_downloads")
+    @Select("SELECT max(id) + 1 FROM whs_news")
     Integer getLastId();
 }
