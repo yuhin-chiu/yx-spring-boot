@@ -17,7 +17,7 @@ KindEditor.plugin('image', function(K) {
 		imageTabIndex = K.undef(self.imageTabIndex, 0),
 		imgPath = self.pluginsPath + 'image/images/',
 		extraParams = K.undef(self.extraFileUploadParams, {}),
-		filePostName = K.undef(self.filePostName, 'imgFile'),
+		filePostName = K.undef(self.filePostName, 'file'),
 		fillDescAfterUploadImage = K.undef(self.fillDescAfterUploadImage, false),
 		lang = self.lang(name + '.');
 
@@ -74,7 +74,7 @@ KindEditor.plugin('image', function(K) {
 			//local upload - start
 			'<div class="tab2" style="display:none;">',
 			'<iframe name="' + target + '" style="display:none;"></iframe>',
-			'<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="' + target + '" action="' + K.addParam(uploadJson, 'dir=image') + '">',
+			'<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="' + target + '" action="' + '/api/uploads' + '">',//K.addParam(uploadJson, 'dir=image')
 			//file
 			'<div class="ke-dialog-row">',
 			hiddenElements.join(''),
@@ -190,8 +190,9 @@ KindEditor.plugin('image', function(K) {
 			width: 60,
 			afterUpload : function(data) {
 				dialog.hideLoading();
-				if (data.error === 0) {
-					var url = data.url;
+				if (data.code === 200) {
+				    var name = data.data[0];
+					var url = '/api/download?fileName=' + name;
 					if (formatUploadUrl) {
 						url = K.formatUrl(url, 'absolute');
 					}
@@ -206,7 +207,7 @@ KindEditor.plugin('image', function(K) {
 						K(".ke-refresh-btn", div).click();
 					}
 				} else {
-					alert(data.message);
+					alert(data.msg);
 				}
 			},
 			afterError : function(html) {
