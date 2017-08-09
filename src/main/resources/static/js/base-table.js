@@ -63,6 +63,7 @@ $(function() {
             toolbar : "#toolbar",// 指定工具栏
             toolbarAlign : "right",// 工具栏对齐方式
             queryParamsType : "",
+            escape: true, // html 转义
             queryParams : _queryParams,
             columns : baseTable.columns,
             locale : "zh-CN",// 中文支持,

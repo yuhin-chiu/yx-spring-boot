@@ -9,3 +9,6 @@ datasource:
   test-while-idle: true
   validation-query: SELECT 1
   time-between-eviction-runs-millis: 300000
+
+file:
+  url: /download?fileName=

@@ -31,12 +31,27 @@ $(function() {
             }
         }
     }, {
+        title : "摘要",
+        field : "abstr",
+        align : "center"
+    }, {
+        title : "图片",
+        field : "url",
+        align : "center",
+        formatter : function(value) {
+            if(value) {
+                return "<img style='width:30px;height:30px;' src='"+ value + "' />";
+            }
+            return "";
+           
+        }
+    }, {
         title : "内容",
         field : "content",
         align : "center",
         formatter : function(value) {
             if(value.length <= 30) {
-                return value
+                return value;
             }
             return value.substring(0, 30);
         }

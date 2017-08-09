@@ -35,8 +35,8 @@ public class FileController {
             throws IOException {
         if (fileName != null) {
             // 当前是从该工程目录的File文件夹中获取文件(该目录在常量中配置了)
-            response.setContentType("application/force-download");// 设置强制下载不打开
-            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
+//            response.setContentType("application/force-download");// 设置强制下载不打开
+//            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
 
             FileUtil.downloadFile(fileName, new BufferedOutputStream(response.getOutputStream()));
         }

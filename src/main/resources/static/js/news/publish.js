@@ -35,15 +35,15 @@ $(function () {
                 if (fileNames.indexOf(name) != -1) {
                     continue;
                 }
-                if (curFiles.length >= 10) {
-                    window.wxc.xcConfirm("文件及图片数量不能超过10！", window.wxc.xcConfirm.typeEnum.info);
+                if (curFiles.length >= 1) {
+                    window.wxc.xcConfirm("图片数量不能超过1！", window.wxc.xcConfirm.typeEnum.info);
                     break;
                 }
                 var infos = name.split('.');
                 var type = infos[infos.length - 1];
                 var target = $('input[name=target]:checked');
-                if ((target.eq(0).val() == 1 || target.eq(1).val() == 1) && imgTypes.indexOf(type) == -1) {
-                    window.wxc.xcConfirm("APP只支持图片发布！", window.wxc.xcConfirm.typeEnum.info);
+                if (imgTypes.indexOf(type) == -1) {
+                    window.wxc.xcConfirm("只支持图片上传！（jpg、jpeg、png）", window.wxc.xcConfirm.typeEnum.info);
                     continue;
                 }
                 var url =  window.URL.createObjectURL(files[i]);
@@ -135,29 +135,35 @@ $(function () {
         },
         publish: function() {
             var title = $('input[name=title]').val();
-            var target = $('input[name=target]:checked');
-            var content = $('#content').val();
+            var target = $('input[name=target]:checked').val();
+//            var content = $('#content').val();
+            var content = window.editor.html();
             
-            if (title.length == 0 || target.length == 0 || content.length == 0) {
+            var abstr = $('input[name=abstr]').val();
+            
+            if (title.length == 0 || !target || content.length == 0) {
                 window.wxc.xcConfirm("请补充完整信息！", window.wxc.xcConfirm.typeEnum.info);
             } else if (title.length > 50 || parseInt($('.count').text()) > 1000) {
                 window.wxc.xcConfirm("标题或内容字数超限！", window.wxc.xcConfirm.typeEnum.info);
-            } else if (curFiles.length > 10) {
-                window.wxc.xcConfirm("文件及图片数量不能超过10！", window.wxc.xcConfirm.typeEnum.info);
-            } else if ((target.eq(0).val() == 1 || target.eq(1).val() == 1) && $('#files').children().length != 0) {
-                window.wxc.xcConfirm("APP只支持图片发布！", window.wxc.xcConfirm.typeEnum.info);
-            } else {
-                var targetStr = '';
-                for (var i = 0; i < target.length; i++) {
-                    targetStr += target.eq(i).val();
-                    if (i != target.length - 1) {
-                        targetStr += ',';
-                    }
-                }
+            } else if (curFiles.length < 1 || curFiles.length > 10) {
+                window.wxc.xcConfirm("图片必须上传！", window.wxc.xcConfirm.typeEnum.info);
+            }
+//            else if ((target.eq(0).val() == 1 || target.eq(1).val() == 1) && $('#files').children().length != 0) {
+//                window.wxc.xcConfirm("APP只支持图片发布！", window.wxc.xcConfirm.typeEnum.info);
+//            }
+            else {
+//                var targetStr = '';
+//                for (var i = 0; i < target.length; i++) {
+//                    targetStr += target.eq(i).val();
+//                    if (i != target.length - 1) {
+//                        targetStr += ',';
+//                    }
+//                }
                 var formData = new FormData();
                 formData.append('title', title);
-                formData.append('target', targetStr);
+                formData.append('target', target);
                 formData.append('content', content);
+                formData.append('abstr', abstr);
 
                 $.each(curFiles, function(index, file, array) {
                     formData.append('files[]', file);
