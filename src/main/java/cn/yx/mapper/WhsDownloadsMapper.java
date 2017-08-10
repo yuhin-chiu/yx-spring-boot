@@ -14,6 +14,7 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
 
+import cn.yx.entity.BaseDownloads;
 import cn.yx.entity.WhsDownloads;
 
 public interface WhsDownloadsMapper {
@@ -94,6 +95,15 @@ public interface WhsDownloadsMapper {
             "annex_name = #{annexName,jdbcType=VARCHAR},", "downs = #{downs,jdbcType=INTEGER},",
             "author = #{author,jdbcType=VARCHAR}", "where id = #{id,jdbcType=INTEGER}" })
     int updateByPrimaryKey(WhsDownloads record);
+    
+    @Select({ "select", "id, title, create_time, annex, downs ",
+            "from whs_downloads", "where status >= 0 LIMIT 10" })
+    @Results({ @Result(column = "id", property = "id", jdbcType = JdbcType.INTEGER, id = true),
+            @Result(column = "title", property = "title", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "create_time", property = "createTime", jdbcType = JdbcType.BIGINT),
+            @Result(column = "annex", property = "annex", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "downs", property = "downs", jdbcType = JdbcType.INTEGER)})
+    List<BaseDownloads> getNew();
 
     @SelectProvider(type = WhsDownloadsSqlProvider.class, method = "listSelective")
     List<WhsDownloads> list(Integer status, Integer limit, Integer offset);

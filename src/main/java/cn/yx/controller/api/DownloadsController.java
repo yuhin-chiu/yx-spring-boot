@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.groovy.util.StringUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,6 +67,35 @@ public class DownloadsController extends AbstractController {
         // down.setAuthor(AdminInfoHolder.getAdmin().getUserName());
         down.setAnnex(StringUtils.join(annexs, ","));
         down.setAnnexName(StringUtils.join(annexNames, ","));
+        down.setCreateTime(TimeUtil.getCurrentTime());
+        downloadsService.add(down);
+
+        resp.setData(down);
+        return resp;
+    }
+    
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiResponse upload(WhsDownloads down, HttpServletRequest request) {
+        ApiResponse temp = null, resp = new ApiResponse();
+        MultipartFile file = ((MultipartHttpServletRequest) request).getFile("file");
+        String fileName = file.getOriginalFilename();
+        if (!file.isEmpty()) {
+            Integer id = downloadsService.getLastId();
+            temp = FileUtil.uploadFile(file, id + "/" + FileUtil.randomName(fileName));
+            if (temp.getCode().compareTo(ApiResponseEnum.SUCCESS.getCode()) != 0) {
+                return temp;
+            }
+            down.setId(id);
+        } else {
+            resp.setEnum(ApiResponseEnum.FILE_SAVE_EMPTY);
+            return resp;
+        }
+
+        down.setAnnex((String)temp.getData());
+        if(StringUtils.isBlank(down.getTitle())) {
+            down.setTitle(fileName);
+        }
         down.setCreateTime(TimeUtil.getCurrentTime());
         downloadsService.add(down);
 

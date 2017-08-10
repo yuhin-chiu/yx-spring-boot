@@ -34,7 +34,7 @@ public class ActivitiesService {
     }
 
     public List<WhsActivities> getNew() {
-        return whsActivitiesMapper.list(null, 20, 1);
+        return whsActivitiesMapper.list(null, 20, 0);
     }
 
     public int update(WhsActivities com) {

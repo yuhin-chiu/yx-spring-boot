@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.yx.constant.FileConstant;
@@ -80,7 +81,7 @@ public class FileUtil {
             in.close();
         }
     }
-
+    
     /**
      * 生成一个相同后缀的随机名字
      * 
@@ -102,4 +103,6 @@ public class FileUtil {
 
         return rFile;
     }
+    
+    
 }

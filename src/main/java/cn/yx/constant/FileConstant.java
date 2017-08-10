@@ -12,6 +12,7 @@ public class FileConstant {
 
     public static final String UPLOAD_FOLDER_NAME = "files/";
     public static final File UPLOAD_FOLDER = new File(UPLOAD_FOLDER_NAME);
+    public static final String DOWNLOAD_URL = "/api/download?fileName=";
 
     static {
         if (!UPLOAD_FOLDER.exists()) {

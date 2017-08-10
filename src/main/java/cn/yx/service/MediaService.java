@@ -25,7 +25,7 @@ public class MediaService {
     private WhsMediaApplyMapper mediaApplyMapper;
 
     public List<WhsMedia> getRecomm() {
-        return list(1, 20, 1);
+        return mediaMapper.list(1, 20, 0);
     }
 
     public List<WhsMedia> list(Integer status, Integer pageSize, Integer currentPage) {

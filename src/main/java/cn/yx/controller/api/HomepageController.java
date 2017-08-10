@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.yx.entity.BaseDownloads;
 import cn.yx.entity.WhsActivities;
 import cn.yx.entity.WhsCompany;
 import cn.yx.entity.WhsMedia;
@@ -35,6 +36,7 @@ public class HomepageController extends AbstractController {
         // 同期活动
         List<WhsActivities> activities = activitiesService.getNew();
         // TODO downloads
+        List<BaseDownloads> downloads = downloadsService.getNew();
         // 展商推荐
         List<WhsCompany> companys = companyService.getRecomm();
         // 合作媒体
@@ -45,6 +47,7 @@ public class HomepageController extends AbstractController {
         obj.put("activities", activities);
         obj.put("companys", companys);
         obj.put("medias", medias);
+        obj.put("downloads", downloads);
 
         resp.setData(obj);
 

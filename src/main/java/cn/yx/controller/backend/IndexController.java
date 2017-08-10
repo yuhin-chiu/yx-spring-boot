@@ -47,6 +47,11 @@ public class IndexController extends AbstractController {
         }
         return "/index/login";
     }
+    
+    @RequestMapping("/test")
+    public String upload() {
+        return "/index/upload";
+    }
 
     @RequestMapping("/logout")
     public String logout(HttpSession session) {

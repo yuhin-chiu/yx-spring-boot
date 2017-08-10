@@ -18,21 +18,19 @@ import cn.yx.util.TimeUtil;
  */
 
 @Service
-public class NewsService {
-
-    private static final String BASE_FILE_URL = "/api/download?fileName=";
+public class NewsService extends AbstractService {
 
     @Autowired
     private WhsNewsMapper whsNewsMapper;
 
-    @Autowired
-    private FileConfig fileConfig;
-    public List<WhsNews> list(Integer status, Integer parent, String timeRange, String query, Integer pageSize, Integer currentPage) {
+    public List<WhsNews> list(Integer status, Integer parent, String timeRange, String query, Integer pageSize,
+            Integer currentPage) {
         long[] time = TimeUtil.splitTimeRange(timeRange);
-        List<WhsNews> rList = whsNewsMapper.list(status, parent, time[0], time[1], query, pageSize, pageSize * (currentPage - 1));
+        List<WhsNews> rList = whsNewsMapper.list(status, parent, time[0], time[1], query, pageSize,
+                pageSize * (currentPage - 1));
         rList.forEach(item -> {
             item.setUrl(parseUri2Url(item.getUrl()));
-        }); 
+        });
         return rList;
     }
 
@@ -46,15 +44,19 @@ public class NewsService {
     }
 
     public List<WhsNews> getNew() {
-        return whsNewsMapper.list(null, null, -1, -1, null, 20, 1);
+        List<WhsNews> rList = whsNewsMapper.list(null, null, -1, -1, null, 20, 0);
+        rList.forEach(item -> {
+            item.setUrl(parseUri2Url(item.getUrl()));
+        });
+        return rList;
     }
 
     public int update(WhsNews com) {
         return whsNewsMapper.updateByPrimaryKeySelective(com);
     }
 
-    public WhsNews uploadNews(String title, Byte parent, String content, String abstr, String author, String createTime, Long browses,
-            String url, Integer status) {
+    public WhsNews uploadNews(String title, Byte parent, String content, String abstr, String author, String createTime,
+            Long browses, String url, Integer status) {
         WhsNews news = new WhsNews();
         news.setTitle(title);
         news.setParent(parent);
@@ -68,26 +70,12 @@ public class NewsService {
         }
         news.setBrowses(browses);
         news.setUrl(url);
-        news.setStatus(status!=null?status.byteValue():0);
+        news.setStatus(status != null ? status.byteValue() : 0);
         whsNewsMapper.insertSelective(news);
         return news;
     }
-    
+
     public Integer getLastId() {
         return whsNewsMapper.getLastId();
-    }
-    
-//    private String[] splitUrl(String input) {
-//        if (StringUtils.isBlank(input)) {
-//            return new String[0];
-//        }
-//        return input.replaceAll("^", BASE_FILE_URL).replaceAll(",", "," + BASE_FILE_URL).split(",");
-//    }
-    
-    private String parseUri2Url(String input) {
-        if (StringUtils.isBlank(input)) {
-            return "";
-        }
-        return BASE_FILE_URL + input;
     }
 }
