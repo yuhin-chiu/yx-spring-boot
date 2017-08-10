@@ -192,10 +192,11 @@ KindEditor.plugin('image', function(K) {
 				dialog.hideLoading();
 				if (data.code === 200) {
 				    var name = data.data[0];
-					var url = '/api/download?fileName=' + name;
-					if (formatUploadUrl) {
-						url = K.formatUrl(url, 'absolute');
-					}
+				    var local = "http://" + window.location.host;
+					var url = local + '/api/download?fileName=' + name;
+//					if (formatUploadUrl) {
+//						url = K.formatUrl(local + url, 'absolute');
+//					}
 					if (self.afterUpload) {
 						self.afterUpload.call(self, url, data, name);
 					}
