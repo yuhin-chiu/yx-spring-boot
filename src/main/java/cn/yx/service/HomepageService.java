@@ -24,7 +24,7 @@ public class HomepageService {
     public JSONObject getBaseInfo() {
         // TODO 这里应该查最新的
         Integer index = getLastId();
-        WhsHomepage whshomepage = whsHomepageMapper.selectByPrimaryKey(index);
+        WhsHomepage whshomepage = whsHomepageMapper.selectByPrimaryKey(index - 1);
         JSONObject resp = (JSONObject) JSON.toJSON(whshomepage);
         return resp;
     }
