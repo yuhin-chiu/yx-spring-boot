@@ -54,7 +54,7 @@ public class DownloadsController extends AbstractController {
             if (!file.isEmpty()) {
                 Integer id = downloadsService.getLastId();
                 String fileName = file.getOriginalFilename();
-                temp = FileUtil.uploadFile(file, id + "/" + FileUtil.randomName(fileName));
+                temp = FileUtil.uploadFile(file, "publish/" + id + "/" + FileUtil.randomName(fileName), this.getClass());
                 if (temp.getCode().compareTo(ApiResponseEnum.SUCCESS.getCode()) != 0) {
                     return temp;
                 }
@@ -82,7 +82,7 @@ public class DownloadsController extends AbstractController {
         String fileName = file.getOriginalFilename();
         if (!file.isEmpty()) {
             Integer id = downloadsService.getLastId();
-            temp = FileUtil.uploadFile(file, id + "/" + FileUtil.randomName(fileName));
+            temp = FileUtil.uploadFile(file, "upload/" + id + "/" + FileUtil.randomName(fileName), this.getClass());
             if (temp.getCode().compareTo(ApiResponseEnum.SUCCESS.getCode()) != 0) {
                 return temp;
             }

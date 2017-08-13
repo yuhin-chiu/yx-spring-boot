@@ -30,6 +30,7 @@ public class NewsService extends AbstractService {
                 pageSize * (currentPage - 1));
         rList.forEach(item -> {
             item.setUrl(parseUri2Url(item.getUrl()));
+            item.setCreateTimeStr(TimeUtil.time2DayStr(item.getCreateTime()));
         });
         return rList;
     }
@@ -44,11 +45,7 @@ public class NewsService extends AbstractService {
     }
 
     public List<WhsNews> getNew() {
-        List<WhsNews> rList = whsNewsMapper.list(null, null, -1, -1, null, 20, 0);
-        rList.forEach(item -> {
-            item.setUrl(parseUri2Url(item.getUrl()));
-        });
-        return rList;
+        return this.list(1, null, "", null, 20, 1);
     }
 
     public int update(WhsNews com) {

@@ -90,8 +90,8 @@ public interface WhsActivitiesMapper {
     int updateByPrimaryKey(WhsActivities record);
 
     @SelectProvider(type = WhsActivitiesSqlProvider.class, method = "listSelective")
-    List<WhsActivities> list(Integer status, Integer limit, Integer offset);
+    List<WhsActivities> list(Integer status, long beginTime, long endTime, String query, Integer limit, Integer offset);
     
     @SelectProvider(type = WhsActivitiesSqlProvider.class, method = "countSelective")
-    int count(Integer status);
+    int count(Integer status, long beginTime, long endTime, String query);
 }

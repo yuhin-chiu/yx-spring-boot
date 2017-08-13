@@ -22,6 +22,13 @@ public class AbstractService {
         if (StringUtils.isBlank(input)) {
             return "";
         }
-        return fileConfig.getUrl() + FileConstant.DOWNLOAD_URL + input;
+        return fileConfig.getUrl() + FileConstant.IMAGE_URL + input;
+    }
+    
+    protected String parseUri2DownloadUrl(String input, String originName) {
+        if (StringUtils.isBlank(input)) {
+            return "";
+        }
+        return fileConfig.getUrl() + FileConstant.DOWNLOAD_URL + input + "&originName=" + originName;
     }
 }

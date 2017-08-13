@@ -1,5 +1,7 @@
 package cn.yx.controller.api;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,12 +21,12 @@ import cn.yx.model.ApiResponse;
 public class ActivitiesController extends AbstractController {
 
     @RequestMapping("/list")
-    public ApiResponse list(@RequestParam(defaultValue = "-1") Integer status,
-            @RequestParam(defaultValue = "20") Integer pageSize,
-            @RequestParam(defaultValue = "1") Integer currentPage) {
+    public ApiResponse list(Integer status, @RequestParam(defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer currentPage, @RequestParam(defaultValue = "") String timeRange,
+            String query) {
         ApiResponse resp = new ApiResponse();
-        resp.setData(activitiesService.list(status, pageSize, currentPage));
-        resp.setTotal(activitiesService.count(status));
+        resp.setData(activitiesService.list(status, timeRange, query, pageSize, currentPage));
+        resp.setTotal(activitiesService.count(status, timeRange, query));
         return resp;
     }
 
@@ -45,10 +47,11 @@ public class ActivitiesController extends AbstractController {
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ApiResponse uploadActivities(@RequestParam String title, @RequestParam String content, String author,
-            String createTime, Long browses, String url, Integer status) {
-        ApiResponse resp = new ApiResponse();
-        resp.setData(activitiesService.uploadActivities(title, content, author, createTime, browses, url, status));
+    public ApiResponse uploadActivities(@RequestParam String title, @RequestParam String content, @RequestParam String abstr, String author,
+            String createTime, Long browses, Integer status, HttpServletRequest request) {
+        ApiResponse resp = uploadFiles(request, this.getClass());
+        String url = (String)resp.getData();
+        resp.setData(activitiesService.uploadActivities(title, content, abstr, author, createTime, browses, url, status));
         return resp;
     }
 }

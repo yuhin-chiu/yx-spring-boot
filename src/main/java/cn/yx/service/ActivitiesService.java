@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.yx.entity.WhsActivities;
+import cn.yx.entity.WhsNews;
 import cn.yx.mapper.WhsActivitiesMapper;
 import cn.yx.util.TimeUtil;
 
@@ -16,17 +17,34 @@ import cn.yx.util.TimeUtil;
  */
 
 @Service
-public class ActivitiesService {
+public class ActivitiesService extends AbstractService {
 
     @Autowired
     private WhsActivitiesMapper whsActivitiesMapper;
 
-    public List<WhsActivities> list(Integer status, Integer pageSize, Integer currentPage) {
-        return whsActivitiesMapper.list(status, pageSize, pageSize * (currentPage - 1));
+    /**
+     * currentPage从1开始
+     * @param status
+     * @param timeRange
+     * @param query
+     * @param pageSize
+     * @param currentPage
+     * @return
+     */
+    public List<WhsActivities> list(Integer status, String timeRange, String query, Integer pageSize, Integer currentPage) {
+        long[] time = TimeUtil.splitTimeRange(timeRange);
+        List<WhsActivities> rList = whsActivitiesMapper.list(status, time[0], time[1], query, pageSize,
+                pageSize * (currentPage - 1));
+        rList.forEach(item -> {
+            item.setUrl(parseUri2Url(item.getUrl()));
+            item.setCreateTimeStr(TimeUtil.time2DayStr(item.getCreateTime()));
+        });
+        return rList;
     }
 
-    public int count(Integer status) {
-        return whsActivitiesMapper.count(status);
+    public int count(Integer status, String timeRange, String query) {
+        long[] time = TimeUtil.splitTimeRange(timeRange);
+        return whsActivitiesMapper.count(status, time[0], time[1], query);
     }
 
     public WhsActivities getDetail(int id) {
@@ -34,19 +52,20 @@ public class ActivitiesService {
     }
 
     public List<WhsActivities> getNew() {
-        return whsActivitiesMapper.list(null, 20, 0);
+        return list(1, "", null, 20, 1);// currentPage应该从1开始
     }
 
     public int update(WhsActivities com) {
         return whsActivitiesMapper.updateByPrimaryKeySelective(com);
     }
 
-    public WhsActivities uploadActivities(String title, String content, String author, String createTime, Long browses,
+    public WhsActivities uploadActivities(String title, String content, String abstr, String author, String createTime, Long browses,
             String url, Integer status) {
         WhsActivities activities = new WhsActivities();
         activities.setTitle(title);
         activities.setContent(content);
         activities.setAuthor(author);
+        activities.setAbstr(abstr);
         if (createTime == null) {
             activities.setCreateTime(TimeUtil.getCurrentTime());
         } else {

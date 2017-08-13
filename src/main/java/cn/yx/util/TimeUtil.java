@@ -26,10 +26,10 @@ public class TimeUtil {
         }
     };
     
-    public static SimpleDateFormat getDateFormat1() {
+    private static SimpleDateFormat getDateFormat1() {
         return threadLocal.get().get("FORMATER_1");
     }
-    public static SimpleDateFormat getDateFormat2() {
+    private static SimpleDateFormat getDateFormat2() {
         return threadLocal.get().get("FORMATER_2");
     }
     
@@ -41,7 +41,7 @@ public class TimeUtil {
         return toSeconds(System.currentTimeMillis());
     }
 
-    public static String seconds2TimeStr(long seconds) {
+    public static String time2TimeStr(long seconds) {
         return getDateFormat1().format(new Date(seconds * 1000));
     }
 

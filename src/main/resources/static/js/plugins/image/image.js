@@ -193,7 +193,7 @@ KindEditor.plugin('image', function(K) {
 				if (data.code === 200) {
 				    var name = data.data[0];
 				    var local = "http://" + window.location.host;
-					var url = local + '/api/download?fileName=' + name;
+					var url = local + '/api/image?fileName=' + name;
 //					if (formatUploadUrl) {
 //						url = K.formatUrl(local + url, 'absolute');
 //					}

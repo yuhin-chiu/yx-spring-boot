@@ -2,6 +2,7 @@ package cn.yx.controller.api;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,15 +30,29 @@ import cn.yx.util.FileUtil;
 @RequestMapping("/api")
 public class FileController {
 
-    // 文件下载相关代码
-    @RequestMapping("/download")
-    public void downloadFile(@RequestParam(defaultValue = "test.txt") String fileName, HttpServletResponse response)
+    // 图片展示相关代码  
+    @RequestMapping("/image")
+    public void imageFile(@RequestParam(defaultValue = "test.txt") String fileName, HttpServletResponse response)
             throws IOException {
         if (fileName != null) {
             // 当前是从该工程目录的File文件夹中获取文件(该目录在常量中配置了)
 //            response.setContentType("application/force-download");// 设置强制下载不打开
 //            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
 
+            FileUtil.downloadFile(fileName, new BufferedOutputStream(response.getOutputStream()));
+        }
+    }
+    
+    // 文件下载相关代码
+    @RequestMapping("/download")
+    public void downloadFile(@RequestParam(name = "fileName", required = true) String fileName,
+            @RequestParam(name = "originName", defaultValue = "download.temp", required = false) String originName, HttpServletResponse response)
+            throws IOException {
+        System.out.println(originName);
+        if (fileName != null) {
+            // 当前是从该工程目录的File文件夹中获取文件(该目录在常量中配置了)
+            response.setContentType("application/force-download");// 设置强制下载不打开
+            response.addHeader("Content-Disposition", "attachment;fileName*=UTF-8''" + URLEncoder.encode(originName,"UTF-8"));// 设置文件名 可以显示中文
             FileUtil.downloadFile(fileName, new BufferedOutputStream(response.getOutputStream()));
         }
     }

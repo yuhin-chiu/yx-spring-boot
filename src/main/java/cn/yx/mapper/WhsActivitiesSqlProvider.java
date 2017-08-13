@@ -78,7 +78,7 @@ public class WhsActivitiesSqlProvider {
         return sql.toString();
     }
 
-    public String listSelective(Integer status, Integer limit, Integer offset) {
+    public String listSelective(Integer status, long beginTime, long endTime, String query, Integer limit, Integer offset) {
         SQL sql = new SQL();
         sql.SELECT("*");
         sql.SELECT("create_time as createTime");
@@ -89,6 +89,9 @@ public class WhsActivitiesSqlProvider {
         } else {
             sql.WHERE("status != -1 ");
         }
+        if(beginTime != -1) {
+            sql.WHERE("create_time >= #{arg1,jdbcType=BIGINT} AND #{arg2,jdbcType=BIGINT}");
+        }
         sql.ORDER_BY("createTime desc");
 
         if (limit != -1) {
@@ -98,7 +101,7 @@ public class WhsActivitiesSqlProvider {
         }
     }
 
-    public String countSelective(Integer status) {
+    public String countSelective(Integer status, long beginTime, long endTime, String query) {
         SQL sql = new SQL();
         sql.SELECT("count(*)");
         sql.FROM("whs_activities");
@@ -107,6 +110,9 @@ public class WhsActivitiesSqlProvider {
             sql.WHERE("status = #{status,jdbcType=TINYINT}");
         } else {
             sql.WHERE("status != -1 ");
+        }
+        if(beginTime != -1) {
+            sql.WHERE("create_time between #{arg1,jdbcType=BIGINT} AND #{arg2,jdbcType=BIGINT}");
         }
 
         return sql.toString();

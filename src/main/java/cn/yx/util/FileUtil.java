@@ -9,9 +9,12 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.yx.constant.FileConstant;
+import cn.yx.controller.api.AbstractController;
 import cn.yx.enums.ApiResponseEnum;
 import cn.yx.model.ApiResponse;
 
@@ -22,7 +25,7 @@ import cn.yx.model.ApiResponse;
  */
 
 public class FileUtil {
-
+    
     /**
      * 如果没传入fileName参数，就生成随机值（不包含前面的斜杠）
      * 
@@ -30,7 +33,7 @@ public class FileUtil {
      * @return
      */
     public static ApiResponse uploadFile(MultipartFile file) {
-        return FileUtil.uploadFile(file, FileUtil.randomName(file.getOriginalFilename()));
+        return FileUtil.uploadFile(file, FileUtil.randomName(file.getOriginalFilename()), FileUtil.class);
     }
 
     /**
@@ -40,7 +43,8 @@ public class FileUtil {
      * @param fileName
      * @return
      */
-    public static ApiResponse uploadFile(MultipartFile file, String fileName) {
+    public static ApiResponse uploadFile(MultipartFile file, String fileName, Class clzss) {
+        Logger LOGGER = LoggerFactory.getLogger(clzss);
         ApiResponse resp = new ApiResponse();
         BufferedOutputStream stream = null;
         try {
@@ -52,6 +56,7 @@ public class FileUtil {
         } catch (Exception e) {
             resp.setCode(ApiResponseEnum.FILE_SAVE_FAILED.getCode());
             resp.setMsg(ApiResponseEnum.FILE_SAVE_FAILED.getContent());
+            LOGGER.error("{}", "[uploadFile]Fail: FileName is " + fileName);
         } finally {
             try {
                 stream.close();
@@ -60,7 +65,7 @@ public class FileUtil {
                 e.printStackTrace();
             }
         }
-
+        LOGGER.info("{}", "[uploadFile]Success: FileName is " + fileName);
         resp.setData(fileName);
         return resp;
     }
@@ -93,7 +98,6 @@ public class FileUtil {
         fileName = UUID.randomUUID() + suffixName;
         return fileName;
     }
-
     private static File createFileSafe(File file, String fileName) {
         File rFile = new File(file, fileName);
 

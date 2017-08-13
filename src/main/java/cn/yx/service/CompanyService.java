@@ -26,7 +26,7 @@ public class CompanyService {
 
     public List<WhsCompany> getRecomm() {
         // TODO 推荐是1
-        return comMapper.list(1, 20, 0);
+        return this.list(1, 20, 1);
     }
 
     public List<WhsCompany> list(Integer status, Integer pageSize, Integer currentPage) {

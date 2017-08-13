@@ -25,7 +25,7 @@ public class DownloadsService extends AbstractService {
     public List<BaseDownloads> getNew() {
         List<BaseDownloads> rList = downMapper.getNew();
         rList.forEach(item -> {
-            item.setUrl(parseUri2Url(item.getAnnex()));
+            item.setUrl(parseUri2DownloadUrl(item.getAnnex(), item.getTitle()));
         });
         return rList;
     }
