@@ -107,7 +107,7 @@ public interface WhsDownloadsMapper {
             @Result(column = "title", property = "title", jdbcType = JdbcType.VARCHAR),
             @Result(column = "create_time", property = "createTime", jdbcType = JdbcType.BIGINT),
             @Result(column = "annex", property = "annex", jdbcType = JdbcType.VARCHAR),
-            @Result(column = "annexName", property = "annexName", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "annex_name", property = "annexName", jdbcType = JdbcType.VARCHAR),
             @Result(column = "downs", property = "downs", jdbcType = JdbcType.INTEGER),
             @Result(column = "type", property = "type", jdbcType = JdbcType.TINYINT)})
     List<BaseDownloads> getNew(@Param("type")Byte type);
