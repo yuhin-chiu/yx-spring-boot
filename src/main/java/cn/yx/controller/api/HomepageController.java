@@ -36,7 +36,7 @@ public class HomepageController extends AbstractController {
         // 同期活动
         List<WhsActivities> activities = activitiesService.getNew();
         // TODO downloads
-        List<BaseDownloads> downloads = downloadsService.getNew();
+        List<BaseDownloads> downloads = downloadsService.getNew(0);
         // 展商推荐
         List<WhsCompany> companys = companyService.getRecomm();
         // 合作媒体

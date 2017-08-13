@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import cn.yx.entity.WhsDownloads;
 import cn.yx.enums.ApiResponseEnum;
 import cn.yx.model.ApiResponse;
 import cn.yx.util.FileUtil;
@@ -28,7 +29,7 @@ import cn.yx.util.FileUtil;
 
 @Controller
 @RequestMapping("/api")
-public class FileController {
+public class FileController extends AbstractController {
 
     // 图片展示相关代码  
     @RequestMapping("/image")
@@ -39,21 +40,30 @@ public class FileController {
 //            response.setContentType("application/force-download");// 设置强制下载不打开
 //            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
 
-            FileUtil.downloadFile(fileName, new BufferedOutputStream(response.getOutputStream()));
+            FileUtil.downloadFile(fileName, new BufferedOutputStream(response.getOutputStream()), this.getClass());
         }
     }
     
     // 文件下载相关代码
     @RequestMapping("/download")
-    public void downloadFile(@RequestParam(name = "fileName", required = true) String fileName,
-            @RequestParam(name = "originName", defaultValue = "download.temp", required = false) String originName, HttpServletResponse response)
-            throws IOException {
-        System.out.println(originName);
-        if (fileName != null) {
+    public void downloadFile(String fileName,
+            Integer fileId,
+            @RequestParam(name = "originName", defaultValue = "download", required = false) String originName,
+            HttpServletResponse response) throws IOException {
+        if (fileId != null) {
+            WhsDownloads down = downloadsService.getById(fileId);
+            String name = down.getAnnex();
+            downloadsService.increase(fileId, 1);
+            response.setContentType("application/force-download");// 设置强制下载不打开
+            response.addHeader("Content-Disposition",
+                    "attachment;fileName*=UTF-8''" + URLEncoder.encode(originName, "UTF-8"));// 设置文件名 可以显示中文
+            FileUtil.downloadFile(name, new BufferedOutputStream(response.getOutputStream()), this.getClass());
+        } else if (fileName != null) {
             // 当前是从该工程目录的File文件夹中获取文件(该目录在常量中配置了)
             response.setContentType("application/force-download");// 设置强制下载不打开
-            response.addHeader("Content-Disposition", "attachment;fileName*=UTF-8''" + URLEncoder.encode(originName,"UTF-8"));// 设置文件名 可以显示中文
-            FileUtil.downloadFile(fileName, new BufferedOutputStream(response.getOutputStream()));
+            response.addHeader("Content-Disposition",
+                    "attachment;fileName*=UTF-8''" + URLEncoder.encode(originName, "UTF-8"));// 设置文件名 可以显示中文
+            FileUtil.downloadFile(fileName, new BufferedOutputStream(response.getOutputStream()), this.getClass());
         }
     }
 

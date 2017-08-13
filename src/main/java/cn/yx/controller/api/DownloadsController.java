@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.groovy.util.StringUtil;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.yx.entity.WhsDownloads;
+import cn.yx.entity.WhsNews;
 import cn.yx.enums.ApiResponseEnum;
 import cn.yx.model.ApiResponse;
 import cn.yx.util.FileUtil;
@@ -34,12 +36,36 @@ public class DownloadsController extends AbstractController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public ApiResponse listDownloads(@RequestParam(defaultValue = "-1") Integer status,
+            @RequestParam(defaultValue = "-1") Integer type,
             @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse resp = new ApiResponse();
 
-        resp.setData(downloadsService.list(status, pageSize, currentPage));
-        resp.setTotal(downloadsService.count(status));
+        resp.setData(downloadsService.list(status, type, pageSize, currentPage));
+        resp.setTotal(downloadsService.count(status, type));
+        return resp;
+    }
+    
+    @RequestMapping(value = "/listFiles")
+    @ResponseBody
+    public ApiResponse listFiles() {
+        ApiResponse resp = new ApiResponse();
+        resp.setData(downloadsService.getNew(0));
+        return resp;
+    }
+    @RequestMapping(value = "/listHotels")
+    @ResponseBody
+    public ApiResponse listHotels() {
+        ApiResponse resp = new ApiResponse();
+        resp.setData(downloadsService.getNew(1));
+        return resp;
+    }
+    
+    @RequestMapping(value = "/listInfos")
+    @ResponseBody
+    public ApiResponse listInfos() {
+        ApiResponse resp = new ApiResponse();
+        resp.setData(downloadsService.getNew(2));
         return resp;
     }
 
@@ -76,9 +102,14 @@ public class DownloadsController extends AbstractController {
     
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public ApiResponse upload(WhsDownloads down, HttpServletRequest request) {
+    public ApiResponse upload(WhsDownloads down, @RequestParam(defaultValue = "0")Integer target, HttpServletRequest request) {
         ApiResponse temp = null, resp = new ApiResponse();
-        MultipartFile file = ((MultipartHttpServletRequest) request).getFile("file");
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("files[]");
+        if(files.size() == 0) {
+            resp.setCode(ApiResponseEnum.FILE_SAVE_EMPTY.getCode());
+            return resp;
+        }
+        MultipartFile file = files.get(0);
         String fileName = file.getOriginalFilename();
         if (!file.isEmpty()) {
             Integer id = downloadsService.getLastId();
@@ -92,14 +123,25 @@ public class DownloadsController extends AbstractController {
             return resp;
         }
 
+        down.setType(target.byteValue());
         down.setAnnex((String)temp.getData());
         if(StringUtils.isBlank(down.getTitle())) {
-            down.setTitle(fileName);
+            down.setTitle(fileName.substring(0, fileName.lastIndexOf(".")));
         }
+        down.setAnnexName(fileName.substring(fileName.lastIndexOf(".")));
         down.setCreateTime(TimeUtil.getCurrentTime());
         downloadsService.add(down);
 
         resp.setData(down);
+        return resp;
+    }
+    
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public ApiResponse edit(@PathVariable Integer id, WhsDownloads down) {
+        ApiResponse resp = new ApiResponse();
+
+        resp.setData(downloadsService.update(down));
+
         return resp;
     }
 

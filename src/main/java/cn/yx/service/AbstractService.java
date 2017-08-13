@@ -31,4 +31,8 @@ public class AbstractService {
         }
         return fileConfig.getUrl() + FileConstant.DOWNLOAD_URL + input + "&originName=" + originName;
     }
+    
+    protected String parseId2DownloadUrl(Integer id, String originName) {
+        return fileConfig.getUrl() + FileConstant.DOWNLOAD_URL_ID + id + "&originName=" + originName;
+    }
 }

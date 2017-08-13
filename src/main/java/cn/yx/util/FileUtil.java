@@ -70,7 +70,7 @@ public class FileUtil {
         return resp;
     }
 
-    public static void downloadFile(String fileName, BufferedOutputStream out) throws IOException {
+    public static void downloadFile(String fileName, BufferedOutputStream out, Class clzss) throws IOException {
 
         File file = new File(FileConstant.UPLOAD_FOLDER, fileName);
         if (file.exists()) {
@@ -84,6 +84,10 @@ public class FileUtil {
 
             out.flush();
             in.close();
+        } else {
+            Logger logger = LoggerFactory.getLogger(clzss);
+            logger.error("[File download error]: File " + fileName + " does not exist!");
+            out.flush();
         }
     }
     

@@ -16,4 +16,9 @@ public class DownloadMcontroller {
     public String list() {
         return "/download/list";
     }
+    
+    @RequestMapping({"publish"})
+    public String publish() {
+        return "/download/publish";
+    }
 }

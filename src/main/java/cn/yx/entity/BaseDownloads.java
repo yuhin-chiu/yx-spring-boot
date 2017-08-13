@@ -10,10 +10,12 @@ public class BaseDownloads {
 
     private Integer id;
     private String annex;
+    private String annexName;
     private String url;
     private String title;
     private Integer downs;
     private Long createTime;
+    private Byte type;
     
     public Integer getId() {
         return id;
@@ -50,6 +52,18 @@ public class BaseDownloads {
     }
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+    public Byte getType() {
+        return type;
+    }
+    public void setType(Byte type) {
+        this.type = type;
+    }
+    public String getAnnexName() {
+        return annexName;
+    }
+    public void setAnnexName(String annexName) {
+        this.annexName = annexName;
     }
     
 }
