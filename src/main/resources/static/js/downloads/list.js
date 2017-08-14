@@ -30,10 +30,6 @@ $(function() {
             return "";
         }
     }, {
-        title : "浏览量",
-        field : "browses",
-        align : "center"
-    }, {
         title : "下载量",
         field : "downs",
         align : "center"

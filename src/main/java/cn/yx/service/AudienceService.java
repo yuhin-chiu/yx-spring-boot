@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.yx.entity.WhsAudience;
+import cn.yx.entity.WhsMedia;
 import cn.yx.mapper.WhsAudienceMapper;
+import cn.yx.util.TimeUtil;
 
 /**
  * @author yuxuanjiao
@@ -24,11 +26,16 @@ public class AudienceService {
         return auMapper.insertSelective(record);
     }
 
-    public List<WhsAudience> listApply(Integer status, Integer pageSize, Integer currentPage) {
-        return auMapper.list(status, pageSize, pageSize * (currentPage - 1));
+    public List<WhsAudience> listApply(Integer status, String timeRange, Integer pageSize, Integer currentPage) {
+        long[] time = TimeUtil.splitTimeRange(timeRange);
+        return auMapper.list(status, time[0], time[1], pageSize, pageSize * (currentPage - 1));
     }
 
-    public int countApply(Integer status) {
-        return auMapper.count(status);
+    public int countApply(Integer status, String timeRange) {
+        long[] time = TimeUtil.splitTimeRange(timeRange);
+        return auMapper.count(status, time[0], time[1]);
+    }
+    public int update(WhsAudience record) {
+        return auMapper.updateByPrimaryKeySelective(record);
     }
 }

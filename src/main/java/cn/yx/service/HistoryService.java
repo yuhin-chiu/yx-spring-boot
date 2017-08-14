@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import cn.yx.entity.WhsHistory;
 import cn.yx.mapper.WhsHistoryMapper;
+import cn.yx.util.TimeUtil;
 
 /**
  * @author yuxuanjiao
@@ -41,6 +42,7 @@ public class HistoryService {
         WhsHistory history = new WhsHistory();
         history.setContent(content);
         history.setName(name);
+        history.setCreateTime(TimeUtil.getCurrentTime());
         hisMapper.insertSelective(history);
         return history;
     }

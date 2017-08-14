@@ -17,4 +17,9 @@ public class CompanyMController {
     public String list() {
         return "/company/list";
     }
+    
+    @RequestMapping({"/publish"})
+    public String publish() {
+        return "/company/publish";
+    }
 }

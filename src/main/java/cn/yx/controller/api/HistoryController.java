@@ -22,7 +22,20 @@ import cn.yx.model.ApiResponse;
 public class HistoryController extends AbstractController {
 
     @RequestMapping("/list")
-    public ApiResponse list(@RequestParam(defaultValue = "-1") Integer status,
+    public ApiResponse list(@RequestParam(defaultValue = "1") Integer status,
+            @RequestParam(defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "1") Integer currentPage) {
+        ApiResponse resp = new ApiResponse();
+        List list = historyService.list(status, pageSize, currentPage);
+        int count = historyService.count(status);
+
+        resp.setData(list);
+        resp.setTotal(count);
+        return resp;
+    }
+    
+    @RequestMapping("/listAll")
+    public ApiResponse listAll(@RequestParam(defaultValue = "-1") Integer status,
             @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "1") Integer currentPage) {
         ApiResponse resp = new ApiResponse();

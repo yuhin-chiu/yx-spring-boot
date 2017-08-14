@@ -35,18 +35,15 @@ public class HomepageController extends AbstractController {
         List<WhsNews> news = newsService.getNew();
         // 同期活动
         List<WhsActivities> activities = activitiesService.getNew();
-        // TODO downloads
+        // downloads 只取类型为0的下载文件到首页
         List<BaseDownloads> downloads = downloadsService.getNew(0);
         // 展商推荐
         List<WhsCompany> companys = companyService.getRecomm();
-        // 合作媒体
-        List<WhsMedia> medias = mediaService.getRecomm();
 
         obj.put("sliders", sliders);
         obj.put("news", news);
         obj.put("activities", activities);
         obj.put("companys", companys);
-        obj.put("medias", medias);
         obj.put("downloads", downloads);
 
         resp.setData(obj);

@@ -9,6 +9,8 @@ import cn.yx.entity.WhsCompany;
 import cn.yx.entity.WhsCompanyApply;
 import cn.yx.mapper.WhsCompanyApplyMapper;
 import cn.yx.mapper.WhsCompanyMapper;
+import cn.yx.util.FileUtil;
+import cn.yx.util.TimeUtil;
 
 /**
  * @author yuxuanjiao
@@ -17,7 +19,7 @@ import cn.yx.mapper.WhsCompanyMapper;
  */
 
 @Service
-public class CompanyService {
+public class CompanyService extends AbstractService {
 
     @Autowired
     private WhsCompanyMapper comMapper;
@@ -30,7 +32,12 @@ public class CompanyService {
     }
 
     public List<WhsCompany> list(Integer status, Integer pageSize, Integer currentPage) {
-        return comMapper.list(status, pageSize, pageSize * (currentPage - 1));
+        List<WhsCompany> rList = comMapper.list(status, pageSize, pageSize * (currentPage - 1));
+        rList.forEach((item) -> {
+            item.setUrl(parseUri2Url(item.getImage()));
+            item.setCreateTimeStr(TimeUtil.time2DayStr(item.getCreateTime()));
+        });
+        return rList;
     }
 
     public int count(Integer status) {
@@ -41,19 +48,28 @@ public class CompanyService {
         return comApplyMapper.insertSelective(record);
     }
 
-    public List<WhsCompanyApply> listApply(Integer status, Integer pageSize, Integer currentPage) {
-        return comApplyMapper.list(status, pageSize, pageSize * (currentPage - 1));
+    public List<WhsCompanyApply> listApply(Integer status, String timeRange, Integer pageSize, Integer currentPage) {
+        long[] time = TimeUtil.splitTimeRange(timeRange);
+        return comApplyMapper.list(status, time[0], time[1], pageSize, pageSize * (currentPage - 1));
     }
 
-    public int countApply(Integer status) {
-        return comApplyMapper.count(status);
+    public int countApply(Integer status, String timeRange) {
+        long[] time = TimeUtil.splitTimeRange(timeRange);
+        return comApplyMapper.count(status, time[0], time[1]);
     }
-
+    public int updateApply(WhsCompanyApply com) {
+        return comApplyMapper.updateByPrimaryKeySelective(com);
+    }
+    
     public int update(WhsCompany com) {
         return comMapper.updateByPrimaryKeySelective(com);
     }
 
     public int add(WhsCompany com) {
         return comMapper.insertSelective(com);
+    }
+    
+    public int getLastId() {
+        return comMapper.getLastId();
     }
 }

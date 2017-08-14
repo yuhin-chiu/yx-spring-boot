@@ -35,7 +35,7 @@ public class DownloadsService extends AbstractService {
     public List<WhsDownloads> list(Integer status, Integer type, Integer pageSize, Integer currentPage) {
         List<WhsDownloads> rList  = downMapper.list(status, type.byteValue(), pageSize, pageSize * (currentPage - 1));
         rList.forEach(item -> {
-            item.setUrl(parseId2DownloadUrl(item.getId(), item.getTitle() + item.getAnnexName()));
+            item.setUrl(parseUri2DownloadUrl(item.getAnnex(), item.getTitle() + item.getAnnexName()));
         });
         return rList;
     }

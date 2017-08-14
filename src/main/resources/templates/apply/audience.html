@@ -13,11 +13,12 @@
       <div class="main">
          <label>日期：</label> <input id="timeRange" type="text" value=""
             class="date-picker" readonly="readonly" /> &nbsp;&nbsp; <label>标题：</label>
-         <input type="text" id="title" style="width: 300px"
-            placeholder="标题关键字" /> &nbsp; <input type="button"
-            value="查询" id="queryBtn" class="btn btn-default" /> <input
-            type="button" title="删除当前选中公告" value="删除" id="delete"
-            class="btn btn-danger hidden" />
+         <input type="text" id="title" style="width: 150px"
+            placeholder="标题关键字" /> &nbsp; <label>状态：</label>
+            <select id="status" style="width: 100px" name="status">
+            <option value="-1" selected="selected">全部</option><option value="0">未处理
+            </option><option value="1">已处理</option></select> &nbsp; <input type="button"
+            value="查询" id="queryBtn" class="btn btn-default" />
 
          <div style="width: 100%; height: 25px; text-align: right">
             共查到<span id="num" style="color: red">0</span>条符合条件的记录

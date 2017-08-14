@@ -9,6 +9,7 @@ import cn.yx.entity.WhsMedia;
 import cn.yx.entity.WhsMediaApply;
 import cn.yx.mapper.WhsMediaApplyMapper;
 import cn.yx.mapper.WhsMediaMapper;
+import cn.yx.util.TimeUtil;
 
 /**
  * @author yuxuanjiao
@@ -40,19 +41,22 @@ public class MediaService {
         return mediaApplyMapper.insertSelective(record);
     }
 
-    public List<WhsMediaApply> listApply(Integer status, Integer pageSize, Integer currentPage) {
-
-        return mediaApplyMapper.list(status, pageSize, pageSize * (currentPage - 1));
+    public List<WhsMediaApply> listApply(Integer status, String timeRange, Integer pageSize, Integer currentPage) {
+        long[] time = TimeUtil.splitTimeRange(timeRange);
+        return mediaApplyMapper.list(status, time[0], time[1], pageSize, pageSize * (currentPage - 1));
     }
 
-    public int countApply(Integer status) {
-        return mediaApplyMapper.count(status);
+    public int countApply(Integer status, String timeRange) {
+        long[] time = TimeUtil.splitTimeRange(timeRange);
+        return mediaApplyMapper.count(status, time[0], time[1]);
     }
     
     public int update(WhsMedia media) {
         return mediaMapper.updateByPrimaryKeySelective(media);
     }
-
+    public int updateApply(WhsMediaApply media) {
+        return mediaApplyMapper.updateByPrimaryKeySelective(media);
+    }
     public int add(WhsMedia media) {
         return mediaMapper.insertSelective(media);
     }

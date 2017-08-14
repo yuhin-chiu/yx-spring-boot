@@ -17,4 +17,9 @@ public class HistoryMController {
     public String list() {
         return "/history/list";
     }
+    
+    @RequestMapping({"/publish"})
+    public String publish() {
+        return "/history/publish";
+    }
 }

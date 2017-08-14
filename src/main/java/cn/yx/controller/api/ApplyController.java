@@ -2,12 +2,14 @@ package cn.yx.controller.api;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.yx.entity.WhsAudience;
+import cn.yx.entity.WhsCompany;
 import cn.yx.entity.WhsCompanyApply;
 import cn.yx.entity.WhsMediaApply;
 import cn.yx.enums.ApiResponseEnum;
@@ -98,11 +100,12 @@ public class ApplyController extends AbstractController {
     @RequestMapping("/media/list")
     public ApiResponse mediaList(@RequestParam(defaultValue = "-1") Integer status,
             @RequestParam(defaultValue = "20") Integer pageSize,
-            @RequestParam(defaultValue = "1") Integer currentPage) {
+            @RequestParam(defaultValue = "1") Integer currentPage, 
+            @RequestParam(defaultValue = "-1")String timeRange) {
         ApiResponse res = new ApiResponse();
 
-        List<WhsMediaApply> list = mediaService.listApply(status, pageSize, currentPage);
-        int count = mediaService.countApply(status);
+        List<WhsMediaApply> list = mediaService.listApply(status, timeRange, pageSize, currentPage);
+        int count = mediaService.countApply(status, timeRange);
 
         res.setData(list);
         res.setDescription("默认返回第一页，每页20行");
@@ -113,11 +116,12 @@ public class ApplyController extends AbstractController {
     @RequestMapping("/audience/list")
     public ApiResponse audienceList(@RequestParam(defaultValue = "-1") Integer status,
             @RequestParam(defaultValue = "20") Integer pageSize,
-            @RequestParam(defaultValue = "1") Integer currentPage) {
+            @RequestParam(defaultValue = "1") Integer currentPage,
+            @RequestParam(defaultValue = "-1")String timeRange) {
         ApiResponse res = new ApiResponse();
 
-        List<WhsAudience> list = audienceService.listApply(status, pageSize, currentPage);
-        int count = audienceService.countApply(status);
+        List<WhsAudience> list = audienceService.listApply(status, timeRange, pageSize, currentPage);
+        int count = audienceService.countApply(status, timeRange);
 
         res.setData(list);
         res.setDescription("默认返回第一页，每页20行");
@@ -128,15 +132,41 @@ public class ApplyController extends AbstractController {
     @RequestMapping("/company/list")
     public ApiResponse companyList(@RequestParam(defaultValue = "-1") Integer status,
             @RequestParam(defaultValue = "20") Integer pageSize,
-            @RequestParam(defaultValue = "1") Integer currentPage) {
+            @RequestParam(defaultValue = "1") Integer currentPage,
+            @RequestParam(defaultValue = "-1")String timeRange) {
         ApiResponse res = new ApiResponse();
 
-        List<WhsCompanyApply> list = companyService.listApply(status, pageSize, currentPage);
-        int count = companyService.countApply(status);
+        List<WhsCompanyApply> list = companyService.listApply(status, timeRange, pageSize, currentPage);
+        int count = companyService.countApply(status, timeRange);
 
         res.setData(list);
         res.setDescription("默认返回第一页，每页20行");
         res.setTotal(count);
         return res;
+    }
+    
+    @RequestMapping(value = "/media/edit/{id}", method = RequestMethod.POST)
+    public ApiResponse mediaEdit(@PathVariable Integer id, WhsMediaApply media) {
+        ApiResponse resp = new ApiResponse();
+
+        resp.setData(mediaService.updateApply(media));
+
+        return resp;
+    }
+    @RequestMapping(value = "/audience/edit/{id}", method = RequestMethod.POST)
+    public ApiResponse audienceEdit(@PathVariable Integer id, WhsAudience audience) {
+        ApiResponse resp = new ApiResponse();
+
+        resp.setData(audienceService.update(audience));
+
+        return resp;
+    }
+    @RequestMapping(value = "/company/edit/{id}", method = RequestMethod.POST)
+    public ApiResponse companyEdit(@PathVariable Integer id, WhsCompanyApply company) {
+        ApiResponse resp = new ApiResponse();
+
+        resp.setData(companyService.updateApply(company));
+
+        return resp;
     }
 }

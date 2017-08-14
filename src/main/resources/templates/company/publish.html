@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>管理后台</title>
+<th:block th:include="/common/common :: header"></th:block>
+<script type="text/javascript" src="/js/kindeditor-min.js"></script>
+<script type="text/javascript" src="/js/lang/zh_CN.js"></script>
+<script type="text/javascript" src="/js/companies/companies.js"></script>
+<script type="text/javascript" src="/js/companies/publish.js"></script>
+</head>
+<body page="companies">
+   <th:block th:include="/common/common :: toolbar"></th:block>
+   <div id="body-content" menu="publish">
+      <th:block th:include="/common/common :: companies"></th:block>
+      <div class="main">
+         <div class="mask">
+            <img src="/img/waiting.gif" class="maskObj" />
+         </div>
+         <form id="form" method="post" enctype="multipart/form-data">
+            <table width="75%">
+               <tr style="height: 50px">
+                  <th style="width: 10%; text-align: right">公司名</th>
+                  <td width="2%"></td>
+                  <td>
+                     <div style="position: relative; width: 100%">
+                        <div
+                           style="position: absolute; right: 5px; top: 5px;">
+                           <span id="titleCount">0</span>/40
+                        </div>
+                        <input id="out" type="text" style="width: 100%;" />
+                        <input name="title" type="text"
+                           placeholder="不能为空且少于40字"
+                           style="width: 92%; height: 28px; position: absolute; top: 1px; left: 1px; border: 0; outline: none" />
+                     </div>
+                  </td>
+               </tr>
+               <tr style="height: 50px">
+                  <th style="width: 10%; text-align: right">负责人</th>
+                  <td width="2%"></td>
+                  <td>
+                     <div style="position: relative; width: 100%">
+                        <div
+                           style="position: absolute; right: 5px; top: 5px;">
+                           <span id="principalCount">0</span>/20
+                        </div>
+                        <input id="out" type="text" style="width: 100%;" />
+                        <input name="principal" type="text"
+                           placeholder="不能为空且少于20字"
+                           style="width: 92%; height: 28px; position: absolute; top: 1px; left: 1px; border: 0; outline: none" />
+                     </div>
+                  </td>
+               </tr>
+               <tr style="height: 50px">
+                  <th style="width: 10%; text-align: right">手机</th>
+                  <td width="2%"></td>
+                  <td>
+                     <div style="position: relative; width: 100%">
+                        <div
+                           style="position: absolute; right: 5px; top: 5px;">
+                           <span id="phoneCount">0</span>/11
+                        </div>
+                        <input id="out" type="text" style="width: 100%;" />
+                        <input name="phone" type="text"
+                           placeholder="请输入手机号"
+                           style="width: 92%; height: 28px; position: absolute; top: 1px; left: 1px; border: 0; outline: none" />
+                     </div>
+                  </td>
+               </tr>
+               <tr style="height: 40px">
+                  <th style="text-align: right">首页推荐</th>
+                  <td width="2%"></td>
+                  <td><label class="checkbox-inline"> <input
+                        type="radio" name="status" class="target"
+                        value="1" checked="checked"/> <span>推荐</span>
+                  </label> <label class="checkbox-inline"> <input
+                        type="radio" name="status" class="target"
+                        value="0" /> <span>不推荐</span>
+                  </label> </td>
+               </tr>
+               <tr>
+                  <th
+                     style="text-align: right; vertical-align: text-top; padding-top: 15px">展示图片</th>
+                  <td width="2%"></td>
+                  <td style="padding-top: 15px">
+                     <div id="extra">
+                        <div id="imgs"></div>
+                        <div id="files"></div>
+                     </div> <input type="file" name="files"
+                     multiple="multiple" class="hidden" /> <input
+                     id="upload" type="button" class="btn btn-default"
+                     value="上传图片" style="width: 100px;" />
+                  </td>
+               </tr>
+               <tr style="height: 50px;">
+                  <th style="width: 10%; text-align: right"></th>
+                  <td width="2%"></td>
+                  <td>以下为可选字段</td>
+               </tr>
+               <tr style="height: 50px">
+                  <th style="width: 10%; text-align: right">公司地址</th>
+                  <td width="2%"></td>
+                  <td>
+                     <div style="position: relative; width: 100%">
+                        <input id="out" type="text" style="width: 100%;" />
+                        <input name="address" type="text"
+                           placeholder="不超过100字"
+                           style="width: 92%; height: 28px; position: absolute; top: 1px; left: 1px; border: 0; outline: none" />
+                     </div>
+                  </td>
+               </tr>
+               <tr style="height: 50px">
+                  <th style="width: 10%; text-align: right">办公电话</th>
+                  <td width="2%"></td>
+                  <td>
+                     <div style="position: relative; width: 100%">
+                        <input id="out" type="text" style="width: 100%;" />
+                        <input name="tele" type="text"
+                           placeholder="不超过100字"
+                           style="width: 92%; height: 28px; position: absolute; top: 1px; left: 1px; border: 0; outline: none" />
+                     </div>
+                  </td>
+               </tr>
+               <tr style="height: 50px">
+                  <th style="width: 10%; text-align: right">邮箱</th>
+                  <td width="2%"></td>
+                  <td>
+                     <div style="position: relative; width: 100%">
+                        <input id="out" type="text" style="width: 100%;" />
+                        <input name="mail" type="text"
+                           placeholder="不超过100字"
+                           style="width: 92%; height: 28px; position: absolute; top: 1px; left: 1px; border: 0; outline: none" />
+                     </div>
+                  </td>
+               </tr>
+               <tr style="text-align: right">
+                  <td colspan="3"><input id="publish" type="button"
+                     class="btn btn-primary" value="发布"
+                     style="width: 100px;" /></td>
+               </tr>
+            </table>
+         </form>
+      </div>
+   </div>
+   <script th:inline="javascript">
+    KindEditor.ready(function(K) {
+        window.editor = K.create('textarea[name="content"]', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,
+          //  uploadJson:'/api/upload',
+            items : ['fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist', '|', 'emoticons', 'link', 'table', 'code', '|', 'image'],
+            afterChange : function() {
+                var num = this.count('text');
+                K('.count').html(num);
+                if (num > 500) {
+                    $(".count").css('color', 'red');
+                } else {
+                    $(".count").css('color', 'black');
+                }
+            }
+        });
+    });
+
+</script>
+   <div th:include="/common/common :: footer"></div>
+</body>
+</html>
