@@ -80,7 +80,7 @@ $(function() {
                     if(data.code == 200) {
                         window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success, {
                             onOk: function(v) {
-                                window.location.href = "/backend/" + baseUri + "/list";
+                                window.location.href = "/backend/companies/list";
                             }
                         });
                     } else {
@@ -94,7 +94,7 @@ $(function() {
                     if(data.code == 200) {
                         window.wxc.xcConfirm("设置首页推荐成功！", window.wxc.xcConfirm.typeEnum.success, {
                             onOk: function(v) {
-                                window.location.href = "/backend/" + baseUri + "/list";
+                                window.location.href = "/backend/companies/list";
                             }
                         });
                     } else {

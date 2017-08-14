@@ -60,7 +60,7 @@ $(function() {
             if(value == 1) {
                 html += "<a class='no' href='javascript:void(0)' rowid=" + row.id + ">已处理</a>"
             } else {
-                html += "<a class='yes' href='javascript:void(0)' rowid=" + row.id + ">未处理</a>"
+                html += "<a class='yes' style='color:red;' href='javascript:void(0)' rowid=" + row.id + ">未处理</a>"
             }
             return html;
         },
