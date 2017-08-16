@@ -48,7 +48,9 @@ public class ActivitiesService extends AbstractService {
     }
 
     public WhsActivities getDetail(int id) {
-        return whsActivitiesMapper.selectByPrimaryKey(id);
+    	WhsActivities rAct = whsActivitiesMapper.selectByPrimaryKey(id);
+    	rAct.setCreateTimeStr(TimeUtil.time2DayStr(rAct.getCreateTime()));
+        return rAct;
     }
 
     public List<WhsActivities> getNew() {

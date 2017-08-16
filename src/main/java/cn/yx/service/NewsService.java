@@ -41,7 +41,9 @@ public class NewsService extends AbstractService {
     }
 
     public WhsNews getDetail(int id) {
-        return whsNewsMapper.selectByPrimaryKey(id);
+    	WhsNews rNews = whsNewsMapper.selectByPrimaryKey(id);
+    	rNews.setCreateTimeStr(TimeUtil.time2DayStr(rNews.getCreateTime()));
+        return rNews;
     }
 
     public List<WhsNews> getNew() {
