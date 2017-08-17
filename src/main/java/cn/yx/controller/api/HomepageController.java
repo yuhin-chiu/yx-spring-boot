@@ -10,7 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import cn.yx.entity.BaseDownloads;
 import cn.yx.entity.WhsActivities;
 import cn.yx.entity.WhsCompany;
-import cn.yx.entity.WhsMedia;
+import cn.yx.entity.WhsHomepage;
 import cn.yx.entity.WhsNews;
 import cn.yx.entity.WhsSliders;
 import cn.yx.model.ApiResponse;
@@ -59,4 +59,11 @@ public class HomepageController extends AbstractController {
         return resp;
     }
 
+    @RequestMapping("/edit")
+    public ApiResponse edit(WhsHomepage homepage) {
+        ApiResponse resp = new ApiResponse();
+        Integer obj = homepageService.update(homepage);
+        resp.setData(obj);
+        return resp;
+    }
 }

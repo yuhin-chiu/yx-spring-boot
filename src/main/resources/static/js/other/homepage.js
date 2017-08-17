@@ -2,16 +2,16 @@
  * Created by jiaoyuxuan on 2017/8/8.
  */
 $(function() {
-    var baseUri = 'sliders'; 
+    var baseUri = 'homepage'; 
     var curFiles = [], fileNames = [], imgTypes = [ 'jpg', 'png', 'jpeg' ];
     var docTypes = [ 'doc', 'docx', 'xls', 'xlsx', 'xlsm', 'ppt', 'pptx', 'txt' ];
-    var titleMax = 20, hasTitle = true;
-    var abstrMax = 200, hasAbstr = true;
-    var contentMax = 1000, hasContent = false;
+    var titleMax = 20, hasTitle = false;
+    var abstrMax = 200, hasAbstr = false;
+    var contentMax = 1000, hasContent = true;
     var hasStatus = false, hasTarget = false;
-    var fileNumMax = 1, hasFile = true;
+    var fileNumMax = 1, hasFile = false;
     var fileNumMin = 1;
-    var onlyImage = true, onlyFile = false;
+    var onlyImage = false, onlyFile = false;
     var events = {
         count_char : function() {
             var num = $(this).val().length;
@@ -168,8 +168,8 @@ $(function() {
             var abstr = hasAbstr && $('input[name=abstr]').val();
             var target = hasTarget && $('input[name=target]:checked').val();
             var status = hasStatus && $('input[name=status]').val();
-            // var content = $('#content').val();
-            var content = hasContent && window.editor.html();
+            var content = $('#content').val();
+//            var content = hasContent && window.editor.html();
 
             var abstr = $('input[name=abstr]').val();
 
@@ -184,7 +184,7 @@ $(function() {
                     || (hasContent && parseInt($('.count').text()) > contentMax)) {
                 window.wxc.xcConfirm("标题或内容字数超限！",
                         window.wxc.xcConfirm.typeEnum.info);
-            } else if (curFiles.length < fileNumMin || curFiles.length > 10) {
+            } else if (hasFile && (curFiles.length < fileNumMin || curFiles.length > 10)) {
                 window.wxc.xcConfirm("图片必须上传！",
                         window.wxc.xcConfirm.typeEnum.info);
             } else if ( onlyImage && $('#files').children().length != 0) {
@@ -203,8 +203,8 @@ $(function() {
                 var formData = new FormData();
                 formData.append('title', title);
                 formData.append('target', target);
-                formData.append('content', content);
-                formData.append('url', abstr);
+                formData.append('introduction', content);
+                formData.append('abstr', abstr);
 
                 $.each(curFiles, function(index, file, array) {
                     formData.append('files[]', file);
@@ -212,7 +212,7 @@ $(function() {
 
                 $(".mask").show();
                 $.ajax({
-                            url : '/api/' + baseUri + '/upload',
+                            url : '/api/' + baseUri + '/edit',
                             type : 'post',
                             data : formData,
                             processData : false,
@@ -225,7 +225,7 @@ $(function() {
                                                     window.wxc.xcConfirm.typeEnum.success,
                                                     {
                                                         onOk : function(v) {
-                                                            window.location.href = "/backend/others";
+                                                            window.location.href = "/backend/others/homepage";
                                                         }
                                                     });
                                 } else {

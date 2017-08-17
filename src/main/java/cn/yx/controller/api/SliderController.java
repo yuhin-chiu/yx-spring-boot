@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.yx.entity.WhsSliders;
 import cn.yx.model.ApiResponse;
+import cn.yx.util.TimeUtil;
 
 /**
  * @author yuxuanjiao
@@ -41,10 +42,13 @@ public class SliderController extends AbstractController {
 //    }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-    public ApiResponse edit(@PathVariable Integer id, WhsSliders news) {
+    public ApiResponse edit(@PathVariable Integer id, WhsSliders sliders) {
         ApiResponse resp = new ApiResponse();
 
-        resp.setData(slidersService.update(news));
+        if(sliders.getStatus() == 1) {
+        	sliders.setCreateTime(TimeUtil.getCurrentTime());
+        }
+        resp.setData(slidersService.update(sliders));
 
         return resp;
     }

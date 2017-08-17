@@ -32,4 +32,11 @@ public class HomepageService {
     public Integer getLastId() {
         return whsHomepageMapper.getLastId();
     }
+    
+    public Integer update(WhsHomepage homepage) {
+        Integer id = whsHomepageMapper.getLastId();
+        homepage.setId(id - 1);
+        
+        return whsHomepageMapper.updateByPrimaryKeySelective(homepage);
+    }
 }

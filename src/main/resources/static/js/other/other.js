@@ -11,6 +11,8 @@ $(function() {
                 location.href = "/backend/others/help";
             } else if (cur.hasClass("list")) {
                 location.href = "/backend/others/list";
+            } else if (cur.hasClass("homepage")) {
+                location.href = "/backend/others/homepage";
             }
         },
         select_menu : function() {
