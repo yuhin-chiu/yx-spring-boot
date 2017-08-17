@@ -6,7 +6,7 @@
 <script type="text/javascript" src="/js/kindeditor-min.js"></script>
 <script type="text/javascript" src="/js/lang/zh_CN.js"></script>
 <script type="text/javascript" src="/js/other/other.js"></script>
-<script type="text/javascript" src="/js/other/sliders.js"></script>
+<script type="text/javascript" src="/js/other/help.js"></script>
 </head>
 <body page="others">
    <th:block th:include="/common/common :: toolbar"></th:block>
@@ -16,6 +16,8 @@
          <div class="mask">
             <img src="/img/waiting.gif" class="maskObj" />
          </div>
+         help
+         <!-- 
          <form id="form" method="post" enctype="multipart/form-data">
             <table width="75%">
                <tr style="height: 50px">
@@ -69,31 +71,9 @@
                </tr>
             </table>
          </form>
+          -->
       </div>
    </div>
-   <script th:inline="javascript">
-    KindEditor.ready(function(K) {
-        window.editor = K.create('textarea[name="content"]', {
-            resizeType : 1,
-            allowPreviewEmoticons : false,
-            allowImageUpload : true,
-          //  uploadJson:'/api/upload',
-            items : ['fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
-                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-                'insertunorderedlist', '|', 'emoticons', 'link', 'table', 'code', '|', 'image'],
-            afterChange : function() {
-                var num = this.count('text');
-                K('.count').html(num);
-                if (num > 500) {
-                    $(".count").css('color', 'red');
-                } else {
-                    $(".count").css('color', 'black');
-                }
-            }
-        });
-    });
-
-</script>
    <div th:include="/common/common :: footer"></div>
 </body>
 </html>

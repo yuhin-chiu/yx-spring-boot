@@ -59,4 +59,44 @@ public class WhsSlidersSqlProvider {
         sql.WHERE("id = #{id,jdbcType=INTEGER}");
         return sql.toString();
     }
+    
+    public String listSelective(Integer status, long beginTime, long endTime, Integer limit, Integer offset) {
+        SQL sql = new SQL();
+        sql.SELECT("*");
+        sql.SELECT("create_time as createTime");
+        sql.SELECT("img_key as imgKey");
+        sql.FROM("whs_sliders");
+        
+        if(status != null && status != -1) {
+            sql.WHERE("status = #{arg0,jdbcType=TINYINT}");
+        } else {
+            sql.WHERE("status != -1 ");
+        }
+        if(beginTime != -1) {
+            sql.WHERE("create_time >= #{arg1,jdbcType=BIGINT} AND #{arg2,jdbcType=BIGINT}");
+        }
+        sql.ORDER_BY("createTime desc");
+        
+        if (limit != -1) {
+            return sql + " limit " + limit + " OFFSET " + offset;
+        } else {
+            return sql.toString();
+        }
+    }
+    
+    public String countSelective(Integer status, long beginTime, long endTime) {
+        SQL sql = new SQL();
+        sql.SELECT("count(*)");
+        sql.FROM("whs_sliders");
+        
+        if(status != null && status != -1) {
+            sql.WHERE("status = #{arg0,jdbcType=TINYINT}");
+        } else {
+            sql.WHERE("status != -1 ");
+        }
+        if(beginTime != -1) {
+            sql.WHERE("create_time between #{arg1,jdbcType=BIGINT} AND #{arg2,jdbcType=BIGINT}");
+        }
+        return sql.toString();
+    }
 }

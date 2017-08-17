@@ -2,13 +2,16 @@
  * Created by jiaoyuxuan on 2017/8/8.
  */
 $(function() {
+    var baseUri = 'sliders'; 
     var curFiles = [], fileNames = [], imgTypes = [ 'jpg', 'png', 'jpeg' ];
-    var docTypes = [ 'doc', 'docx', 'xls', 'xlsx', 'xlsm', 'ppt', 'pptx' ];
-    var titleMax = 50;
-    var abstrMax = 100;
-    var contentMax = 1000;
-    var fileNumMax = 1;
+    var docTypes = [ 'doc', 'docx', 'xls', 'xlsx', 'xlsm', 'ppt', 'pptx', 'txt' ];
+    var titleMax = 20, hasTitle = true;
+    var abstrMax = 200, hasAbstr = true;
+    var contentMax = 1000, hasContent = false;
+    var hasStatus = false, hasTarget = false;
+    var fileNumMax = 1, hasFile = true;
     var fileNumMin = 1;
+    var onlyImage = true, onlyFile = false;
     var events = {
         count_char : function() {
             var num = $(this).val().length;
@@ -44,18 +47,24 @@ $(function() {
                     continue;
                 }
                 if (curFiles.length >= fileNumMax) {
-                    window.wxc.xcConfirm("图片数量不能超过" + fileNumMax + "！",
+                    window.wxc.xcConfirm("数量不能超过" + fileNumMax + "！",
                             window.wxc.xcConfirm.typeEnum.info);
                     break;
                 }
                 var infos = name.split('.');
                 var type = infos[infos.length - 1];
                 var status = $('input[name=status]:checked');
-                if (imgTypes.indexOf(type) == -1) { // 当前只支持图片上传
+                
+                if (onlyImage && imgTypes.indexOf(type) == -1) { // 当前只支持图片上传
                     window.wxc.xcConfirm("只支持图片上传！（jpg、jpeg、png）",
                             window.wxc.xcConfirm.typeEnum.info);
                     continue;
-                }
+                } else if (onlyFile && docTypes.indexOf(type) == -1) { // 当前只支持图片上传
+                    window.wxc.xcConfirm("只支持文件上传！（doc , docx , xls , xlsx , xlsm , ppt , pptx , txt ）",
+                            window.wxc.xcConfirm.typeEnum.info);
+                    continue;
+                } 
+                
                 var url = window.URL.createObjectURL(files[i]);
 
                 if (imgTypes.indexOf(type) != -1) {
@@ -155,32 +164,35 @@ $(function() {
 
         },
         publish : function() {
-            var title = $('input[name=title]').val();
-            var abstr = $('input[name=abstr]').val();
-            var target = $('input[name=target]:checked').val();
-            var status = true;
+            var title = hasTitle && $('input[name=title]').val();
+            var abstr = hasAbstr && $('input[name=abstr]').val();
+            var target = hasTarget && $('input[name=target]:checked').val();
+            var status = hasStatus && $('input[name=status]').val();
             // var content = $('#content').val();
-            var content = window.editor.html();
+            var content = hasContent && window.editor.html();
 
             var abstr = $('input[name=abstr]').val();
 
-            if (title.length == 0 || abstr.length == 0 || !target || !status || content.length == 0) {
+            if ((hasTitle && title.length == 0) 
+                    || ( hasAbstr && abstr.length == 0) 
+                    || ( hasTarget && !target ) 
+                    || ( hasStatus && !status )
+                    || ( hasContent && content.length == 0)) {
                 window.wxc.xcConfirm("请补充完整信息！",
                         window.wxc.xcConfirm.typeEnum.info);
-            } else if (title.length > titleMax || abstr.length > abstrMax
-                    || parseInt($('.count').text()) > contentMax) {
+            } else if ((hasTitle && title.length > titleMax) || (hasAbstr && abstr.length > abstrMax)
+                    || (hasContent && parseInt($('.count').text()) > contentMax)) {
                 window.wxc.xcConfirm("标题或内容字数超限！",
                         window.wxc.xcConfirm.typeEnum.info);
             } else if (curFiles.length < fileNumMin || curFiles.length > 10) {
                 window.wxc.xcConfirm("图片必须上传！",
                         window.wxc.xcConfirm.typeEnum.info);
-            }
-            // else if ((target.eq(0).val() == 1 || target.eq(1).val() == 1) &&
-            // $('#files').children().length != 0) {
-            // window.wxc.xcConfirm("APP只支持图片发布！",
-            // window.wxc.xcConfirm.typeEnum.info);
-            // }
+            } else if ( onlyImage && $('#files').children().length != 0) {
+                 window.wxc.xcConfirm("只支持图片发布！",
+                 window.wxc.xcConfirm.typeEnum.info);
+             }
             else {
+                // 多选
                 // var targetStr = '';
                 // for (var i = 0; i < target.length; i++) {
                 // targetStr += target.eq(i).val();
@@ -192,7 +204,7 @@ $(function() {
                 formData.append('title', title);
                 formData.append('target', target);
                 formData.append('content', content);
-                formData.append('abstr', abstr);
+                formData.append('url', abstr);
 
                 $.each(curFiles, function(index, file, array) {
                     formData.append('files[]', file);
@@ -200,7 +212,7 @@ $(function() {
 
                 $(".mask").show();
                 $.ajax({
-                            url : '/api/news/upload',
+                            url : '/api/' + baseUri + '/upload',
                             type : 'post',
                             data : formData,
                             processData : false,
@@ -213,7 +225,7 @@ $(function() {
                                                     window.wxc.xcConfirm.typeEnum.success,
                                                     {
                                                         onOk : function(v) {
-                                                            window.location.href = "/backend/news/list";
+                                                            window.location.href = "/backend/others";
                                                         }
                                                     });
                                 } else {

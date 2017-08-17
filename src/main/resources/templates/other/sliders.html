@@ -34,23 +34,25 @@
                      </div>
                   </td>
                </tr>
-               <tr style="height: 40px">
-                  <th style="text-align: right">所属栏目</th>
+               <tr style="height: 50px">
+                  <th style="width: 10%; text-align: right">跳转链接</th>
                   <td width="2%"></td>
-                  <td><label class="checkbox-inline"> <input
-                        type="radio" name="target" class="target"
-                        value="0" checked="checked"/> <span>下载文件</span>
-                  </label> <label class="checkbox-inline"> <input
-                        type="radio" name="target" class="target"
-                        value="1" /> <span>酒店推荐</span>
-                  </label> <label class="checkbox-inline"> <input
-                        type="radio" name="target" class="target"
-                        value="2" /> <span>参观资料</span>
-                  </label></td>
+                  <td>
+                     <div style="position: relative; width: 100%">
+                        <div
+                           style="position: absolute; right: 5px; top: 5px;">
+                           <span id="abstrCount">0</span>/200
+                        </div>
+                        <input id="out2" type="text" style="width: 100%;" />
+                        <input name="abstr" type="text"
+                           placeholder="请把需要跳转的新闻或活动链接粘贴到此处"
+                           style="width: 92%; height: 28px; position: absolute; top: 1px; left: 1px; border: 0; outline: none" />
+                     </div>
+                  </td>
                </tr>
                <tr>
                   <th
-                     style="text-align: right; vertical-align: text-top; padding-top: 15px">附件</th>
+                     style="text-align: right; vertical-align: text-top; padding-top: 15px">图片</th>
                   <td width="2%"></td>
                   <td style="padding-top: 15px">
                      <div id="extra">
@@ -59,7 +61,7 @@
                      </div> <input type="file" name="files"
                      multiple="multiple" class="hidden" /> <input
                      id="upload" type="button" class="btn btn-default"
-                     value="上传文件" style="width: 100px;" />
+                     value="上传图片" style="width: 100px;" />
                   </td>
                </tr>
                <tr style="text-align: right">

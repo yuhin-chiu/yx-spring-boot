@@ -30,7 +30,7 @@ public class HomepageController extends AbstractController {
         ApiResponse resp = new ApiResponse();
         JSONObject obj = homepageService.getBaseInfo();
         // 滚动窗口
-        List<WhsSliders> sliders = slidersService.getNew();
+        List<WhsSliders> sliders = slidersService.getNew(3);
         // 最新动态
         List<WhsNews> news = newsService.getNew();
         // 同期活动

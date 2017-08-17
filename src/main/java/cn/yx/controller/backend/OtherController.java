@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/backend/others")
 public class OtherController {
 
-    @RequestMapping({"", "/", "/sliders"})
+    @RequestMapping({"", "/", "/list"})
     public String list() {
+        return "/other/list";
+    }
+    
+    @RequestMapping("/sliders")
+    public String sliders() {
         return "/other/sliders";
     }
     

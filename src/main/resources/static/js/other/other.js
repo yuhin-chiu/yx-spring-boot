@@ -9,6 +9,8 @@ $(function() {
                 location.href = "/backend/others/sliders";
             } else if (cur.hasClass("help")) {
                 location.href = "/backend/others/help";
+            } else if (cur.hasClass("list")) {
+                location.href = "/backend/others/list";
             }
         },
         select_menu : function() {

@@ -6,9 +6,11 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
@@ -72,11 +74,10 @@ public interface WhsSlidersMapper {
             "create_time = #{createTime,jdbcType=BIGINT}", "where id = #{id,jdbcType=INTEGER}" })
     int updateByPrimaryKey(WhsSliders record);
 
-    @Select({
-        "select",
-        "id, img_key, title, url, status, create_time",
-        "from whs_sliders",
-        "where status = 0"
+    @Select({ "<script>select id, img_key, title, url, status, create_time from whs_sliders where status = 1 "
+            + "order by create_time desc"
+            + "<if test='size != null &amp;&amp; size != -1'> limit #{size} </if>"
+            + "<if test='size == null || size == -1'> limit 3 </if> </script>"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
@@ -85,24 +86,7 @@ public interface WhsSlidersMapper {
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.INTEGER)
     })
-    List<WhsSliders> selectAll();
-    
-    @Select({
-        "select",
-        "id, img_key, title, url, status, create_time",
-        "from whs_sliders",
-        "where status = 0",
-        "order by create_time desc",
-        "limit 10"
-    })
-    @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="img_key", property="imgKey", jdbcType=JdbcType.VARCHAR),
-        @Result(column="title", property="title", jdbcType=JdbcType.VARCHAR),
-        @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
-        @Result(column="create_time", property="createTime", jdbcType=JdbcType.INTEGER)
-    })
-    List<WhsSliders> selectNew();
+    List<WhsSliders> selectNew(@Param("size")Integer size);
     
     @Select({
         "select",
@@ -117,4 +101,13 @@ public interface WhsSlidersMapper {
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.INTEGER)
     })
     List<WhsSliders> selectAllWithoutStatus();
+    
+    @SelectProvider(type = WhsSlidersSqlProvider.class, method = "listSelective")
+    List<WhsSliders> list(Integer status, long beginTime, long endTime, Integer limit, Integer offset);
+    
+    @SelectProvider(type = WhsSlidersSqlProvider.class, method = "countSelective")
+    int count(Integer status, long beginTime, long endTime);
+    
+    @Select("SELECT max(id) + 1 FROM whs_sliders")
+    Integer getLastId();
 }
