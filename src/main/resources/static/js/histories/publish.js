@@ -10,7 +10,7 @@ $(function() {
     Max["abstr"] = 100;
     Max["phone"] = 11;
     Max["principal"] = 20;
-    Max["content"] = 1000;
+    Max["content"] = 20000;
     var hasTitle = true;
     var hasAbstr = false;
     var hasContent = true;

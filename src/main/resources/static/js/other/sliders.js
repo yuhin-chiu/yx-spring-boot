@@ -173,8 +173,7 @@ $(function() {
 
             var abstr = $('input[name=abstr]').val();
 
-            if ((hasTitle && title.length == 0) 
-                    || ( hasAbstr && abstr.length == 0) 
+            if ((hasTitle && title.length == 0)
                     || ( hasTarget && !target ) 
                     || ( hasStatus && !status )
                     || ( hasContent && content.length == 0)) {

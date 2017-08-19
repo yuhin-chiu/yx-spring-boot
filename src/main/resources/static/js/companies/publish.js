@@ -191,11 +191,10 @@ $(function() {
                     || ( hasAbstr && abstr.length == 0) 
                     || ( hasTarget && !target ) 
                     || ( hasStatus && !status )
-                    || ( hasContent && content.length == 0)
-                    || principal.length == 0) {
+                    || ( hasContent && content.length == 0)) {
                 window.wxc.xcConfirm("请补充完整信息！",
                         window.wxc.xcConfirm.typeEnum.info);
-            } else if (phone.length != Max["phone"]) {
+            } else if (phone.length != 0 && phone.length != Max["phone"]) {
                 window.wxc.xcConfirm("请检查手机号！",
                         window.wxc.xcConfirm.typeEnum.info);
             } else if ((hasTitle && title.length > Max["title"]) || (hasAbstr && abstr.length > Max["abstr"])

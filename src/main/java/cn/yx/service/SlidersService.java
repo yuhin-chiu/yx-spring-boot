@@ -2,6 +2,7 @@ package cn.yx.service;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,9 @@ public class SlidersService extends AbstractService {
             news.setCreateTime(TimeUtil.getCurrentTime());
         } else {
             news.setCreateTime(TimeUtil.dayStr2Seconds(createTime));
+        }
+        if(StringUtils.isBlank(url)) {
+        	url = "#";
         }
         news.setUrl(url);
         news.setImgKey(imgKey);

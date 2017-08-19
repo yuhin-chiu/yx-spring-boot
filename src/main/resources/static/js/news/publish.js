@@ -6,7 +6,7 @@ $(function() {
     var docTypes = [ 'doc', 'docx', 'xls', 'xlsx', 'xlsm', 'ppt', 'pptx' ];
     var titleMax = 50;
     var abstrMax = 100;
-    var contentMax = 1000;
+    var contentMax = 20000;
     var fileNumMax = 1;
     var fileNumMin = 1;
     var events = {
@@ -26,6 +26,7 @@ $(function() {
             var num = $(this).val().length;
             var count = $(".count");
             count.text(num);
+            console.log(num + ": " + contentMax);
             if (num > contentMax) {
                 count.css('color', 'red');
             } else {

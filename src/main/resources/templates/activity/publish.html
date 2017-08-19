@@ -69,7 +69,7 @@
                      <div style="position: relative; width: 100%">
                         <div
                            style="position: absolute; right: 5px; top: 5px;">
-                           <span class="count">0</span>/1000
+                           <span class="count">0</span>/20000
                         </div>
                         <!-- 
                         <textarea name="content" id="content"
@@ -116,7 +116,7 @@
             afterChange : function() {
                 var num = this.count('text');
                 K('.count').html(num);
-                if (num > 500) {
+                if (num > 20000) {
                     $(".count").css('color', 'red');
                 } else {
                     $(".count").css('color', 'black');
