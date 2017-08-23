@@ -39,7 +39,7 @@ public class FileController extends AbstractController {
             // 当前是从该工程目录的File文件夹中获取文件(该目录在常量中配置了)
 //            response.setContentType("application/force-download");// 设置强制下载不打开
 //            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
-            response.setDateHeader("expires", System.currentTimeMillis()+ 30*24*3600*1000); // 这个单位特么是毫秒？
+            response.setDateHeader("expires", System.currentTimeMillis()+ 30*24*3600*1000L); // 这个单位特么是毫秒？
             FileUtil.downloadFile(fileName, new BufferedOutputStream(response.getOutputStream()), this.getClass());
         }
     }
