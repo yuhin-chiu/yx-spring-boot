@@ -26,7 +26,7 @@ $(function() {
         title : "所属栏目",
         field : "parent",
         align : "center",
-        formatter : (value) => {
+        formatter : function(value) {
             switch(value) {
                 case 0: return "展会动态";
                 case 1: return "展商新闻";
@@ -83,10 +83,10 @@ $(function() {
 
     function callback(data) {
         $("#num").text(data.total);
-        $(".remove").each((i) => {
-            $($(".remove")[i]).click(() => {
+        $(".remove").each(function(i) {
+            $($(".remove")[i]).click(function() {
                 var rowid = $($(".remove")[i]).attr("rowid");
-                $.post("/api/" + baseUri + "/edit/"+rowid, {status: -1}, (data) => {
+                $.post("/api/" + baseUri + "/edit/"+rowid, {status: -1}, function(data) {
                     if(data.code == 200) {
                         window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success, {
                             onOk: function(v) {
@@ -98,9 +98,9 @@ $(function() {
                     }
                 });
             });
-            $($(".yes")[i]).click(() => {
+            $($(".yes")[i]).click(function() {
                 var rowid = $($(".yes")[i]).attr("rowid");
-                $.post("/api/" + baseUri + "/edit/"+rowid, {status: 1}, (data) => {
+                $.post("/api/" + baseUri + "/edit/"+rowid, {status: 1}, function(data) {
                     if(data.code == 200) {
                         window.wxc.xcConfirm("设置首页推荐成功！", window.wxc.xcConfirm.typeEnum.success, {
                             onOk: function(v) {
@@ -112,9 +112,9 @@ $(function() {
                     }
                 });
             });
-            $($(".no")[i]).click(() => {
+            $($(".no")[i]).click(function() {
                 var rowid = $($(".no")[i]).attr("rowid");
-                $.post("/api/" + baseUri + "/edit/"+rowid, {status: 0}, (data) => {
+                $.post("/api/" + baseUri + "/edit/"+rowid, {status: 0}, function(data) {
                     if(data.code == 200) {
                         window.wxc.xcConfirm("删除首页推荐成功！", window.wxc.xcConfirm.typeEnum.success, {
                             onOk: function(v) {
