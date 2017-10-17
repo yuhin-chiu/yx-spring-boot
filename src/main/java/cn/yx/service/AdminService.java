@@ -1,9 +1,11 @@
 package cn.yx.service;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
+import cn.yx.mapper.AdminMapper;
 import cn.yx.model.Admin;
-import cn.yx.util.MD5Util;
 
 /**
  * @author yuxuanjiao
@@ -14,21 +16,18 @@ import cn.yx.util.MD5Util;
 @Service
 public class AdminService {
 
+    @Resource
+    private AdminMapper adminMapper;
+    
     public Admin checkUser(Admin admin) {
-//        return adminMapper.checkUser(admin.getAccount());
-        if("admin".equals(admin.getAccount())) {
-            Admin ad = new Admin();
-            ad.setAccount("admin");
-            ad.setUserName("admin");
-            ad.setPasswd(MD5Util.toMD5("888888"));
-            return ad;
-        }
-        
-        return null;
+        return adminMapper.checkUser(admin.getAccount());
     }
 
     public void addUser(String account, String password, String userName) {
-//        adminMapper.addUser(account, password, userName);
-        
+        adminMapper.addUser(account, password, userName);
+    }
+
+    public void modifyUser(String account, String password) {
+        adminMapper.modifyUser(account, password);
     }
 }

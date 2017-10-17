@@ -5,10 +5,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
 
 import cn.yx.controller.api.AbstractController;
 import cn.yx.holder.AdminInfoHolder;
 import cn.yx.model.Admin;
+import cn.yx.util.MD5Util;
 
 /**
  * @author yuxuanjiao
@@ -47,7 +52,7 @@ public class IndexController extends AbstractController {
         }
         return "/index/login";
     }
-    
+
     @RequestMapping("/test")
     public String upload() {
         return "/index/upload";
@@ -77,21 +82,59 @@ public class IndexController extends AbstractController {
     // outputStream.close();
     // }
 
-    // @RequestMapping("/addUser")
-    // @ResponseBody
-    // public JSONObject register(@RequestParam String account, @RequestParam String
-    // password, @RequestParam String name) {
-    // JSONObject resp = new JSONObject();
-    // try {
-    // password = MD5Util.toMD5(password);
-    // adminService.addUser(account, password, name);
-    // resp.put("code", 200);
-    // resp.put("msg", "添加成功");
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // resp.put("code", -1);
-    // resp.put("msg", "添加失败");
-    // }
-    // return resp;
-    // }
+    @RequestMapping("/addUser")
+    @ResponseBody
+    public JSONObject register(@RequestParam String account, @RequestParam String password, @RequestParam String name,
+            @RequestParam(value = "key", required = false) String key) {
+        JSONObject resp = new JSONObject();
+        if(key == null || !checkKey(key)) {
+            resp.put("code", 304);
+            resp.put("msg", "你没有权限添加用户哦");
+            return resp;
+        }
+        try {
+            password = MD5Util.toMD5(password);
+            adminService.addUser(account, password, name);
+            resp.put("code", 200);
+            resp.put("msg", "添加成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.put("code", -1);
+            resp.put("msg", "添加失败");
+        }
+        return resp;
+    }
+
+    @RequestMapping("/modifyPwd")
+    @ResponseBody
+    public JSONObject modifyPwd(@RequestParam String account, @RequestParam String password,
+            @RequestParam(value = "key", required = false) String key) {
+        JSONObject resp = new JSONObject();
+        if(key == null || !checkKey(key)) {
+            resp.put("code", 304);
+            resp.put("msg", "你没有权限修改密码哦");
+            return resp;
+        }
+        try {
+            password = MD5Util.toMD5(password);
+            adminService.modifyUser(account, password);
+            resp.put("code", 200);
+            resp.put("msg", "修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.put("code", -1);
+            resp.put("msg", "修改失败");
+        }
+        return resp;
+    }
+
+    private boolean checkKey(String key) {
+        Admin admin = new Admin();
+        admin.setAccount("yuxuan");
+        Admin check = adminService.checkUser(admin);
+        if(check != null && check.getPasswd().equals(MD5Util.toMD5(key))) {
+            return true;
+        }
+        return false;
+    }
 }
