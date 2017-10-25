@@ -30,11 +30,15 @@ $(function () {
                 location.href = "/backend/others";
             }
             
+        },
+        goto_home: function() {
+            window.open("http://www.sportswuhan.com/", "_blank"); 
         }
     };
 
     function bind_event() {
         $(".header-content .header-main div span").click(events.jump);
+        $(".logo").click(events.goto_home);
     }
 
     function init() {

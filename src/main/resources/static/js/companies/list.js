@@ -17,7 +17,7 @@ $(function() {
         width : 200
     }, {
         title : "首页图片",
-        field : "url",
+        field : "imageUrl",
         align : "center",
         width : 40,
         formatter : function(value) {

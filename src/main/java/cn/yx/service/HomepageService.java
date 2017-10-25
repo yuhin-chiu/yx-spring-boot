@@ -16,27 +16,28 @@ import cn.yx.mapper.WhsHomepageMapper;
  */
 
 @Service
-public class HomepageService {
+public class HomepageService extends AbstractService {
 
     @Autowired
     private WhsHomepageMapper whsHomepageMapper;
 
     public JSONObject getBaseInfo() {
-        // TODO 这里应该查最新的
         Integer index = getLastId();
         WhsHomepage whshomepage = whsHomepageMapper.selectByPrimaryKey(index - 1);
+        whshomepage.setLogoUrl(parseUri2Url(whshomepage.getLogo()));
+        whshomepage.setTime(parseTimeRange2Time(whshomepage.getBeginTime(), whshomepage.getEndTime()));
         JSONObject resp = (JSONObject) JSON.toJSON(whshomepage);
         return resp;
     }
-    
+
     public Integer getLastId() {
         return whsHomepageMapper.getLastId();
     }
-    
+
     public Integer update(WhsHomepage homepage) {
         Integer id = whsHomepageMapper.getLastId();
         homepage.setId(id - 1);
-        
+
         return whsHomepageMapper.updateByPrimaryKeySelective(homepage);
     }
 }

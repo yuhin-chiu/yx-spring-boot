@@ -34,7 +34,7 @@ public class CompanyService extends AbstractService {
     public List<WhsCompany> list(Integer status, Integer pageSize, Integer currentPage) {
         List<WhsCompany> rList = comMapper.list(status, pageSize, pageSize * (currentPage - 1));
         rList.forEach((item) -> {
-            item.setUrl(parseUri2Url(item.getImage()));
+            item.setImageUrl(parseUri2Url(item.getImage()));
             item.setCreateTimeStr(TimeUtil.time2DayStr(item.getCreateTime()));
         });
         return rList;
