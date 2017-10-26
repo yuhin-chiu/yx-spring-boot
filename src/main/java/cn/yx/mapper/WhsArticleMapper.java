@@ -1,6 +1,7 @@
 package cn.yx.mapper;
 
-import cn.yx.entity.WhsArticle;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
@@ -10,6 +11,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
+
+import cn.yx.entity.WhsArticle;
 
 public interface WhsArticleMapper {
     /**
@@ -112,4 +115,11 @@ public interface WhsArticleMapper {
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(WhsArticle record);
+
+    @Select({
+        "select id, title",
+        "from whs_article",
+        "where parent = #{parent,jdbcType=INTEGER}"
+    })
+    List<WhsArticle> getTitles(Integer parent);
 }

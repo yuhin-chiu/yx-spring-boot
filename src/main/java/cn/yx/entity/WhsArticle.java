@@ -200,4 +200,10 @@ public class WhsArticle {
     public void setContent(String content) {
         this.content = content;
     }
+    
+    public WhsArticle() {}
+    public WhsArticle(Integer parent, String title) {
+        this.parent = parent;
+        this.title = title;
+    }
 }

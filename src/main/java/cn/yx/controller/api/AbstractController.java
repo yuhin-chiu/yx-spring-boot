@@ -7,9 +7,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -17,6 +14,7 @@ import cn.yx.enums.ApiResponseEnum;
 import cn.yx.model.ApiResponse;
 import cn.yx.service.ActivitiesService;
 import cn.yx.service.AdminService;
+import cn.yx.service.ArticlesService;
 import cn.yx.service.AudienceService;
 import cn.yx.service.CompanyService;
 import cn.yx.service.DownloadsService;
@@ -54,6 +52,8 @@ public abstract class AbstractController {
     protected DownloadsService downloadsService;
     @Resource
     protected AdminService adminService;
+    @Resource
+    protected ArticlesService articlesService;
     
     protected ApiResponse uploadFiles(HttpServletRequest request, Class clzss) {
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("files[]");

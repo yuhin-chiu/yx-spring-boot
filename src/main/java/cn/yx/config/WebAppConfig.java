@@ -4,11 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
 import cn.yx.interceptors.LoginInterceptor;
 
@@ -47,4 +51,15 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         super.addViewControllers(registry);
     }
 
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        super.configureMessageConverters(converters);
+        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
+        SerializerFeature[] features = new SerializerFeature[] {
+                SerializerFeature.QuoteFieldNames,
+                SerializerFeature.WriteDateUseDateFormat,
+                SerializerFeature.PrettyFormat};
+        fastJsonHttpMessageConverter.setFeatures(features);
+        converters.add(fastJsonHttpMessageConverter);
+    }
 }

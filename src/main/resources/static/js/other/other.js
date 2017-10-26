@@ -13,6 +13,8 @@ $(function() {
                 location.href = "/backend/others/list";
             } else if (cur.hasClass("homepage")) {
                 location.href = "/backend/others/homepage";
+            } else if (cur.hasClass("article")) {
+                location.href = "/backend/others/article";
             }
         },
         select_menu : function() {
