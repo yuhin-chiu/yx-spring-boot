@@ -58,10 +58,13 @@ public abstract class AbstractController {
     protected ApiResponse uploadFiles(HttpServletRequest request, Class clzss) {
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("files[]");
         MultipartFile file = null;
-        System.out.println(files.size());
         List<String> annexs = new ArrayList<>();
         ApiResponse temp, resp = new ApiResponse();
 
+        if(files == null || files.size() == 0) {
+            resp.setCode(-1);
+            return resp;
+        }
         for (int i = 0; i < files.size(); ++i) {
             file = files.get(i);
             if (!file.isEmpty()) {

@@ -1,5 +1,6 @@
 package cn.yx.controller.api;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,13 @@ public class ArticlesController extends AbstractController {
     @RequestMapping("/getContent")
     public WhsArticle getContent(@RequestParam(value = "id") Long id) {
         return articlesService.getContent(id);
+    }
+
+    @RequestMapping("/getContent/{id}")
+    public ApiResponse getContentPath(@PathVariable(required = true) Long id) {
+        ApiResponse resp = new ApiResponse();
+        resp.setData(articlesService.getContent(id));
+        return resp;
     }
 
     @RequestMapping(value = "/editContent", method = RequestMethod.POST)

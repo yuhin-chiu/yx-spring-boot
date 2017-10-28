@@ -2,6 +2,8 @@ package cn.yx.controller.api;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -60,8 +62,14 @@ public class HomepageController extends AbstractController {
     }
 
     @RequestMapping("/edit")
-    public ApiResponse edit(WhsHomepage homepage) {
-        ApiResponse resp = new ApiResponse();
+    public ApiResponse edit(WhsHomepage homepage, HttpServletRequest request) {
+        ApiResponse resp = uploadFiles(request, this.getClass());
+        if(resp.getCode() == 200) {
+            String imgKey = (String) resp.getData();
+            homepage.setLogo(imgKey);
+        } else {
+            resp.setCode(200);
+        }
         Integer obj = homepageService.update(homepage);
         resp.setData(obj);
         return resp;

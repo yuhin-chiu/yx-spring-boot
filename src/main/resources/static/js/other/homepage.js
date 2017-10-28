@@ -5,13 +5,15 @@ $(function() {
     var baseUri = 'homepage'; 
     var curFiles = [], fileNames = [], imgTypes = [ 'jpg', 'png', 'jpeg' ];
     var docTypes = [ 'doc', 'docx', 'xls', 'xlsx', 'xlsm', 'ppt', 'pptx', 'txt' ];
-    var titleMax = 20, hasTitle = false;
+    var titleMax = 20, hasTitle = true;
     var abstrMax = 200, hasAbstr = false;
     var contentMax = 1000, hasContent = true;
     var hasStatus = false, hasTarget = false;
-    var fileNumMax = 1, hasFile = false;
-    var fileNumMin = 1;
-    var onlyImage = false, onlyFile = false;
+    var fileNumMax = 1, hasFile = true;
+    var fileNumMin = 0;
+    var onlyImage = true, onlyFile = false;
+    var beginTime;
+    var endTime;
     var events = {
         count_char : function() {
             var num = $(this).val().length;
@@ -201,14 +203,22 @@ $(function() {
                 // }
                 // }
                 var formData = new FormData();
-                formData.append('title', title);
-                formData.append('target', target);
+                formData.append('address', title);
                 formData.append('introduction', content);
+                if(beginTime) {
+                    formData.append('beginTime', beginTime);
+                }
+                if(endTime) {
+                    formData.append('endTime', endTime);
+                }
+                formData.append('target', target);
                 formData.append('abstr', abstr);
 
-                $.each(curFiles, function(index, file, array) {
-                    formData.append('files[]', file);
-                });
+                if(curFiles.length == 1) {
+                    $.each(curFiles, function(index, file, array) {
+                        formData.append('files[]', file);
+                    });    
+                }
 
                 $(".mask").show();
                 $.ajax({
@@ -242,6 +252,15 @@ $(function() {
                         });
 
             }
+        },
+        view_old_info: function () {
+            $.get("/api/homepage/base", function (data) {
+                $('#content').val(data.data.introduction);
+                $("#timeRange").data('daterangepicker').setStartDate(data.data.beginTime);
+                $("#timeRange").data('daterangepicker').setEndDate(data.data.endTime);
+                $("#timeRange").val(data.data.beginTime.substr(0, 10) + " - " + data.data.endTime.substr(0, 10))
+                $("input[name=title]").val(data.data.address);
+            });
         }
     };
 
@@ -252,9 +271,14 @@ $(function() {
         $("#upload").click(events.display_file_upload);
         $("input[name=files]").change(events.preview_file);
         $("#publish").click(events.publish);
+        events.view_old_info();
     }
 
     function init() {
+        var daterange = $("#timeRange").daterangepicker({}, function(start, end, label) {
+            beginTime = start;
+            endTime = end;
+        });
         event_bind();
     }
 
