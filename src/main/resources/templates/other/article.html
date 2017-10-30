@@ -19,24 +19,24 @@
          <form id="form" method="post" enctype="multipart/form-data">
             <table width="75%">
                <tr style="height: 50px">
-                  <th style="width: 10%; text-align: right">文章栏目</th>
+                  <th style="width: 10%; text-align: right">频道</th>
                   <td width="2%"></td>
                   <td>
                      <div style="position: relative; width: 100%">
                          <select id="parent" style="width: 120px">
-                             <option value="-1">--选择栏目--</option>
+                             <option value="-1">--选择频道--</option>
                              <option th:each="parent: ${parents}" th:text="${parent.title}" th:value="${parent.parent}"></option>
                          </select>
                      </div>
                   </td>
                </tr>
                <tr style="height: 50px">
-                  <th style="width: 10%; text-align: right">文章标题</th>
+                  <th style="width: 10%; text-align: right">栏目</th>
                   <td width="2%"></td>
                   <td>
                       <div style="position: relative; width: 100%">
                          <select id="title" style="width: 120px">
-                             <option value="-1">--选择标题--</option>
+                             <option value="-1">--选择栏目--</option>
                          </select>
                      </div>
                   </td>
@@ -56,10 +56,18 @@
                      </div>
                   </td>
                </tr>
+               <tr style="text-align: left">
+                  <td colspan="2">
+                  </td>
+                  <td>
+                    <p style="margin-top: 10px;margin-bottom:0px;">注：编辑正文时建议尽量只对文字进行插入删除，避免对整行整段做删除操作，</p>
+                    <p style="margin-top: 5px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;否则可能造成样式丢失，需要重新排版。</p>
+                  </td>
+               </tr>
                <tr style="text-align: right">
-                  <td colspan="3"><input id="publish" type="button"
-                     class="btn btn-primary" value="提交"
-                     style="width: 100px;" /></td>
+                  <td colspan="3">
+                    <input id="publish" type="button" class="btn btn-primary" value="提交" style="width: 100px;" />
+                  </td>
                </tr>
             </table>
          </form>
@@ -72,10 +80,9 @@
             allowPreviewEmoticons : false,
             allowImageUpload : true,
           //  uploadJson:'/api/upload',
-            items : [],
-            //['fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
-              //  'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-                //'insertunorderedlist', '|', 'emoticons', 'link', 'table', 'code', '|', 'image'],
+            items : ['fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist', '|', 'emoticons', 'link', 'table', 'code', '|', 'image'],
             afterChange : function() {
                 var num = this.count('text');
                 K('.count').html(num);
