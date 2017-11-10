@@ -11,7 +11,7 @@ $(function() {
     var hasStatus = false, hasTarget = true;
     var fileNumMax = 1, hasFile = true;
     var fileNumMin = 1;
-    var onlyImage = false, onlyFile = true;
+    var onlyImage = false, onlyFile = false;
     var events = {
         count_char : function() {
             var num = $(this).val().length;
