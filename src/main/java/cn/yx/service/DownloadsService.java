@@ -49,7 +49,8 @@ public class DownloadsService extends AbstractService {
         return downMapper.insertSelective(down);
     }
 
-    public Integer getLastId() {
+    @Override
+    public int getLastId() {
         return downMapper.getLastId();
     }
     

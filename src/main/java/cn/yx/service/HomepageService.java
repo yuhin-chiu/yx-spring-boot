@@ -30,7 +30,8 @@ public class HomepageService extends AbstractService {
         return resp;
     }
 
-    public Integer getLastId() {
+    @Override
+    public int getLastId() {
         return whsHomepageMapper.getLastId();
     }
 

@@ -16,7 +16,6 @@ import cn.yx.constant.FileConstant;
  * @date 2017年8月10日 下午8:37:41
  * @version 1.0
  */
-@Service
 public class AbstractService {
 
     @Autowired
@@ -57,5 +56,10 @@ public class AbstractService {
 
         String time = format1.format(beginTime) + "~" + format2.format(endTime);
         return time;
+    }
+
+    public int getLastId() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 }

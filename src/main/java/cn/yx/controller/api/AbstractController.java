@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.yx.enums.ApiResponseEnum;
 import cn.yx.model.ApiResponse;
+import cn.yx.service.AbstractService;
 import cn.yx.service.ActivitiesService;
 import cn.yx.service.AdminService;
 import cn.yx.service.ArticlesService;
@@ -55,7 +56,7 @@ public abstract class AbstractController {
     @Resource
     protected ArticlesService articlesService;
     
-    protected ApiResponse uploadFiles(HttpServletRequest request, Class clzss) {
+    protected ApiResponse uploadFiles(HttpServletRequest request, AbstractService service, Class clzss) {
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("files[]");
         MultipartFile file = null;
         List<String> annexs = new ArrayList<>();
@@ -68,7 +69,7 @@ public abstract class AbstractController {
         for (int i = 0; i < files.size(); ++i) {
             file = files.get(i);
             if (!file.isEmpty()) {
-                Integer id = newsService.getLastId(); // 有问题
+                Integer id = service.getLastId(); // 有问题
                 String fileName = file.getOriginalFilename();
                 temp = FileUtil.uploadFile(file, clzss.getSimpleName() + "/" + id + "/" + FileUtil.randomName(fileName), clzss);
                 if (temp.getCode().compareTo(ApiResponseEnum.SUCCESS.getCode()) != 0) {

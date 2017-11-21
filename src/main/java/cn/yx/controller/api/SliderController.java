@@ -57,7 +57,7 @@ public class SliderController extends AbstractController {
     public ApiResponse uploadNews(@RequestParam("title") String title, String createTime,
             @RequestParam(name = "url", defaultValue = "", required = true) String url,
             @RequestParam(defaultValue = "1", required = false) Integer status, HttpServletRequest request) {
-        ApiResponse resp = uploadFiles(request, this.getClass());
+        ApiResponse resp = uploadFiles(request, slidersService, this.getClass());
         String imgKey = (String) resp.getData();
         resp.setData(slidersService.upload(title, imgKey, createTime, url, status));
         return resp;

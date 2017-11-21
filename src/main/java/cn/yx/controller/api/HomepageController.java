@@ -63,7 +63,7 @@ public class HomepageController extends AbstractController {
 
     @RequestMapping("/edit")
     public ApiResponse edit(WhsHomepage homepage, HttpServletRequest request) {
-        ApiResponse resp = uploadFiles(request, this.getClass());
+        ApiResponse resp = uploadFiles(request, homepageService, this.getClass());
         if(resp.getCode() == 200) {
             String imgKey = (String) resp.getData();
             homepage.setLogo(imgKey);

@@ -41,8 +41,8 @@ public class NewsService extends AbstractService {
     }
 
     public WhsNews getDetail(int id) {
-    	WhsNews rNews = whsNewsMapper.selectByPrimaryKey(id);
-    	rNews.setCreateTimeStr(TimeUtil.time2DayStr(rNews.getCreateTime()));
+        WhsNews rNews = whsNewsMapper.selectByPrimaryKey(id);
+        rNews.setCreateTimeStr(TimeUtil.time2DayStr(rNews.getCreateTime()));
         return rNews;
     }
 
@@ -74,7 +74,8 @@ public class NewsService extends AbstractService {
         return news;
     }
 
-    public Integer getLastId() {
+    @Override
+    public int getLastId() {
         return whsNewsMapper.getLastId();
     }
 }

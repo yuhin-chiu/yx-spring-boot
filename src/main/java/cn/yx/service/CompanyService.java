@@ -57,10 +57,11 @@ public class CompanyService extends AbstractService {
         long[] time = TimeUtil.splitTimeRange(timeRange);
         return comApplyMapper.count(status, time[0], time[1]);
     }
+
     public int updateApply(WhsCompanyApply com) {
         return comApplyMapper.updateByPrimaryKeySelective(com);
     }
-    
+
     public int update(WhsCompany com) {
         return comMapper.updateByPrimaryKeySelective(com);
     }
@@ -68,7 +69,8 @@ public class CompanyService extends AbstractService {
     public int add(WhsCompany com) {
         return comMapper.insertSelective(com);
     }
-    
+
+    @Override
     public int getLastId() {
         return comMapper.getLastId();
     }

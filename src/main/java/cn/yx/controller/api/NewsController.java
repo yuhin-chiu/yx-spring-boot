@@ -61,7 +61,7 @@ public class NewsController extends AbstractController {
     public ApiResponse uploadNews(@RequestParam String title, @RequestParam Byte target, @RequestParam String content,
             @RequestParam String abstr, String author, String createTime, Long browses,
             @RequestParam(defaultValue = "1", required = false) Integer status, HttpServletRequest request) {
-        ApiResponse resp = uploadFiles(request, this.getClass());
+        ApiResponse resp = uploadFiles(request, newsService, this.getClass());
         String url = (String) resp.getData();
         resp.setData(newsService.uploadNews(title, target, content, abstr, author, createTime, browses, url, status));
         return resp;

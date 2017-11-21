@@ -49,7 +49,7 @@ public class ActivitiesController extends AbstractController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ApiResponse uploadActivities(@RequestParam String title, @RequestParam String content, @RequestParam String abstr, String author,
             String createTime, Long browses, Integer status, HttpServletRequest request) {
-        ApiResponse resp = uploadFiles(request, this.getClass());
+        ApiResponse resp = uploadFiles(request, activitiesService, this.getClass());
         String url = (String)resp.getData();
         resp.setData(activitiesService.uploadActivities(title, content, abstr, author, createTime, browses, url, status));
         return resp;
