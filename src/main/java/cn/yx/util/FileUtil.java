@@ -25,7 +25,7 @@ import cn.yx.model.ApiResponse;
  */
 
 public class FileUtil {
-    
+
     /**
      * 如果没传入fileName参数，就生成随机值（不包含前面的斜杠）
      * 
@@ -90,7 +90,7 @@ public class FileUtil {
             out.flush();
         }
     }
-    
+
     /**
      * 生成一个相同后缀的随机名字
      * 
@@ -102,6 +102,7 @@ public class FileUtil {
         fileName = UUID.randomUUID() + suffixName;
         return fileName;
     }
+
     private static File createFileSafe(File file, String fileName) {
         File rFile = new File(file, fileName);
 
@@ -111,6 +112,18 @@ public class FileUtil {
 
         return rFile;
     }
-    
-    
+
+    public static final String REGEX = "^\\w+([\\\\|/][\\w-]+)+\\.[a-z]+$";
+    /**
+     * 需要拒绝访问的就返回false
+     * 
+     * @param input
+     * @return
+     */
+    public static Boolean verifyString(String input) {
+        if (input.length() > 200) {
+            return false;
+        }
+        return input.matches(REGEX);
+    }
 }

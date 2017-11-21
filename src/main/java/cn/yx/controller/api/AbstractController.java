@@ -68,7 +68,7 @@ public abstract class AbstractController {
         for (int i = 0; i < files.size(); ++i) {
             file = files.get(i);
             if (!file.isEmpty()) {
-                Integer id = newsService.getLastId();
+                Integer id = newsService.getLastId(); // 有问题
                 String fileName = file.getOriginalFilename();
                 temp = FileUtil.uploadFile(file, clzss.getSimpleName() + "/" + id + "/" + FileUtil.randomName(fileName), clzss);
                 if (temp.getCode().compareTo(ApiResponseEnum.SUCCESS.getCode()) != 0) {

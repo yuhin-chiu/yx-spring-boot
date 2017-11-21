@@ -35,25 +35,26 @@ public class FileController extends AbstractController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(AbstractController.class);
 
-    // 图片展示相关代码  
+    // 图片展示相关代码
     @RequestMapping("/image")
-    public void imageFile(@RequestParam(defaultValue = "test.txt") String fileName, HttpServletResponse response, HttpServletRequest request)
-            throws IOException {
+    public void imageFile(@RequestParam(defaultValue = "test.txt") String fileName, HttpServletResponse response,
+            HttpServletRequest request) throws IOException {
         if (fileName != null) {
-            if (verifyString(fileName)) {
-                LOGGER.error("Yuhin！有人尝试输入非法文件名,IP为：" + getIpReal(request) + "；uri为：" + request.getRequestURL()
-                        + "?" + request.getQueryString());
+            if (!FileUtil.verifyString(fileName)) {
+                LOGGER.error("Yuhin！有人尝试输入非法文件名,IP为：" + getIpReal(request) + "；uri为：" + request.getRequestURL() + "?"
+                        + request.getQueryString());
                 response.sendRedirect("https://www.baidu.com/s?wd=%E6%B1%82%E6%94%BE%E8%BF%87");
                 return;
             }
             // 当前是从该工程目录的File文件夹中获取文件(该目录在常量中配置了)
-//            response.setContentType("application/force-download");// 设置强制下载不打开
-//            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
-            response.setDateHeader("expires", System.currentTimeMillis()+ 30*24*3600*1000L); // 这个单位特么是毫秒？
+            // response.setContentType("application/force-download");// 设置强制下载不打开
+            // response.addHeader("Content-Disposition", "attachment;fileName=" +
+            // fileName);// 设置文件名
+            response.setDateHeader("expires", System.currentTimeMillis() + 30 * 24 * 3600 * 1000L); // 这个单位特么是毫秒？
             FileUtil.downloadFile(fileName, new BufferedOutputStream(response.getOutputStream()), this.getClass());
         }
     }
-    
+
     // 文件下载相关代码
     @RequestMapping("/download")
     public void downloadFile(@RequestParam(name = "fileName", required = false) String fileName,
@@ -70,9 +71,9 @@ public class FileController extends AbstractController {
             FileUtil.downloadFile(name, new BufferedOutputStream(response.getOutputStream()), this.getClass());
         } else if (fileName != null) {
             // 当前是从该工程目录的File文件夹中获取文件(该目录在常量中配置了)
-            if (verifyString(fileName)) {
-                LOGGER.error("Yuhin！有人尝试输入非法文件名,IP为：" + getIpReal(request) + "；uri为：" + request.getRequestURL()
-                        + "?" + request.getQueryString());
+            if (!FileUtil.verifyString(fileName)) {
+                LOGGER.error("Yuhin！有人尝试输入非法文件名,IP为：" + getIpReal(request) + "；uri为：" + request.getRequestURL() + "?"
+                        + request.getQueryString());
                 response.sendRedirect("https://www.baidu.com/s?wd=%E6%B1%82%E6%94%BE%E8%BF%87");
                 return;
             }
@@ -129,23 +130,4 @@ public class FileController extends AbstractController {
         }
         return ip.equals("0:0:0:0:0:0:0:1") ? "localhost" : ip;
     }
-
-    /**
-     * 需要拒绝访问的就返回true
-     * @param input
-     * @return
-     */
-    private Boolean verifyString(String input) {
-        System.out.println(input);
-        String[] fbsArr = { "\\", "$", "(", ")", "*", "+", "[", "]", "?", "^", "{", "}", "|", "%", "~"};
-        for (String key : fbsArr) {
-            if (input.contains(key)) {
-                return true;
-            }
-        }
-        if (input.indexOf("..") != -1) {
-            return true;
-        }
-        return false;
-    } 
 }

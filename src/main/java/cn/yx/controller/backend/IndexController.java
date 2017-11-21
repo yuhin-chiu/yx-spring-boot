@@ -34,10 +34,10 @@ public class IndexController extends AbstractController {
     public String login(Model model, Admin admin, HttpSession session) {
         Admin res = adminService.checkUser(admin);
         if (res == null) {
-            model.addAttribute("error", "* 用户名不存在");
+            model.addAttribute("error", "* 认证信息错误");
             return "/index/login";
         } else if (!admin.getPasswd().equals(res.getPasswd())) {
-            model.addAttribute("error", "* 密码错误");
+            model.addAttribute("error", "* 认证信息错误");
             return "/index/login";
         } else {
             session.setAttribute("admin", res);
