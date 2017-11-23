@@ -113,7 +113,7 @@ public class FileUtil {
         return rFile;
     }
 
-    public static final String REGEX = "^\\w+([\\\\|/][\\w-]+)+\\.[a-z]+$";
+    public static final String REGEX = "^(\\w+[\\\\|/])*[\\w-]+\\.[a-z]+$";
     /**
      * 需要拒绝访问的就返回false
      * 
@@ -121,8 +121,11 @@ public class FileUtil {
      * @return
      */
     public static Boolean verifyString(String input) {
-        if (input.length() > 200) {
+        if (input == null || input.length() > 200) {
             return false;
+        }
+        if (input.equals("0")) {
+            return true;
         }
         return input.matches(REGEX);
     }
