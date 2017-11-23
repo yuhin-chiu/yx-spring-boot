@@ -43,7 +43,7 @@ public class FileController extends AbstractController {
             if (!FileUtil.verifyString(fileName)) {
                 LOGGER.error("Yuhin！有人尝试输入非法文件名,IP为：" + getIpReal(request) + "；uri为：" + request.getRequestURL() + "?"
                         + request.getQueryString());
-                response.sendRedirect("http://map.baidu.com/");
+                response.sendRedirect("http://www.eee334.com/");
                 return;
             }
             // 当前是从该工程目录的File文件夹中获取文件(该目录在常量中配置了)
