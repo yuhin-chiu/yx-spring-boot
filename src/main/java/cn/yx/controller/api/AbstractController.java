@@ -86,4 +86,33 @@ public abstract class AbstractController {
         resp.setData(StringUtils.join(annexs, ","));
         return resp;
     }
+
+    protected ApiResponse uploadFile(HttpServletRequest request, Class<?> clzss, String key) {
+        MultipartFile file = null;
+        String annex = null;
+        ApiResponse temp = null;
+
+        try {
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+            file = multiRequest.getFile(key);
+        }  catch (Exception e) {
+            return null;
+        }
+        if (file == null) {
+            return null;
+        }
+
+        if (file != null && !file.isEmpty()) {
+            String fileName = file.getOriginalFilename();
+            temp = FileUtil.uploadFile(file, clzss.getSimpleName() + "/" + FileUtil.randomName(fileName), clzss);
+            if (temp.getCode().compareTo(ApiResponseEnum.SUCCESS.getCode()) != 0) {
+                return temp;
+            }
+            annex = (String) temp.getData();
+        } else {
+            return ApiResponse.fileSaveEmpty();
+        }
+
+        return ApiResponse.successResponse().setData(annex);
+    }
 }

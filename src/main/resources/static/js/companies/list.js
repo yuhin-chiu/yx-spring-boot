@@ -37,20 +37,6 @@ $(function() {
         align : "center",
         width : 100
     }, {
-        title : "办公电话",
-        field : "tele",
-        align : "center",
-        width : 150
-    }, {
-        title : "公司地址",
-        field : "address",
-        align : "center",
-        width : 200
-    }, {
-        title : "邮箱",
-        field : "mail",
-        align : "center"
-    }, {
         title : "申请时间",
         field : "createTimeStr",
         align : "center",
@@ -60,7 +46,8 @@ $(function() {
         field : "status",
         align : "center",
         formatter : function(value,row,index) {
-            var html = "<a class='remove' href='javascript:void(0)' rowid=" + row.id + ">删除</a>&nbsp;";
+            var html = "<a href='javascript:void(0)' onclick='edit(" + row.id + ")'>编辑</a>&nbsp;"
+                  + "<a class='remove' href='javascript:void(0)' rowid=" + row.id + ">删除</a>&nbsp;";
             if(value == 1) {
                 html += "<a class='no' href='javascript:void(0)' rowid=" + row.id + ">关闭</a>"
             } else {
@@ -68,7 +55,7 @@ $(function() {
             }
             return html;
         },
-        width : 100
+        width : 150
     } ];
 
     function callback(data) {
@@ -125,4 +112,7 @@ $(function() {
     });
 
     $("#queryBtn").click($("#autotable").baseTable.query);
+    
+    $("#modal-table").baseModal(baseUri, $("#autotable").baseTable);
+
 });

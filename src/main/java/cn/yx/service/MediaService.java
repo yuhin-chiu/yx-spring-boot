@@ -18,7 +18,7 @@ import cn.yx.util.TimeUtil;
  */
 
 @Service
-public class MediaService {
+public class MediaService extends AbstractService {
 
     @Autowired
     private WhsMediaMapper mediaMapper;
@@ -30,7 +30,11 @@ public class MediaService {
     }
 
     public List<WhsMedia> list(Integer status, Integer pageSize, Integer currentPage) {
-        return mediaMapper.list(status, pageSize, pageSize * (currentPage - 1));
+        List<WhsMedia> rList = mediaMapper.list(status, pageSize, pageSize * (currentPage - 1));
+        rList.forEach(item -> {
+            item.setImage(parseUri2Url(item.getImage()));
+        });
+        return rList;
     }
 
     public int count(Integer status) {
@@ -50,14 +54,29 @@ public class MediaService {
         long[] time = TimeUtil.splitTimeRange(timeRange);
         return mediaApplyMapper.count(status, time[0], time[1]);
     }
-    
+
     public int update(WhsMedia media) {
         return mediaMapper.updateByPrimaryKeySelective(media);
     }
+
     public int updateApply(WhsMediaApply media) {
         return mediaApplyMapper.updateByPrimaryKeySelective(media);
     }
+
     public int add(WhsMedia media) {
         return mediaMapper.insertSelective(media);
+    }
+
+    public WhsMedia getDetail(int id) {
+        WhsMedia rAct = mediaMapper.selectByPrimaryKey(id);
+        return rAct;
+    }
+
+    public Boolean insertOrUpdate(WhsMedia demo) {
+        if (demo.getId() == null) {
+            return mediaMapper.insertSelective(demo) > 0 ? true : false;
+        } else {
+            return mediaMapper.updateByPrimaryKeySelective(demo) > 0 ? true : false;
+        }
     }
 }

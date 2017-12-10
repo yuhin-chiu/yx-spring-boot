@@ -1,24 +1,18 @@
 package cn.yx.controller.api;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cn.yx.entity.WhsNews;
-import cn.yx.enums.ApiResponseEnum;
 import cn.yx.model.ApiResponse;
-import cn.yx.util.FileUtil;
-import cn.yx.util.TimeUtil;
 
 /**
  * @author yuxuanjiao
@@ -32,7 +26,8 @@ public class NewsController extends AbstractController {
 
     @RequestMapping("/list")
     public ApiResponse list(Integer status, Integer parent, @RequestParam(defaultValue = "20") Integer pageSize,
-            @RequestParam(defaultValue = "1") Integer currentPage, @RequestParam(defaultValue = "") String timeRange, String query) {
+            @RequestParam(defaultValue = "1") Integer currentPage, @RequestParam(defaultValue = "") String timeRange,
+            String query) {
         ApiResponse resp = new ApiResponse();
         List<WhsNews> list = newsService.list(status, parent, timeRange, query, pageSize, currentPage);
         int count = newsService.count(status, parent, timeRange, query);
@@ -66,6 +61,35 @@ public class NewsController extends AbstractController {
         resp.setData(newsService.uploadNews(title, target, content, abstr, author, createTime, browses, url, status));
         return resp;
     }
-    
 
+    @RequestMapping("/getById")
+    public WhsNews getById(@RequestParam(value = "id", required = true) int id) {
+        return newsService.getDetail(id);
+    }
+
+    @RequestMapping(value = "/insertOrUpdate", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiResponse insertOrUpdate(WhsNews news, HttpServletRequest request) {
+        ApiResponse temp = this.uploadFile(request, this.getClass(), "image");
+
+        if (news.getId() == null) {
+            if (temp == null) {
+                return ApiResponse.fileSaveEmpty();
+            } else if (temp.isSuccess()) {
+                String imgKey = (String) temp.getData();
+                news.setUrl(imgKey);
+            } else {
+                return temp;
+            }
+        } else if (news.getId() != null) {
+            if (temp != null && temp.isSuccess()) {
+                String imgKey = (String) temp.getData();
+                news.setUrl(imgKey);
+            }
+        }
+        if (newsService.insertOrUpdate(news)) {
+            return ApiResponse.successResponse();
+        }
+        return ApiResponse.exceptionResponse();
+    }
 }

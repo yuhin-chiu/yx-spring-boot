@@ -2,13 +2,17 @@ package cn.yx.controller.api;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.yx.entity.WhsHistory;
+import cn.yx.entity.WhsNews;
 import cn.yx.model.ApiResponse;
 
 /**
@@ -68,5 +72,18 @@ public class HistoryController extends AbstractController {
         ApiResponse resp = new ApiResponse();
         resp.setData(historyService.uploadHistory(name, content));
         return resp;
+    }
+    @RequestMapping("/getById")
+    public WhsHistory getById(@RequestParam(value = "id", required = true) int id) {
+        return historyService.getDetail(id);
+    }
+
+    @RequestMapping(value = "/insertOrUpdate", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiResponse insertOrUpdate(WhsHistory news, HttpServletRequest request) {
+        if (historyService.insertOrUpdate(news)) {
+            return ApiResponse.successResponse();
+        }
+        return ApiResponse.exceptionResponse();
     }
 }

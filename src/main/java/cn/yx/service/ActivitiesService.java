@@ -24,6 +24,7 @@ public class ActivitiesService extends AbstractService {
 
     /**
      * currentPage从1开始
+     * 
      * @param status
      * @param timeRange
      * @param query
@@ -31,7 +32,8 @@ public class ActivitiesService extends AbstractService {
      * @param currentPage
      * @return
      */
-    public List<WhsActivities> list(Integer status, String timeRange, String query, Integer pageSize, Integer currentPage) {
+    public List<WhsActivities> list(Integer status, String timeRange, String query, Integer pageSize,
+            Integer currentPage) {
         long[] time = TimeUtil.splitTimeRange(timeRange);
         List<WhsActivities> rList = whsActivitiesMapper.list(status, time[0], time[1], query, pageSize,
                 pageSize * (currentPage - 1));
@@ -48,8 +50,8 @@ public class ActivitiesService extends AbstractService {
     }
 
     public WhsActivities getDetail(int id) {
-    	WhsActivities rAct = whsActivitiesMapper.selectByPrimaryKey(id);
-    	rAct.setCreateTimeStr(TimeUtil.time2DayStr(rAct.getCreateTime()));
+        WhsActivities rAct = whsActivitiesMapper.selectByPrimaryKey(id);
+        rAct.setCreateTimeStr(TimeUtil.time2DayStr(rAct.getCreateTime()));
         return rAct;
     }
 
@@ -61,8 +63,8 @@ public class ActivitiesService extends AbstractService {
         return whsActivitiesMapper.updateByPrimaryKeySelective(com);
     }
 
-    public WhsActivities uploadActivities(String title, String content, String abstr, String author, String createTime, Long browses,
-            String url, Integer status) {
+    public WhsActivities uploadActivities(String title, String content, String abstr, String author, String createTime,
+            Long browses, String url, Integer status) {
         WhsActivities activities = new WhsActivities();
         activities.setTitle(title);
         activities.setContent(content);
@@ -78,5 +80,13 @@ public class ActivitiesService extends AbstractService {
         activities.setStatus(status.byteValue());
         whsActivitiesMapper.insertSelective(activities);
         return activities;
+    }
+
+    public Boolean insertOrUpdate(WhsActivities demo) {
+        if (demo.getId() == null) {
+            return whsActivitiesMapper.insertSelective(demo) > 0 ? true : false;
+        } else {
+            return whsActivitiesMapper.updateByPrimaryKeySelective(demo) > 0 ? true : false;
+        }
     }
 }

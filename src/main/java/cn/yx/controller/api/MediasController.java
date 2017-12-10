@@ -2,14 +2,19 @@ package cn.yx.controller.api;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.yx.entity.WhsActivities;
 import cn.yx.entity.WhsMedia;
 import cn.yx.model.ApiResponse;
+import cn.yx.util.TimeUtil;
 
 /**
  * @author yuxuanjiao
@@ -49,5 +54,37 @@ public class MediasController extends AbstractController {
         resp.setData(mediaService.add(media));
         return resp;
     }
+    @RequestMapping("/getById")
+    public WhsMedia getById(@RequestParam(value = "id", required = true) int id) {
+        return mediaService.getDetail(id);
+    }
 
+    @RequestMapping(value = "/insertOrUpdate", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiResponse insertOrUpdate(WhsMedia news, HttpServletRequest request) {
+        ApiResponse temp = this.uploadFile(request, this.getClass(), "image2");
+
+        if (news.getId() == null) {
+            if (temp == null) {
+                return ApiResponse.fileSaveEmpty();
+            } else if (temp.isSuccess()) {
+                String imgKey = (String) temp.getData();
+                news.setImage(imgKey);
+            } else {
+                return temp;
+            }
+        } else if (news.getId() != null) {
+            if (temp != null && temp.isSuccess()) {
+                String imgKey = (String) temp.getData();
+                news.setImage(imgKey);
+            }
+        }
+        if(news.getApplyTime() == null) {
+            news.setApplyTime(TimeUtil.getCurrentTime());
+        }
+        if (mediaService.insertOrUpdate(news)) {
+            return ApiResponse.successResponse();
+        }
+        return ApiResponse.exceptionResponse();
+    }
 }

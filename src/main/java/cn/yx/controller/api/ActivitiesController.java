@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.yx.entity.WhsActivities;
@@ -53,5 +54,35 @@ public class ActivitiesController extends AbstractController {
         String url = (String)resp.getData();
         resp.setData(activitiesService.uploadActivities(title, content, abstr, author, createTime, browses, url, status));
         return resp;
+    }
+    @RequestMapping("/getById")
+    public WhsActivities getById(@RequestParam(value = "id", required = true) int id) {
+        return activitiesService.getDetail(id);
+    }
+
+    @RequestMapping(value = "/insertOrUpdate", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiResponse insertOrUpdate(WhsActivities news, HttpServletRequest request) {
+        ApiResponse temp = this.uploadFile(request, this.getClass(), "image");
+
+        if (news.getId() == null) {
+            if (temp == null) {
+                return ApiResponse.fileSaveEmpty();
+            } else if (temp.isSuccess()) {
+                String imgKey = (String) temp.getData();
+                news.setUrl(imgKey);
+            } else {
+                return temp;
+            }
+        } else if (news.getId() != null) {
+            if (temp != null && temp.isSuccess()) {
+                String imgKey = (String) temp.getData();
+                news.setUrl(imgKey);
+            }
+        }
+        if (activitiesService.insertOrUpdate(news)) {
+            return ApiResponse.successResponse();
+        }
+        return ApiResponse.exceptionResponse();
     }
 }

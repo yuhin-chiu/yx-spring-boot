@@ -84,8 +84,9 @@ public interface WhsHistoryMapper {
     int updateByPrimaryKey(WhsHistory record);
 
     @SelectProvider(type = WhsHistorySqlProvider.class, method = "listSelective")
+    @Results({ @Result(column = "create_time", property = "createTime", jdbcType = JdbcType.BIGINT) })
     List<WhsHistory> list(Integer status, Integer limit, Integer offset);
-    
+
     @SelectProvider(type = WhsHistorySqlProvider.class, method = "countSelective")
     int count(Integer status);
 }

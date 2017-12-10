@@ -1,0 +1,90 @@
+<div th:fragment="modal-dialog" class="modal-dialog">
+       <!-- Modal 只控制文本编辑，不控制图片上传-->
+   <div class="modal fade" id="modal-dialog" role="dialog" aria-labelledby="modalLabel">
+       <div class="modal-dialog" role="document" style="z-index: 1000000;margin-top:50px;width:900px;">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <h4 class="modal-title" id="modalLabel">详情预览</h4>
+               </div>
+               <div class="modal-body">
+                   <input type="text" id="modal-id" class="hidden"/>
+                   <input type="hidden" id="modal-author" th:value="${admin.userName}" />
+                   <table width="100%" class="table" id="modal-table">
+                       <tr th:each="item:${dialogItems}" style="height: 50px" th:class="${item.type == 'hidden'}?'hidden':''">
+                           <th style="width: 120px; text-align: right"><span style="color: red">*</span><span th:text="${item.title}"></span>:</th>
+                           <td style="text-align: left">
+                               <input th:if="${item.type} == 'hidden'" type="hidden" th:value="${item.title}" th:attr="key=${item.id}"/>
+                               <div th:if="${item.type} == 'text'">
+                                 <input th:attr="key=${item.id}, minLength=${item.minLength}, maxLength=${item.maxLength}, placeholder=${item.placeholder}, title=${item.title}"
+                                    type="text" style="width: 50%;" />
+                                  <span th:if="${item.comment} != null and ${item.comment} != ''" th:text="${item.comment}" style="color:red;"></span>
+                               </div>
+                               <select th:if="${item.type} == 'select'" th:attr="key=${item.id}, type=${item.type}" class="modal-select">
+                                   <option th:each="selectItem: ${item.selectItems}" th:text="${selectItem.value}" th:value="${selectItem.key}"></option>
+                               </select>
+                               <textarea th:if="${item.type} == 'textarea'" 
+                                    th:attr="key=${item.id}, minLength=${item.minLength}, maxLength=${item.maxLength}, placeholder=${item.placeholder}, type=${item.type}, title=${item.title}" 
+                                    style="width: 100%; height: 76px;resize:none;"></textarea>
+                               <div th:if="${item.type} == 'image'">
+                                    <input type="file" multiple="multiple" 
+                                        th:attr="key=${item.id}, name=${item.id}, title=${item.title}, type='file'" style="display:inline-block;"/>
+                                    <span th:if="${item.placeholder} != null and ${item.placeholder}" th:text="${item.placeholder}" style="color:red;"></span>
+                               </div>
+                               <textarea th:if="${item.type} == 'editor'" name="editor"
+                                    th:attr="key=${item.id}, minLength=${item.minLength}, maxLength=${item.maxLength}, type=${item.type}, title=${item.title}"
+                                    style="width: 100%; height: 350px; visibility: hidden; display: block;"></textarea>
+                     </td>
+                       </tr>
+                   </table>
+               </div>
+               <div > </div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-success" id="modal-saveBtn">保存</button>
+                   <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+               </div>
+           </div>
+       </div>
+    </div>
+    <script th:inline="javascript">
+    if($('textarea[name="editor"]').length != 0) {
+        KindEditor.ready(function(K) {
+            window.editor = K.create('textarea[name="editor"]', {
+                resizeType : 1,
+                allowPreviewEmoticons : false,
+                allowImageUpload : true,
+              //  uploadJson:'/api/upload',
+                items : ['fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                    'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                    'insertunorderedlist', '|', 'emoticons', 'link', 'table', 'code', '|', 'image'],
+                afterChange : function() {
+                    var num = this.count('text');
+                    K('.count').html(num);
+                    if (num > 20000) {
+                        $(".count").css('color', 'red');
+                    } else {
+                        $(".count").css('color', 'black');
+                    }
+                }
+            });
+        });
+    }
+    </script>
+    <!-- Modal End --> 
+</div>
+<div th:fragment="modal-menu" class="modal-menu">
+         <label>日期：</label><input id="modal-timeRange" type="text" value="" class="date-picker" readonly="readonly" />
+         <label>关键字：</label><input type="text" id="modal-title" style="width: 300px" placeholder="输入关键字点击查询" />
+         <input type="button" value="查询" id="modal-queryBtn" class="btn btn-default"/>
+         <input th:if="${addable} == true" type="button" value="添加" id="modal-addBtn" class="btn btn-default" 
+              style="background-color:#5cb85c;border-color:#4cae4c;color:#fff;" data-toggle="modal" data-target="#modal-dialog"/>
+         <div style="width: 100%; height: 25px; text-align: right;">
+         </div>
+         <table id="autotable"> <!-- 显示列表 -->
+         </table>
+         
+</div>
+<!-- th:include和th:replace都可以引入模块，两者的区别在于 
+th:include：引入子模块的children，依然保留父模块的tag。 
+th:replace：引入子模块的所有，不保留父模块的tag。 
+区别就在于是留父模块的div还是子模块div，在这个例子里，replace子模块有class-->

@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.yx.entity.WhsActivities;
 import cn.yx.entity.WhsCompany;
 import cn.yx.entity.WhsCompanyApply;
+import cn.yx.entity.WhsDownloads;
 import cn.yx.mapper.WhsCompanyApplyMapper;
 import cn.yx.mapper.WhsCompanyMapper;
 import cn.yx.util.FileUtil;
@@ -73,5 +75,17 @@ public class CompanyService extends AbstractService {
     @Override
     public int getLastId() {
         return comMapper.getLastId();
+    }
+
+    public WhsCompany getById(Integer id) {
+        return comMapper.selectByPrimaryKey(id);
+    }
+
+    public Boolean insertOrUpdate(WhsCompany demo) {
+        if (demo.getId() == null) {
+            return comMapper.insertSelective(demo) > 0 ? true : false;
+        } else {
+            return comMapper.updateByPrimaryKeySelective(demo) > 0 ? true : false;
+        }
     }
 }

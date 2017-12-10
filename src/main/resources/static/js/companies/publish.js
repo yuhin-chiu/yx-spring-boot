@@ -178,6 +178,8 @@ $(function() {
             var address = $('input[name=address]').val();
             var tele = $('input[name=tele]').val();
             var mail = $('input[name=mail]').val();
+            var url = $('input[name=url]').val();
+
             // var content = $('#content').val();
             var content = hasContent && window.editor.html();
             
@@ -201,6 +203,9 @@ $(function() {
                     || (hasContent && parseInt($('.count').text()) > contentMax)) {
                 window.wxc.xcConfirm("标题或内容字数超限！",
                         window.wxc.xcConfirm.typeEnum.info);
+            } else if ((address.length > 50) || (tele.length > 50) || (mail.length > 50) || url.length > 200) {
+                window.wxc.xcConfirm("字数超限！",
+                        window.wxc.xcConfirm.typeEnum.info);
             } else if (curFiles.length < fileNumMin || curFiles.length > 10) {
                 window.wxc.xcConfirm("图片必须上传！",
                         window.wxc.xcConfirm.typeEnum.info);
@@ -223,6 +228,7 @@ $(function() {
                 formData.append('address', address);
                 formData.append('tele', tele);
                 formData.append('mail', mail);
+                formData.append('url', url);
                 formData.append('principal', principal);
                 formData.append('phone', phone);
 

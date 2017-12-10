@@ -78,4 +78,12 @@ public class NewsService extends AbstractService {
     public int getLastId() {
         return whsNewsMapper.getLastId();
     }
+
+    public Boolean insertOrUpdate(WhsNews demo) {
+        if (demo.getId() == null) {
+            return whsNewsMapper.insertSelective(demo) > 0 ? true : false;
+        } else {
+            return whsNewsMapper.updateByPrimaryKeySelective(demo) > 0 ? true : false;
+        }
+    }
 }

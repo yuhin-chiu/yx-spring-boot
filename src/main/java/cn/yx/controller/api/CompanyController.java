@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import cn.yx.entity.WhsCompany;
 import cn.yx.entity.WhsCompany;
 import cn.yx.enums.ApiResponseEnum;
 import cn.yx.model.ApiResponse;
@@ -88,5 +90,36 @@ public class CompanyController extends AbstractController {
         resp.setData(companyService.add(company));
 
         return resp;
+    }
+    @RequestMapping("/getById")
+    public WhsCompany getById(@RequestParam(value = "id", required = true) int id) {
+        return companyService.getById(id);
+    }
+
+    @RequestMapping(value = "/insertOrUpdate", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiResponse insertOrUpdate(WhsCompany news, HttpServletRequest request) {
+        ApiResponse temp = this.uploadFile(request, this.getClass(), "image2");
+
+        news.setImage(null);
+        if (news.getId() == null) {
+            if (temp == null) {
+                return ApiResponse.fileSaveEmpty();
+            } else if (temp.isSuccess()) {
+                String imgKey = (String) temp.getData();
+                news.setImage(imgKey);
+            } else {
+                return temp;
+            }
+        } else if (news.getId() != null) {
+            if (temp != null && temp.isSuccess()) {
+                String imgKey = (String) temp.getData();
+                news.setImage(imgKey);
+            }
+        }
+        if (companyService.insertOrUpdate(news)) {
+            return ApiResponse.successResponse();
+        }
+        return ApiResponse.exceptionResponse();
     }
 }

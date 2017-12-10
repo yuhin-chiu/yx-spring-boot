@@ -108,6 +108,7 @@ public class WhsMediaSqlProvider {
         } else {
             sql.WHERE("status != -1 ");
         }
+        sql.ORDER_BY("applyTime desc");
         if (limit != -1) {
             return sql + " limit " + limit + " OFFSET " + offset;
         } else {

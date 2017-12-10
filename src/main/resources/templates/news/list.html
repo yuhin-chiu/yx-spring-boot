@@ -3,8 +3,6 @@
 <head>
 <title>管理后台</title>
 <th:block th:include="/common/common :: header"></th:block>
-<script type="text/javascript" src="/js/news/news.js"></script>
-<script type="text/javascript" src="/js/news/list.js"></script>
 </head>
 <body page="news">
    <th:block th:include="/common/common :: toolbar"></th:block>
@@ -27,6 +25,10 @@
       </div>
    </div>
 
+   <!-- 添加和编辑的弹框  -->
+    <div th:replace="/common/modal :: modal-dialog"></div>
    <div th:include="/common/common :: footer"></div>
+   <script type="text/javascript" src="/js/news/news.js"></script>
+   <script type="text/javascript" src="/js/news/list.js"></script>
 </body>
 </html>

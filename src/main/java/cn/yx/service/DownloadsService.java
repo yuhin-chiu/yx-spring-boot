@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import cn.yx.entity.BaseDownloads;
+import cn.yx.entity.WhsActivities;
 import cn.yx.entity.WhsDownloads;
 import cn.yx.entity.WhsNews;
 import cn.yx.mapper.WhsDownloadsMapper;
@@ -64,5 +65,13 @@ public class DownloadsService extends AbstractService {
     
     public Integer update(WhsDownloads down) {
         return downMapper.updateByPrimaryKeySelective(down);
+    }
+
+    public Boolean insertOrUpdate(WhsDownloads demo) {
+        if (demo.getId() == null) {
+            return downMapper.insertSelective(demo) > 0 ? true : false;
+        } else {
+            return downMapper.updateByPrimaryKeySelective(demo) > 0 ? true : false;
+        }
     }
 }

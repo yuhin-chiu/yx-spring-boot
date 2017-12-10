@@ -145,4 +145,34 @@ public class DownloadsController extends AbstractController {
         return resp;
     }
 
+    @RequestMapping("/getById")
+    public WhsDownloads getById(@RequestParam(value = "id", required = true) int id) {
+        return downloadsService.getById(id);
+    }
+
+    @RequestMapping(value = "/insertOrUpdate", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiResponse insertOrUpdate(WhsDownloads news, HttpServletRequest request) {
+        ApiResponse temp = this.uploadFile(request, this.getClass(), "image");
+
+        if (news.getId() == null) {
+            if (temp == null) {
+                return ApiResponse.fileSaveEmpty();
+            } else if (temp.isSuccess()) {
+                String imgKey = (String) temp.getData();
+                news.setUrl(imgKey);
+            } else {
+                return temp;
+            }
+        } else if (news.getId() != null) {
+            if (temp != null && temp.isSuccess()) {
+                String imgKey = (String) temp.getData();
+                news.setUrl(imgKey);
+            }
+        }
+        if (downloadsService.insertOrUpdate(news)) {
+            return ApiResponse.successResponse();
+        }
+        return ApiResponse.exceptionResponse();
+    }
 }
