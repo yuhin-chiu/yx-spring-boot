@@ -59,8 +59,55 @@ $(function() {
         },
         width: 90
     } ];
-
-    $("#autotable").baseTable("/api/medias/list", columns, getOtherCondition);
+    function callback(data) {
+        $("#num").text(data.total);
+        $(".remove").each(function(i) {
+            $($(".remove")[i]).click(function() {
+                var rowid = $($(".remove")[i]).attr("rowid");
+                $.post("/api/" + baseUri + "/edit/"+rowid, {status: -1}, function(data) {
+                    if(data.code == 200) {
+                        window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success, {
+                            onOk: function(v) {
+                                window.location.href = "/backend/medias";
+                            }
+                        });
+                    } else {
+                        console.log("出现异常，请重试！");
+                    }
+                });
+            });
+            $($(".yes")[i]).click(function() {
+                var rowid = $($(".yes")[i]).attr("rowid");
+                $.post("/api/" + baseUri + "/edit/"+rowid, {status: 1}, function(data) {
+                    if(data.code == 200) {
+                        window.wxc.xcConfirm("设置首页推荐成功！", window.wxc.xcConfirm.typeEnum.success, {
+                            onOk: function(v) {
+                                window.location.href = "/backend/medias";
+                            }
+                        });
+                    } else {
+                        console.log("出现异常，请重试！");
+                    }
+                });
+            });
+            $($(".no")[i]).click(function() {
+                var rowid = $($(".no")[i]).attr("rowid");
+                $.post("/api/" + baseUri + "/edit/"+rowid, {status: 0}, function(data) {
+                    if(data.code == 200) {
+                        window.wxc.xcConfirm("删除首页推荐成功！", window.wxc.xcConfirm.typeEnum.success, {
+                            onOk: function(v) {
+                                window.location.href = "/backend/medias";
+                            }
+                        });
+                    } else {
+                        console.log("出现异常，请重试！");
+                    }
+                });
+            });
+        });
+    };
+    
+    $("#autotable").baseTable("/api/medias/list", columns, getOtherCondition, callback);
 
     $("#queryBtn").click($("#autotable").baseTable.query);
     
