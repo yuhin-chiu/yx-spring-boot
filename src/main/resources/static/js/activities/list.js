@@ -9,7 +9,8 @@ $(function() {
     var columns = [ {
         title : "ID",
         field : "id",
-        align : "center"
+        align : "center",
+        width : 20
     }, {
         title : "标题",
         field : "title",
@@ -46,7 +47,8 @@ $(function() {
     }, {
         title : "发布时间",
         field : "createTimeStr",
-        align : "center"
+        align : "center",
+        width : 100
     }, {
         title : "操作",
         field : "status",
@@ -60,7 +62,8 @@ $(function() {
                 html += "<a class='yes' href='javascript:void(0)' rowid=" + row.id + ">开启</a>"
             }
             return html;
-        }
+        },
+        width : 150
     } ];
 
     function callback(data) {

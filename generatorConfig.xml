@@ -13,10 +13,10 @@
     <table schema="homepage" tableName="whs_homepage" enableCountByExample="false" enableUpdateByExample="false"  
             enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
     </table>
+        <!--
     <table schema="article" tableName="whs_article" enableCountByExample="false" enableUpdateByExample="false"  
             enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
     </table>
-    <!-- 
     <table schema="news" tableName="whs_news" enableCountByExample="false" enableUpdateByExample="false"  
             enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
     </table>

@@ -171,6 +171,10 @@ $(function() {
             var target = hasTarget && $('input[name=target]:checked').val();
             var status = hasStatus && $('input[name=status]').val();
             var content = $('#content').val();
+            var tele = $("input[name=tele]").val();
+            var mail = $('input[name=mail]').val();
+            var addre = $('input[name=addre]').val();
+
 //            var content = hasContent && window.editor.html();
 
             var abstr = $('input[name=abstr]').val();
@@ -185,6 +189,9 @@ $(function() {
             } else if ((hasTitle && title.length > titleMax) || (hasAbstr && abstr.length > abstrMax)
                     || (hasContent && parseInt($('.count').text()) > contentMax)) {
                 window.wxc.xcConfirm("标题或内容字数超限！",
+                        window.wxc.xcConfirm.typeEnum.info);
+            } else if (tele.length == 0 || tele.length > 100 || mail.length == 0 || mail.length > 100 || addre.length > 100 || addre.length == 0) {
+                window.wxc.xcConfirm("请检查底栏文字数目！",
                         window.wxc.xcConfirm.typeEnum.info);
             } else if (hasFile && (curFiles.length < fileNumMin || curFiles.length > 10)) {
                 window.wxc.xcConfirm("图片必须上传！",
@@ -213,6 +220,9 @@ $(function() {
                 }
                 formData.append('target', target);
                 formData.append('abstr', abstr);
+                formData.append('addre', addre);
+                formData.append('tele', tele);
+                formData.append('mail', mail);
 
                 if(curFiles.length == 1) {
                     $.each(curFiles, function(index, file, array) {
@@ -260,6 +270,9 @@ $(function() {
                 $("#timeRange").data('daterangepicker').setEndDate(data.data.endTime);
                 $("#timeRange").val(data.data.beginTime.substr(0, 10) + " - " + data.data.endTime.substr(0, 10))
                 $("input[name=title]").val(data.data.address);
+                $("input[name=addre]").val(data.data.addre);
+                $("input[name=tele]").val(data.data.tele);
+                $("input[name=mail]").val(data.data.mail);
             });
         }
     };
