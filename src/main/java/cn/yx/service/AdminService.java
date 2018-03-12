@@ -1,11 +1,11 @@
 package cn.yx.service;
 
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import cn.yx.mapper.AdminMapper;
 import cn.yx.model.Admin;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author yuxuanjiao
@@ -18,8 +18,16 @@ public class AdminService {
 
     @Resource
     private AdminMapper adminMapper;
+
+    @Value("${spring.profiles}")
+    private String profiles;
     
     public Admin checkUser(Admin admin) {
+        System.out.println(profiles);
+        if("dev".equals(profiles)) {
+            admin.setUserName("dev");
+            return admin;
+        }
         return adminMapper.checkUser(admin.getAccount());
     }
 
